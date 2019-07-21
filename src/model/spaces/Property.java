@@ -1,0 +1,225 @@
+package model.spaces;
+
+import model.cards.CardApply;
+import java.util.ArrayList;
+
+/**
+ * This class represents the available properties on the board rand
+ * includes methods that check for interactions like development and
+ * rent calculation.
+ *
+ * @author Jan Uriel Marcelo
+ * @author Thea Go
+ * @version 1.0
+ * @since 1.0
+ */
+public class Property extends OwnableSpace
+{
+   private final String color;
+   private final int pricePerBuilding;
+   private int numBuildings;
+   /**
+    * The base rent of the property as the number of buildings go up.
+    */
+   private final int[] baseRents;
+   private final double multiplier;
+   private int totalCollected;
+   private int footTraffic;
+
+   /**
+    * A constructor that constructs a property with the input attributes.
+    *
+    * @param name Name of the property
+    * @param color Color value of the property
+    * @param location Location index of the property along the board
+    * @param price Price to pay when buying the property
+    * @param pricePerBuilding Price to pay when developing
+    * @param baseRents Index array of the base rents of the property
+    * @param multiplier Multiplier that determines how much foot traffic is
+    * needed for development
+    */
+   public Property (String name, String color, int location, int price, int pricePerBuilding, int[] baseRents, double multiplier)
+   {
+      this.baseRents = baseRents;
+      this.setName (name);
+      this.color = color;
+      this.setLocation (location);
+      this.setPrice (price);
+      this.pricePerBuilding = pricePerBuilding;
+      this.multiplier = multiplier;
+      this.setCards (new ArrayList<> ());
+   }
+
+   /**
+    * Calculates the total rent of a property.
+    * Takes into account the base rent, the number of properties the owner has
+    * of the same color, and the cards applied to it.
+    *
+    * @return The total rent value.
+    */
+   public int getRent ()
+   {
+      int i;
+      int baseRent;
+      int finalRent;
+      int count = 1;
+      Property pHold;
+
+      baseRent = this.baseRents[numBuildings];
+      finalRent = baseRent;
+//
+//    for (i = 0; i < MyEmpire.spaces.size (); i++)
+//    {
+//       if (MyEmpire.spaces.get (i) instanceof Property)
+//       {
+//          pHold = (Property) MyEmpire.spaces.get (i);
+//          if (pHold != this && pHold.color.equals (this.color) && pHold.getOwner () != null)
+//             if (pHold.getOwner ().getName ().equals (this.getOwner ().getName ()))
+//                count++;
+//       }
+//    }
+
+      if (count == 2)
+      {
+         finalRent += 10;
+      }
+      else if (count == 3)
+      {
+         finalRent += 20;
+      }
+
+      for (i = 0; i < this.getCards ().size (); i++)
+      {
+         if (this.getCards ().get (i) instanceof CardApply)
+         {
+            finalRent *= (int) ((CardApply) (this.getCards ().get (i))).getChange ();
+         }
+      }
+      return finalRent;
+   }
+
+   /**
+    * Gets the string representation of the color.
+    *
+    * @return String representing the color of the property.
+    */
+   public String getColor ()
+   {
+      return this.color;
+   }
+
+   /**
+    * Gets the price of each building of the property.
+    *
+    * @return Integer representing the price of each building.
+    */
+   public int getPricePerBuilding ()
+   {
+      return this.pricePerBuilding;
+   }
+
+   /**
+    * Gets the number of buildings.
+    *
+    * @return Integer representing the number of buildings.
+    */
+   public int getNumBuildings ()
+   {
+      return this.numBuildings;
+   }
+
+   /**
+    * Gets the base rents of this property.
+    *
+    * @return Integer array representing the base rents of the property.
+    */
+   public int[] getBaseRents ()
+   {
+      return this.baseRents;
+   }
+
+   /**
+    * Gets the multiplier used in calculating foot traffic threshold.
+    *
+    * @return Double representing the multiplier of the property.
+    */
+   public double getMultiplier ()
+   {
+      return this.multiplier;
+   }
+
+   /**
+    * Gets the current foot traffic of this property.
+    *
+    * @return Integer representing the current foot traffic of the property.
+    */
+   public int getFootTraffic ()
+   {
+      return this.footTraffic;
+   }
+
+   /**
+    * Adds a building and takes money from the owner according to the price.
+    * Only adds if able to develop and there is still room to develop.
+    */
+   public void addBuilding ()
+   {
+      if (this.isAbleToDevelop ())
+      {
+         if (this.numBuildings < 4 || (this.numBuildings == 4 && this.isOwnedFullyDeveloped ()))
+         {
+            this.numBuildings++;
+         }
+      }
+   }
+
+   /**
+    * Adds foot traffic to the property.
+    */
+   public void addFootTraffic ()
+   {
+      this.footTraffic++;
+   }
+
+   /**
+    * Checks if the owner is able to develop the property. Takes into
+    * consideration if the owner meets the requirements for development.
+    *
+    * @return Truth value if the owner is able to develop.
+    */
+   public boolean isAbleToDevelop ()
+   {
+      return true;
+//          return this.getOwner ().getCash () >= this.pricePerBuilding && (this.footTraffic >= MyEmpire.players.size () * multiplier || this.totalCollected >= this.pricePerBuilding);
+   }
+
+   /**
+    * Checks if the owner's other properties of the same color are all fully
+    * developed (aside from hotels).
+    *
+    * @return Truth value if the owner's other properties of the same color have
+    * 4 houses or a hotel.
+    */
+   public boolean isOwnedFullyDeveloped ()
+   {
+      int i;
+      boolean ownedFullyDeveloped;
+      Property hold;
+
+      ownedFullyDeveloped = true;
+      i = 0;
+//		while (i < MyEmpire.spaces.size () && ownedFullyDeveloped)
+//		{
+//			if (MyEmpire.spaces.get (i) instanceof Property)
+//			{
+//				hold = (Property) MyEmpire.spaces.get (i);
+//				if (hold.getOwner () != null)
+//					if (hold.getOwner () == this.getOwner () && hold.numBuildings < 4)
+//					 	ownedFullyDeveloped = false;
+//			}
+//
+//			i++;
+//		}
+      return ownedFullyDeveloped;
+   }
+}
