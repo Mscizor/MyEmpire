@@ -5,11 +5,24 @@
  */
 package model.cards;
 
+import model.Player;
+
 /**
  *
  * @author janur
  */
-public class CardBGetCash
+public class CardBGetCash extends Card
 {
+   private final double cash;
+   public CardBGetCash (String name, String text, double cash)
+   {
+      super (name, text);
+      this.cash = cash;
+   }
    
+   public void doCardEffect (Player player)
+   {
+      player.changeCash (this.cash);
+      this.discard ();
+   }
 }

@@ -5,11 +5,26 @@
  */
 package model.cards;
 
+import model.Player;
+
 /**
  *
  * @author janur
  */
-public interface CardERandomPay
+public class CardERandomPay extends Card
 {
+   private final double randomPayment;
    
+   public CardERandomPay (String name, String text, double randomPayment)
+   {
+      super (name, text);
+      this.randomPayment = randomPayment;
+   }
+   
+   public void doCardEffect (Player player)
+   {
+      player.changeCash (-this.randomPayment);
+      
+      this.discard ();
+   }
 }

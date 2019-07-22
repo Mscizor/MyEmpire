@@ -20,8 +20,7 @@ public class Player
    private double cash;
    private int position;
    private boolean inJail;
-   private final ArrayList<Card> cards;
-
+   private final ArrayList <Ownable> owned;
    /**
     * Player constructor that initializes player name and cash value
     *
@@ -29,7 +28,7 @@ public class Player
     */
    public Player (String name)
    {
-      this.cards = new ArrayList<> ();
+      this.owned = new ArrayList <> ();
       this.name = new String ();
       this.name = name;
       this.cash = 1500;
@@ -77,27 +76,16 @@ public class Player
       return this.inJail;
    }
 
-   /**
-    * Gets the array list of cards
-    *
-    * @return a <code> ArrayList </code> of @see Card specifying the list of
-    * cards.
-    */
-   public ArrayList<Card> getCards ()
+   public ArrayList <Ownable> getOwned ()
    {
-      return this.cards;
+      return this.owned;
    }
 
-   public void addCard (Card card)
+   public void addOwnable (Ownable own)
    {
-      this.cards.add (card);
+      this.owned.add (own);
    }
-
-   public void removeCard (Card card)
-   {
-      this.cards.remove (card);
-   }
-
+   
    /**
     * sets player's inJail value to true
     */

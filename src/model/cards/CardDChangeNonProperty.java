@@ -13,11 +13,11 @@ import model.spaces.*;
  *
  * @author janur
  */
-public class CardDChangeProperty extends Card
+public class CardDChangeNonProperty extends Card
 {
    private final double changeToRent;
    
-   public CardDChangeProperty (String name, String text, double changeToRent)
+   public CardDChangeNonProperty (String name, String text, double changeToRent)
    {
       super (name, text);
       this.changeToRent = changeToRent;
@@ -26,11 +26,11 @@ public class CardDChangeProperty extends Card
    public void doCardEffect (Player player, ArrayList <Space> spaces, 
            OwnableSpace owned)
    {   
-      if (owned instanceof Property)
+      if (owned instanceof Railroad || owned instanceof Utility)
          owned.addCard (this);
    }
    
-   public double getChangeToRent ()
+   public double getchangeToRent ()
    {
       return this.changeToRent;
    }

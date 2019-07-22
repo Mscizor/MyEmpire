@@ -16,7 +16,6 @@ import model.Player;
 public abstract class OwnableSpace extends Space
 {
    private double price;
-   private Player owner;
    private ArrayList<Card> cards;
 
    /**
@@ -55,17 +54,7 @@ public abstract class OwnableSpace extends Space
    public void setPrice (int price)
    {
       this.price = price;
-   }
-
-   /**
-    * method that updates the owner to a new one
-    *
-    * @param player the players involved in the property transaction process
-    */
-   public void changeOwner (Player player)
-   {
-      this.owner = player;
-   }
+   } 
 
    public void setCards (ArrayList<Card> cards)
    {

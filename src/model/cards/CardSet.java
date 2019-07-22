@@ -15,7 +15,7 @@ import model.spaces.Space;
  */
 public class CardSet
 {
-   private final ArrayList<Card> cards;
+   private final ArrayList <Card> cards;
 
    /**
     * This constructor accepts a null parameter
@@ -24,9 +24,9 @@ public class CardSet
     *
     * @param spaces The spaces to use for randomizing the cards
     */
-   public CardSet (ArrayList<Space> spaces)
+   public CardSet (ArrayList <Space> spaces)
    {
-      cards = new ArrayList<> ();
+      cards = new ArrayList <> ();
 
       int i;
 

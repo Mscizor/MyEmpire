@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.cards;
+package model;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author janur
  */
-public class CardDChangeOther
+public interface Ownable
 {
-   
+   public Player getOwner (ArrayList <Player> players);
 }
