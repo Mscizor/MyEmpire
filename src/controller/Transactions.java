@@ -27,10 +27,11 @@ public class Transactions
    public static void tradeWithOtherPlayer (Player player, Player other,
            ArrayList <Ownable> give, ArrayList <Ownable> take)
    {
-//      for (int i = 0; i < give.size (); i++)
-//         give.get (i).changeOwner (other);
-//      
-//      for (int i = 0; i < take.size (); i++)
-//         take.get (i).changeOwner (player);
+      for (int i = 0; i < give.size (); i++)
+    	  other.addOwnable (give.get (i));
+      
+      for (int i = 0; i < give.size (); i++)
+    	  player.addOwnable (take.get (i));
+      
    }
 }

@@ -44,14 +44,11 @@ public class Property extends OwnableSpace
     */
    public Property (String name, String color, int location, int price, int pricePerBuilding, int[] baseRents, double multiplier)
    {
-      this.baseRents = baseRents;
-      this.setName (name);
-      this.color = color;
-      this.setLocation (location);
-      this.setPrice (price);
-      this.pricePerBuilding = pricePerBuilding;
-      this.multiplier = multiplier;
-      this.setCards (new ArrayList <> ());
+	   super (name, location, price);
+	   this.baseRents = baseRents;
+	   this.color = color;
+	   this.pricePerBuilding = pricePerBuilding;
+	   this.multiplier = multiplier;
    }
    
    /**

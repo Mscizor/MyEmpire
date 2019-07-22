@@ -22,24 +22,9 @@ public class Corner extends Space
     * @param type The type of corner to be generated.
     * @param location The location of the space on the array list of spaces.
     */
-   public Corner (int type, int location)
+   public Corner (String name, int location)
    {
-      switch (type)
-      {
-         case 0:
-            this.setName ("START");
-            break;
-         case 1:
-            this.setName ("Community Service");
-            break;
-         case 2:
-            this.setName ("Free Parking");
-            break;
-         case 3:
-            this.setName ("JAIL");
-      }
-      
-      this.setLocation (location);
+	   super (name, location);
    }
 
 }

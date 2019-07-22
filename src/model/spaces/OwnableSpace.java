@@ -25,6 +25,14 @@ public abstract class OwnableSpace extends Space implements Ownable
     * @return a <code> int </code>
     * specifying the price of the specific space
     */
+   
+   public OwnableSpace (String name, int location, double price)
+   {
+	   super (name, location);
+	   this.cards = new ArrayList <> ();
+	   this.price = price;
+   }
+   
    public double getPrice ()
    {
       return this.price;

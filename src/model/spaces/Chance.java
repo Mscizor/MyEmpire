@@ -22,8 +22,7 @@ public class Chance extends Space
     */
    public Chance (String name, int location)
    {
-      this.setName (name);
-      this.setLocation (location);
+      super (name, location);
    }
    /**
     * This method accepts a Player object as parameter

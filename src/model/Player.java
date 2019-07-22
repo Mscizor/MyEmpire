@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import model.spaces.OwnableSpace;
+import model.spaces.Property;
+
 /**
  * This class holds player information and lets them choose between their
  * playable actions
@@ -140,16 +143,21 @@ public class Player
 
    public double getTotalValue ()
    {
-      /*
-       * temp, what does property value mean?
-       */
-      return 0;
-   }
-
-   public void trade (Player other, ArrayList <Ownable> giving, ArrayList<Ownable> taking)
-   {
-      /*
-       * Not yet implemented
-       */
+	   double totalValue = 0;
+	   for (int i = 0; i < this.owned.size (); i++)
+	   {
+		   Ownable own = this.owned.get (i);
+		   
+		   if (own instanceof Property)
+		   {
+			   Property pHold = (Property) own;
+			   totalValue += pHold.getPricePerBuilding() * 
+					   (pHold.getNumHouses() + pHold.getNumHotels ());
+		   }
+		   
+		   if (own instanceof OwnableSpace)
+			   totalValue += ((OwnableSpace) own).getPrice ();
+	   }
+	   return totalValue;
    }
 }

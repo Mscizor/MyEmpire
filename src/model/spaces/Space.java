@@ -16,6 +16,12 @@ public abstract class Space
    private String name;
    private int location;
 
+   public Space (String name, int location)
+   {
+	   this.name = name;
+	   this.location = location;
+   }
+   
    /**
     * Gets the name of the space
     *

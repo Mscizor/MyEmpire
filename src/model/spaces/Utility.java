@@ -29,10 +29,7 @@ public class Utility extends OwnableSpace
     */
    public Utility (String name, int location, int price)
    {
-      this.setName (name);
-      this.setLocation (location);
-      this.setPrice (price);
-      this.setCards (new ArrayList<> ());
+      super (name, location, price);
    }
 
    /**

@@ -19,13 +19,8 @@ public class Tax extends Space
     * @param type The type of Tax to be generated.
     * @param location The location of the tax space on the list of spaces.
     */
-   public Tax (int type, int location)
+   public Tax (String name, int location)
    {
-      if (type == 0)
-         this.setName ("Luxury Tax");
-      else
-         this.setName ("Income Tax");
-      
-      this.setLocation (location);
+	   super (name, location);
    }
 }
