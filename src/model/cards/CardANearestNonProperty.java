@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.cards;
 
 import java.util.ArrayList;
-import model.Player;
-import model.spaces.*;  
+import model.*;
+import model.spaces.*;
 
 /**
  *
- * @author janur
+ * @author Thea Go
+ * @author Jan Uriel Marcelo
  */
-public class CardANearestNonProperty extends Card
+public class CardANearestNonProperty extends Card implements CardMovePlayer
 {
    private final boolean isRailroad;
    
@@ -23,7 +19,7 @@ public class CardANearestNonProperty extends Card
       this.isRailroad = isRailroad;
    }
    
-   public void doCardEffect (Player player, ArrayList <Space> spaces)
+   public void doCardEffect (Player player, ArrayList <Space> spaces, Bank bank)
    {
       int playerPos = player.getPosition ();
       int highestDistance = 0;
@@ -33,7 +29,7 @@ public class CardANearestNonProperty extends Card
       for (int i = 0; i < spaces.size (); i++)
       {
          search = spaces.get (i);
-         if ((search instanceof Railroad && this.isRailroad) || 
+         if ((search instanceof Railroad && this.isRailroad) ||
                  (search instanceof Utility && !this.isRailroad))
          {
             destinationLoc = spaces.get (i).getLocation ();

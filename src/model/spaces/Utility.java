@@ -2,6 +2,10 @@ package model.spaces;
 
 import java.util.ArrayList;
 
+import model.spaces.Space;
+import model.CardApplyOwnableSpace;
+import model.Player;
+
 /**
  * It is a special type of ownable space that increases its value 
  * the more of it a player owns, as well as the value of
@@ -36,44 +40,42 @@ public class Utility extends OwnableSpace
     *
     * @return a <code> int </code> specifying the utility's current rent
     */
-   @Override
-   public int getRent ()
+   public double getRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player)
    {
-      int i;
       int diceRoll;
-      int baseRent = 0;
-      int finalRent;
+      double baseRent = 0;
+      double finalRent;
       boolean bothOwned = true;
-
       Utility uHold;
-//
-//		for (i = 0; i < MyEmpire.spaces.size (); i++)
-//		{
-//			if (MyEmpire.spaces.get (i) instanceof Utility)
-//			{
-//				uHold = (Utility) MyEmpire.spaces.get (i);
-//				if (uHold.getOwner () == null)
-//					bothOwned = false;
-//			}
-//		}
-//
-//		diceRoll = MyEmpire.diceRoll ();
-//
-//		// If both are owned by a player, rent is 10 times the number of the dice
-//		if (bothOwned)
-//			baseRent = 10 * diceRoll;
-//		// If one is owned by a player, rent is 4 times the number of the dice
-//		else
-//			baseRent = 4 * diceRoll;
-
-//		finalRent = baseRent;
-      for (i = 0; i < this.getCards ().size (); i++)
+      
+      if (player == this.getOwner (players))
+    	  return 0;
+      
+      for (int i = 0; i < spaces.size (); i++)
       {
-//			if (this.getCards ().get (i) instanceof CardApply)
-//				finalRent *= (int) (((CardApply) this.getCards ().get (i)).getChange ());
+    	  if (spaces.get (i) instanceof Utility)
+    	  {
+    		  uHold = (Utility) spaces.get (i);
+    		  if (uHold.getOwner (players) == null)
+    			  bothOwned = false;
+    	  }
       }
 
-//		return (int) finalRent;
-      return 0;
+      diceRoll = player.getDiceRoll ();
+      // If both are owned by a player, rent is 10 times the number of the dice
+      if (bothOwned)
+    	  baseRent = 10 * diceRoll;
+      // If one is owned by a player, rent is 4 times the number of the dice
+      else
+    	  baseRent = 4 * diceRoll;
+
+      finalRent = baseRent;
+      for (int i = 0; i < this.getCards ().size (); i++)
+      {
+    	  if (this.getCards ().get (i) instanceof CardApplyOwnableSpace)
+    		  finalRent *= ((CardApplyOwnableSpace) this.getCards ().get (i)).getChangeToRent ();
+      }
+
+      return finalRent;
    }
 }

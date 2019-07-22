@@ -1,7 +1,5 @@
 package model;
 
-import model.spaces.OwnableSpace;
-import model.cards.Card;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +19,8 @@ public class Player
    private int position;
    private boolean inJail;
    private final ArrayList <Ownable> owned;
+   private int diceRoll = 0;
+   
    /**
     * Player constructor that initializes player name and cash value
     *
@@ -66,6 +66,11 @@ public class Player
       return this.position;
    }
 
+   public int getDiceRoll ()
+   {
+	   return this.diceRoll;
+   }
+   
    /**
     * Gets and returns true if the player is in jail
     *
@@ -141,18 +146,7 @@ public class Player
       return 0;
    }
 
-   @Override
-   public String toString ()
-   {
-      String hold;
-      hold = "Name: " + this.name;
-      hold += "\nCash: " + this.cash;
-//      hold += "\nPosition: " + MyEmpire.spaces.get(position).getName();
-
-      return hold;
-   }
-
-   public void trade (Player other, ArrayList<OwnableSpace> giving, ArrayList<OwnableSpace> taking)
+   public void trade (Player other, ArrayList <Ownable> giving, ArrayList<Ownable> taking)
    {
       /*
        * Not yet implemented

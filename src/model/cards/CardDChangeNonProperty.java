@@ -1,21 +1,19 @@
-/*
- * To changeToRent this license header, choose License Headers in Project Properties.
- * To changeToRent this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.cards;
 
 import java.util.ArrayList;
-import model.Player;
+import model.*;
 import model.spaces.*;
 
 /**
  *
- * @author janur
+ * @author Thea Go
+ * @author Jan Uriel Marcelo
  */
-public class CardDChangeNonProperty extends Card
+
+public class CardDChangeNonProperty extends Card implements CardApplyOwnableSpace
 {
    private final double changeToRent;
+   private boolean applied = false;
    
    public CardDChangeNonProperty (String name, String text, double changeToRent)
    {
@@ -24,14 +22,22 @@ public class CardDChangeNonProperty extends Card
    }
    
    public void doCardEffect (Player player, ArrayList <Space> spaces, 
-           OwnableSpace owned)
+           OwnableSpace owned, Bank bank)
    {   
       if (owned instanceof Railroad || owned instanceof Utility)
-         owned.addCard (this);
+      {
+    	  owned.addCard (this);
+    	  this.applied = true;
+      }
    }
    
-   public double getchangeToRent ()
+   public double getChangeToRent ()
    {
       return this.changeToRent;
+   }
+   
+   public boolean isApplied ()
+   {
+	   return this.applied;
    }
 }

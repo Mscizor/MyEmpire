@@ -1,8 +1,9 @@
 package model.spaces;
 
+import model.Ownable;
+import model.Player;
 import model.cards.Card;
 import java.util.ArrayList;
-import model.Player;
 
 /**
  * This class inherits the attributes of the Space class.
@@ -13,10 +14,10 @@ import model.Player;
  * @version 1.0
  * @since 1.0
  */
-public abstract class OwnableSpace extends Space
+public abstract class OwnableSpace extends Space implements Ownable
 {
    private double price;
-   private ArrayList<Card> cards;
+   private ArrayList <Card> cards;
 
    /**
     * Gets the price of the space
@@ -30,27 +31,16 @@ public abstract class OwnableSpace extends Space
    }
 
    /**
-    * Gets the owner of the space
-    *
-    * @return a <code> Player </code>
-    * specifying the current player that owns the space
-    */
-   public Player getOwner ()
-   {
-      return this.owner;
-   }
-
-   /**
     * Gets the array list of cards
     *
     * @return a <code> ArrayList </code> of @see Card
     * specifying the array list of cards
     */
-   public ArrayList<Card> getCards ()
+   public ArrayList <Card> getCards ()
    {
       return this.cards;
    }
-
+   
    public void setPrice (int price)
    {
       this.price = price;
@@ -80,6 +70,7 @@ public abstract class OwnableSpace extends Space
    {
       this.cards.remove (card);
    }
-
-   public abstract int getRent ();
+   
+   public abstract double getRent (ArrayList <Player> players, ArrayList <Space> spaces,
+		   Player player);
 }

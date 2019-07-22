@@ -1,11 +1,8 @@
 package controller;
 
-import model.cards.Card;
-import model.cards.CardFJailFree;
-import model.Bank;
-import model.spaces.Space;
-import model.Player;
+import model.*;
 import model.cards.*;
+import model.spaces.*;
 import java.util.ArrayList;
 
 /**
@@ -34,42 +31,25 @@ public class CardController
    public static void doCardEffect (Card card, Player player, 
            ArrayList <Space> spaces, Bank bank)
    {
-      if (card instanceof CardApply)
-      {
-         // apply
-      }
-      else if (card instanceof CardGetMoney)
-      {
-         double money = ((CardPayMoney) card).getMoney ();
-         player.changeCash (money);
-         bank.changeCash (-money);
-      }
-      else if (card instanceof CardFJailFree)
-      {
-         player.addCard (card);
-      }
-      else if (card instanceof CardMoveLand)
-      {
-         /*
-          * land on the space thing
-          */
-      }
-      else if (card instanceof CardMoveOnly)
-      {
-         /*
-          * if (card.getEffectIndex() == 0)
-          *    move directly jail
-          * else
-          *    land on thing
-          */
-      }
-      else if (card instanceof CardPayMoney)
-      {
-         double money = ((CardPayMoney) card).getMoney ();
-         player.changeCash (-money);
-         bank.changeCash (money);
-      }
-      
-      
+	   if (card instanceof CardMoneyOnly)
+	   {
+		   // TODO: GUI
+		   ((CardMoneyOnly) card).doCardEffect (player, bank);
+		   // TODO: GUI
+	   }
+	   else if (card instanceof CardMovePlayer)
+	   {
+		   // TODO: GUI
+		   ((CardMovePlayer) card).doCardEffect (player, spaces, bank);
+		   // TODO: GUI
+	   }
+	   else if (card instanceof CardApplyOwnableSpace)
+	   {
+		   OwnableSpace owned = null;
+		   // TODO: GUI
+		   ((CardApplyOwnableSpace) card).doCardEffect(player, spaces, owned, bank);
+		   // TODO: GUI
+	   }
    }
+   
 }

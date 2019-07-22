@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.cards;
 
 import java.util.ArrayList;
-import model.Player;
+import model.*;
 import model.spaces.*;
+import controller.Transactions;
 
 /**
  *
- * @author janur
+ * @author Thea Go
+ * @author Jan Uriel Marcelo
  */
-public class CardDRenovateProperty extends Card
+public class CardDRenovateProperty extends Card implements CardApplyOwnableSpace
 {
    private final double changeToRent;
+   private boolean applied;
    
    public CardDRenovateProperty (String name, String text, 
            double changeToRent)
@@ -25,14 +23,35 @@ public class CardDRenovateProperty extends Card
    }
    
    public void doCardEffect (Player player, ArrayList <Space> spaces, 
-           OwnableSpace owned)
+           OwnableSpace owned, Bank bank)
    {   
       if (owned instanceof Property)
-         owned.addCard (this);
+      {
+    	 int ownedHouses = 0, ownedHotels = 0;
+    	 for (int i = 0; i < player.getOwned ().size (); i++)
+    	 { 
+    		 if (player.getOwned ().get (i) instanceof Property)
+    		 {
+    			 Property pHold = (Property) player.getOwned ().get (i);
+    			 ownedHouses += pHold.getNumHouses ();
+    			 ownedHotels += pHold.getNumHotels ();
+    		 }
+    	 }
+    	 Transactions.cashToBank (player, bank, ownedHouses * 25 + ownedHotels * 50);
+    	 owned.addCard (this); 
+    	 this.applied = true;
+      }
+      else
+    	  this.discard ();
    }
    
-   public double getChange ()
+   public double getChangeToRent ()
    {
       return this.changeToRent;
+   }
+   
+   public boolean isApplied ()
+   {
+	   return this.applied;
    }
 }

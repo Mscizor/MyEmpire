@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.cards;
 
 import java.util.ArrayList;
-import model.Player;
+
+import model.*;
 import model.spaces.Property;
 import model.spaces.Space;
 
@@ -14,7 +10,7 @@ import model.spaces.Space;
  *
  * @author janur
  */
-public class CardARandomProperty extends Card
+public class CardARandomProperty extends Card implements CardMovePlayer
 {
    private final Property random;
    
@@ -24,7 +20,7 @@ public class CardARandomProperty extends Card
       this.random = random;
    }
    
-   public void doCardEffect (Player player, ArrayList <Space> spaces)
+   public void doCardEffect (Player player, ArrayList <Space> spaces, Bank bank)
    {
       player.changePosition (random.getLocation ());
       // TODO: do land thing and start thing

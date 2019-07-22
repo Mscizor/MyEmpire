@@ -1,6 +1,9 @@
 package model.spaces;
 
-import model.cards.CardApply;
+import model.CardApplyOwnableSpace;
+import model.Ownable;
+import model.Player;
+
 import java.util.ArrayList;
 
 /**
@@ -17,7 +20,8 @@ public class Property extends OwnableSpace
 {
    private final String color;
    private final int pricePerBuilding;
-   private int numBuildings;
+   private int numHouses;
+   private int numHotels;
    /**
     * The base rent of the property as the number of buildings go up.
     */
@@ -47,9 +51,9 @@ public class Property extends OwnableSpace
       this.setPrice (price);
       this.pricePerBuilding = pricePerBuilding;
       this.multiplier = multiplier;
-      this.setCards (new ArrayList<> ());
+      this.setCards (new ArrayList <> ());
    }
-
+   
    /**
     * Calculates the total rent of a property.
     * Takes into account the base rent, the number of properties the owner has
@@ -57,27 +61,30 @@ public class Property extends OwnableSpace
     *
     * @return The total rent value.
     */
-   public int getRent ()
+   public double getRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player)
    {
       int i;
       int baseRent;
       int finalRent;
       int count = 1;
       Property pHold;
-
-      baseRent = this.baseRents[numBuildings];
+      
+      baseRent = this.baseRents[numHouses];
       finalRent = baseRent;
-//
-//    for (i = 0; i < MyEmpire.spaces.size (); i++)
-//    {
-//       if (MyEmpire.spaces.get (i) instanceof Property)
-//       {
-//          pHold = (Property) MyEmpire.spaces.get (i);
-//          if (pHold != this && pHold.color.equals (this.color) && pHold.getOwner () != null)
-//             if (pHold.getOwner ().getName ().equals (this.getOwner ().getName ()))
-//                count++;
-//       }
-//    }
+      
+      if (player == this.getOwner (players))
+    	  return 0;
+      
+      for (i = 0; i < spaces.size (); i++)
+      {
+    	  if (spaces.get (i) instanceof Property)
+    	  {
+    		  pHold = (Property) spaces.get (i);
+	          if (pHold != this && pHold.color.equals (this.color) && pHold.getOwner (players) != null)
+	             if (pHold.getOwner (players).getName ().equals (this.getOwner (players).getName ()))
+	                count++;
+    	  }
+      }
 
       if (count == 2)
       {
@@ -90,9 +97,9 @@ public class Property extends OwnableSpace
 
       for (i = 0; i < this.getCards ().size (); i++)
       {
-         if (this.getCards ().get (i) instanceof CardApply)
+         if (this.getCards ().get (i) instanceof CardApplyOwnableSpace)
          {
-            finalRent *= (int) ((CardApply) (this.getCards ().get (i))).getChange ();
+            finalRent *= ((CardApplyOwnableSpace) (this.getCards ().get (i))).getChangeToRent ();
          }
       }
       return finalRent;
@@ -123,9 +130,14 @@ public class Property extends OwnableSpace
     *
     * @return Integer representing the number of buildings.
     */
-   public int getNumBuildings ()
+   public int getNumHouses ()
    {
-      return this.numBuildings;
+      return this.numHouses;
+   }
+   
+   public int getNumHotels ()
+   {
+	   return this.numHotels;
    }
 
    /**
@@ -162,13 +174,17 @@ public class Property extends OwnableSpace
     * Adds a building and takes money from the owner according to the price.
     * Only adds if able to develop and there is still room to develop.
     */
-   public void addBuilding ()
+   public void addBuilding (ArrayList <Player> players)
    {
-      if (this.isAbleToDevelop ())
+      if (this.isAbleToDevelop (players))
       {
-         if (this.numBuildings < 4 || (this.numBuildings == 4 && this.isOwnedFullyDeveloped ()))
+         if (this.numHouses < 4 && this.getOwner (players).getCash () >= this.pricePerBuilding)
          {
-            this.numBuildings++;
+            this.numHouses++;
+         }
+         else if (this.numHouses == 4 && this.isAbleToDevelop (players))
+         {
+        	 this.numHotels++;
          }
       }
    }
@@ -187,10 +203,11 @@ public class Property extends OwnableSpace
     *
     * @return Truth value if the owner is able to develop.
     */
-   public boolean isAbleToDevelop ()
+   public boolean isAbleToDevelop (ArrayList <Player> players)
    {
-      return true;
-//          return this.getOwner ().getCash () >= this.pricePerBuilding && (this.footTraffic >= MyEmpire.players.size () * multiplier || this.totalCollected >= this.pricePerBuilding);
+	   return this.getOwner (players).getCash () >= this.pricePerBuilding && 
+			   (this.footTraffic >= players.size () * multiplier || 
+			   this.totalCollected >= this.pricePerBuilding);
    }
 
    /**
@@ -200,26 +217,30 @@ public class Property extends OwnableSpace
     * @return Truth value if the owner's other properties of the same color have
     * 4 houses or a hotel.
     */
-   public boolean isOwnedFullyDeveloped ()
+   public boolean isOwnedFullyDeveloped (ArrayList <Player> players)
    {
       int i;
       boolean ownedFullyDeveloped;
       Property hold;
-
+      ArrayList <Ownable> owned = this.getOwner (players).getOwned ();
+      
       ownedFullyDeveloped = true;
       i = 0;
-//		while (i < MyEmpire.spaces.size () && ownedFullyDeveloped)
-//		{
-//			if (MyEmpire.spaces.get (i) instanceof Property)
-//			{
-//				hold = (Property) MyEmpire.spaces.get (i);
-//				if (hold.getOwner () != null)
-//					if (hold.getOwner () == this.getOwner () && hold.numBuildings < 4)
-//					 	ownedFullyDeveloped = false;
-//			}
-//
-//			i++;
-//		}
+      while (i < owned.size () && ownedFullyDeveloped)
+      {
+    	  if (owned.get (i) instanceof Property)
+    	  {
+    		  if (((Property) owned.get (i)).getColor ().equals (this.getColor ()))
+	    	  {
+	    		  hold = (Property) owned.get (i);
+	    		  if (hold.getOwner (players) != null)
+	    			  if (hold.getOwner (players) == this.getOwner (players) && hold.numHouses < 4)
+	    				  ownedFullyDeveloped = false;
+	    	  }
+    	  }
+    	  
+    	  i++;
+      }
       return ownedFullyDeveloped;
    }
 }

@@ -1,7 +1,8 @@
 package model.spaces;
 
-import model.cards.CardApply;
 import java.util.ArrayList;
+
+import model.*;
 
 /**
  * This class inherits the attributes of the OwnableSpace class.
@@ -37,25 +38,24 @@ public class Railroad extends OwnableSpace
     * @return a <code> int </code>
     * specifying the railroad's current rent
     */
-   public int getRent ()
+   public double getRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player)
    {
       int i;
       int baseRent = 0;
       int finalRent;
       int countRailroads = 0;
-
-      Railroad rHold;
-//
-//		//checks the number of railroads owned by the player
-//		for (i = 0; i < MyEmpire.spaces.size (); i++)
-//		{
-//			if (MyEmpire.spaces.get (i) instanceof Railroad)
-//			{
-//				rHold = (Railroad) MyEmpire.spaces.get (i);
-//				if (rHold.getOwner () == this.getOwner ())
-//					countRailroads++;
-//			}
-//		}
+      Player owner = this.getOwner (players);
+      
+      if (player == owner)
+    	  return 0;
+      
+      // checks the number of railroads owned by the player
+      for (i = 0; i < owner.getOwned ().size (); i++)
+      {
+    	  if (owner.getOwned ().get (i) instanceof Railroad)
+    		  countRailroads++;
+      }
+      
       //decides value based on railroads owned
       switch (countRailroads)
       {
@@ -68,16 +68,17 @@ public class Railroad extends OwnableSpace
          case 3:
             baseRent = 150;
       }
+      
       //applies card effects to the base rent value of the railroad
       finalRent = baseRent;
       for (i = 0; i < this.getCards ().size (); i++)
       {
-         if (this.getCards ().get (i) instanceof CardApply)
+         if (this.getCards ().get (i) instanceof CardApplyOwnableSpace)
          {
-            finalRent *= (int) (((CardApply) (this.getCards ().get (i))).getChange ());
+            finalRent *= ((CardApplyOwnableSpace) this.getCards ().get (i)).getChangeToRent ();
          }
       }
 
-      return (int) finalRent;
+      return finalRent;
    }
 }

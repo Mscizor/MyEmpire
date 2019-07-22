@@ -2,6 +2,8 @@ package model.cards;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import model.CardApplyOwnableSpace;
 import model.spaces.Space;
 
 /**
@@ -83,38 +85,24 @@ public class CardSet
     */
    public Card pickRandom ()
    {
-      int i = 0;
-      Random rand = new Random ();
-      int loc = rand.nextInt (32);
-      Card hold;
-      boolean found = false;
-
-      while (true)
-      {
-         while (i <= cards.size () && found == false && !cards.isEmpty ())
-         {
-            hold = cards.get ((loc + i) % cards.size ());
-//           if (hold.isDiscarded () == false)
-//         {
-//               if (hold instanceof D)
-//               {
-//                  if (((CardApply) (hold)).isApplied () == false)
-//                  {
-//                     return hold;
-//                  }
-//         }
-//         else
-//         {
-//           return hold;
-//         }
-//               
-//        
-         }
-         if (found == false)
-         {
-            shuffleSet ();
-         }
-      }
+	   Random rand = new Random ();
+	   int randomPick = rand.nextInt (cards.size ());
+	   boolean found = false;
+	   
+	   if (cards.size () == 0)
+		   this.shuffleSet ();
+	   
+	   int i = 0;
+	   Card randomCard = null;
+	   while (i < cards.size () && !found && !cards.isEmpty ())
+	   {
+		   randomCard = cards.get ((randomPick + i) % cards.size ());
+		   if (!randomCard.isDiscarded () && 
+				   !(randomCard instanceof CardApplyOwnableSpace) || 
+				   ((CardApplyOwnableSpace) randomCard).isApplied())
+			   found = true;
+		   
+	   }
+	   return randomCard;
    }
-
 }

@@ -1,22 +1,18 @@
 package model.cards;
 
+import model.Ownable;
+
 /**
  * Frees the player from jail (if in) when player has this card.
  *
  * @author Jan Uriel Marcelo
  * @author Thea Ellen Go
- * @version 1.0
- * @since 1.0
  */
-public class CardFJailFree extends Card
+public class CardFJailFree extends Card implements Ownable
 {
-   /**
-    * No-argument Constructor that picks a random card 
-    * of this card type.
-    */
-   public CardFJailFree ()
+   
+   public CardFJailFree (String name, String text)
    {
-      super ("Get Out of Jail Free", "Keep this until you get jailed to"
-              + "avoid the payment.");
+      super (name, text);
    }
 }

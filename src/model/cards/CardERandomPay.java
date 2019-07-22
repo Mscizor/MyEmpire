@@ -1,17 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.cards;
 
+import controller.Transactions;
+import model.Bank;
+import model.CardMoneyOnly;
 import model.Player;
 
 /**
  *
- * @author janur
+ * @author Thea Go
+ * @author Jan Uriel Marcelo
  */
-public class CardERandomPay extends Card
+public class CardERandomPay extends Card implements CardMoneyOnly
 {
    private final double randomPayment;
    
@@ -21,9 +20,9 @@ public class CardERandomPay extends Card
       this.randomPayment = randomPayment;
    }
    
-   public void doCardEffect (Player player)
+   public void doCardEffect (Player player, Bank bank)
    {
-      player.changeCash (-this.randomPayment);
+      Transactions.cashToBank(player, bank, randomPayment);
       
       this.discard ();
    }

@@ -1,17 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.cards;
 
 import model.Player;
+import model.Bank;
+import model.CardMoneyOnly;
+import controller.Transactions;
 
 /**
  *
- * @author janur
+ * @author Thea Go
+ * @author Jan Uriel Marcelo
  */
-public class CardBGetCash extends Card
+public class CardBGetCash extends Card implements CardMoneyOnly
 {
    private final double cash;
    public CardBGetCash (String name, String text, double cash)
@@ -20,9 +19,9 @@ public class CardBGetCash extends Card
       this.cash = cash;
    }
    
-   public void doCardEffect (Player player)
+   public void doCardEffect (Player player, Bank bank)
    {
-      player.changeCash (this.cash);
+      Transactions.cashToBank(player, bank, cash);
       this.discard ();
    }
 }

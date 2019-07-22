@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.util.ArrayList;
 import model.Bank;
+import model.Ownable;
 import model.Player;
-import model.spaces.OwnableSpace;
 
 /**
  *
@@ -30,12 +25,12 @@ public class Transactions
    }
    
    public static void tradeWithOtherPlayer (Player player, Player other,
-           ArrayList <OwnableSpace> give, ArrayList <OwnableSpace> take)
+           ArrayList <Ownable> give, ArrayList <Ownable> take)
    {
-      for (int i = 0; i < give.size (); i++)
-         give.get (i).changeOwner (other);
-      
-      for (int i = 0; i < take.size (); i++)
-         take.get (i).changeOwner (player);
+//      for (int i = 0; i < give.size (); i++)
+//         give.get (i).changeOwner (other);
+//      
+//      for (int i = 0; i < take.size (); i++)
+//         take.get (i).changeOwner (player);
    }
 }
