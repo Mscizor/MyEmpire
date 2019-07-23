@@ -8,13 +8,15 @@ import java.util.ArrayList;
  */
 public interface Ownable
 {
-   default Player getOwner (ArrayList <Player> players) 
+   default Player getOwner (ArrayList<Player> players)
    {
-	   for (int i = 0; i < players.size (); i++)
-	   {
-		   if (players.get((i)).getOwned ().contains (this))
-			   return players.get (i);
-	   }
-	   return null;
+      for (int i = 0; i < players.size (); i++)
+      {
+         if (players.get ((i)).getOwned ().contains (this))
+         {
+            return players.get (i);
+         }
+      }
+      return null;
    }
 }

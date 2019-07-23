@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public abstract class OwnableSpace extends Space implements Ownable
 {
    private double price;
-   private ArrayList <Card> cards;
+   private ArrayList<Card> cards;
 
    /**
     * Gets the price of the space
@@ -25,14 +25,13 @@ public abstract class OwnableSpace extends Space implements Ownable
     * @return a <code> int </code>
     * specifying the price of the specific space
     */
-   
    public OwnableSpace (String name, int location, double price)
    {
-	   super (name, location);
-	   this.cards = new ArrayList <> ();
-	   this.price = price;
+      super (name, location);
+      this.cards = new ArrayList<> ();
+      this.price = price;
    }
-   
+
    public double getPrice ()
    {
       return this.price;
@@ -44,15 +43,15 @@ public abstract class OwnableSpace extends Space implements Ownable
     * @return a <code> ArrayList </code> of @see Card
     * specifying the array list of cards
     */
-   public ArrayList <Card> getCards ()
+   public ArrayList<Card> getCards ()
    {
       return this.cards;
    }
-   
+
    public void setPrice (int price)
    {
       this.price = price;
-   } 
+   }
 
    public void setCards (ArrayList<Card> cards)
    {
@@ -78,7 +77,7 @@ public abstract class OwnableSpace extends Space implements Ownable
    {
       this.cards.remove (card);
    }
-   
-   public abstract double getRent (ArrayList <Player> players, ArrayList <Space> spaces,
-		   Player player);
+
+   public abstract double getRent (ArrayList<Player> players, ArrayList<Space> spaces,
+           Player player);
 }

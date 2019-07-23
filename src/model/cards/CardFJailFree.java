@@ -10,7 +10,7 @@ import model.Ownable;
  */
 public class CardFJailFree extends Card implements Ownable
 {
-   
+
    public CardFJailFree (String name, String text)
    {
       super (name, text);

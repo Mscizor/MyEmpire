@@ -13,17 +13,17 @@ import model.Player;
 public class CardERandomPay extends Card implements CardMoneyOnly
 {
    private final double randomPayment;
-   
+
    public CardERandomPay (String name, String text, double randomPayment)
    {
       super (name, text);
       this.randomPayment = randomPayment;
    }
-   
+
    public void doCardEffect (Player player, Bank bank)
    {
-      Transactions.cashToBank(player, bank, randomPayment);
-      
+      Transactions.cashToBank (player, bank, randomPayment);
+
       this.discard ();
    }
 }

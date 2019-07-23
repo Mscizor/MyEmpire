@@ -21,6 +21,6 @@ public class Tax extends Space
     */
    public Tax (String name, int location)
    {
-	   super (name, location);
+      super (name, location);
    }
 }

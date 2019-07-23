@@ -17,7 +17,7 @@ import model.spaces.Space;
  */
 public class CardSet
 {
-   private final ArrayList <Card> cards;
+   private final ArrayList<Card> cards;
 
    /**
     * This constructor accepts a null parameter
@@ -26,9 +26,9 @@ public class CardSet
     *
     * @param spaces The spaces to use for randomizing the cards
     */
-   public CardSet (ArrayList <Space> spaces)
+   public CardSet (ArrayList<Space> spaces)
    {
-      cards = new ArrayList <> ();
+      cards = new ArrayList<> ();
 
       int i;
 
@@ -85,24 +85,28 @@ public class CardSet
     */
    public Card pickRandom ()
    {
-	   Random rand = new Random ();
-	   int randomPick = rand.nextInt (cards.size ());
-	   boolean found = false;
-	   
-	   if (cards.size () == 0)
-		   this.shuffleSet ();
-	   
-	   int i = 0;
-	   Card randomCard = null;
-	   while (i < cards.size () && !found && !cards.isEmpty ())
-	   {
-		   randomCard = cards.get ((randomPick + i) % cards.size ());
-		   if (!randomCard.isDiscarded () && 
-				   !(randomCard instanceof CardApplyOwnableSpace) || 
-				   ((CardApplyOwnableSpace) randomCard).isApplied())
-			   found = true;
-		   
-	   }
-	   return randomCard;
+      Random rand = new Random ();
+      int randomPick = rand.nextInt (cards.size ());
+      boolean found = false;
+
+      if (cards.isEmpty ())
+      {
+         this.shuffleSet ();
+      }
+
+      int i = 0;
+      Card randomCard = null;
+      while (i < cards.size () && !found && !cards.isEmpty ())
+      {
+         randomCard = cards.get ((randomPick + i) % cards.size ());
+         if (!randomCard.isDiscarded ()
+                 && !(randomCard instanceof CardApplyOwnableSpace)
+                 || ((CardApplyOwnableSpace) randomCard).isApplied ())
+         {
+            found = true;
+         }
+
+      }
+      return randomCard;
    }
 }

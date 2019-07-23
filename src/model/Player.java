@@ -21,9 +21,9 @@ public class Player
    private double cash;
    private int position;
    private boolean inJail;
-   private final ArrayList <Ownable> owned;
+   private final ArrayList<Ownable> owned;
    private int diceRoll = 0;
-   
+
    /**
     * Player constructor that initializes player name and cash value
     *
@@ -31,7 +31,7 @@ public class Player
     */
    public Player (String name)
    {
-      this.owned = new ArrayList <> ();
+      this.owned = new ArrayList<> ();
       this.name = new String ();
       this.name = name;
       this.cash = 1500;
@@ -71,9 +71,9 @@ public class Player
 
    public int getDiceRoll ()
    {
-	   return this.diceRoll;
+      return this.diceRoll;
    }
-   
+
    /**
     * Gets and returns true if the player is in jail
     *
@@ -84,7 +84,7 @@ public class Player
       return this.inJail;
    }
 
-   public ArrayList <Ownable> getOwned ()
+   public ArrayList<Ownable> getOwned ()
    {
       return this.owned;
    }
@@ -93,7 +93,7 @@ public class Player
    {
       this.owned.add (own);
    }
-   
+
    /**
     * sets player's inJail value to true
     */
@@ -143,21 +143,23 @@ public class Player
 
    public double getTotalValue ()
    {
-	   double totalValue = 0;
-	   for (int i = 0; i < this.owned.size (); i++)
-	   {
-		   Ownable own = this.owned.get (i);
-		   
-		   if (own instanceof Property)
-		   {
-			   Property pHold = (Property) own;
-			   totalValue += pHold.getPricePerBuilding() * 
-					   (pHold.getNumHouses() + pHold.getNumHotels ());
-		   }
-		   
-		   if (own instanceof OwnableSpace)
-			   totalValue += ((OwnableSpace) own).getPrice ();
-	   }
-	   return totalValue;
+      double totalValue = 0;
+      for (int i = 0; i < this.owned.size (); i++)
+      {
+         Ownable own = this.owned.get (i);
+
+         if (own instanceof Property)
+         {
+            Property pHold = (Property) own;
+            totalValue += pHold.getPricePerBuilding ()
+                    * (pHold.getNumHouses () + pHold.getNumHotels ());
+         }
+
+         if (own instanceof OwnableSpace)
+         {
+            totalValue += ((OwnableSpace) own).getPrice ();
+         }
+      }
+      return totalValue;
    }
 }

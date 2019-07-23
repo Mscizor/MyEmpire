@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/spaces/OwnableSpace.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDDoubleRent.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDRenovateProperty.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardCRandomProperty.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/Ownable.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardBGetCash.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/spaces/Property.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/Card.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardERandomPay.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/Player.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardSet.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDChangeNonProperty.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardARandomProperty.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardFJailFree.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardBStart.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardCJail.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDChangeProperty.java</file>
-            <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardANearestNonProperty.java</file>
-        </group>
-    </open-files>
+   <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+   <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+      <group>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/spaces/OwnableSpace.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDDoubleRent.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDRenovateProperty.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardCRandomProperty.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/Ownable.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardBGetCash.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/spaces/Property.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/Card.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardERandomPay.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/Player.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardSet.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDChangeNonProperty.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardARandomProperty.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardFJailFree.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardBStart.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardCJail.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardDChangeProperty.java</file>
+         <file>file:/C:/Users/janur/Documents/CCPROG3MP-Go-Marcelo/MyEmpire/src/model/cards/CardANearestNonProperty.java</file>
+      </group>
+   </open-files>
 </project-private>

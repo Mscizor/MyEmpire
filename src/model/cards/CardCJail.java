@@ -15,8 +15,8 @@ public class CardCJail extends Card implements CardMovePlayer
    {
       super (name, text);
    }
-   
-   public void doCardEffect (Player player, ArrayList <Space> spaces, Bank bank)
+
+   public void doCardEffect (Player player, ArrayList<Space> spaces, Bank bank)
    {
       if (spaces.get (16).getName ().equals ("JAIL"))
       {

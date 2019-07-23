@@ -3,8 +3,8 @@ package model.spaces;
 /**
  * It is a special type of space that has different types of effects
  * if the Player if the player lands on it.
- * 
- * There are four types of corner spaces: start, jail, community service, 
+ * <p>
+ * There are four types of corner spaces: start, jail, community service,
  * and free parking.
  *
  * @author Jan Uriel Marcelo
@@ -24,7 +24,7 @@ public class Corner extends Space
     */
    public Corner (String name, int location)
    {
-	   super (name, location);
+      super (name, location);
    }
 
 }

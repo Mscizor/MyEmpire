@@ -20,6 +20,7 @@ public abstract class Card
       this.name = name;
       this.text = text;
    }
+
    /**
     * Checks to see if the card is discarded.
     *
@@ -68,5 +69,5 @@ public abstract class Card
    {
       this.discarded = false;
    }
-   
+
 }

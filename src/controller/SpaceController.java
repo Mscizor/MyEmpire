@@ -12,16 +12,16 @@ import model.spaces.*;
  */
 public class SpaceController
 {
-   public static void doLandEffect (ArrayList <Space> spaces, Space space,
+   public static void doLandEffect (ArrayList<Space> spaces, Space space,
            Player player, Bank bank)
    {
       if (space instanceof Property)
       {
-         
+
       }
       else if (space instanceof Utility || space instanceof Railroad)
       {
-         
+
       }
       else if (space instanceof Corner)
       {
@@ -61,14 +61,17 @@ public class SpaceController
             case "Income Tax":
                double cash;
                if (player.getCash () * 0.10 > 200)
+               {
                   cash = player.getCash () * 0.10;
+               }
                else
+               {
                   cash = 200;
+               }
                player.changeCash (-cash);
                break;
          }
       }
    }
-   
-   
+
 }

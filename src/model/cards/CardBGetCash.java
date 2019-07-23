@@ -13,15 +13,16 @@ import controller.Transactions;
 public class CardBGetCash extends Card implements CardMoneyOnly
 {
    private final double cash;
+
    public CardBGetCash (String name, String text, double cash)
    {
       super (name, text);
       this.cash = cash;
    }
-   
+
    public void doCardEffect (Player player, Bank bank)
    {
-      Transactions.cashToBank(player, bank, cash);
+      Transactions.cashToBank (player, bank, cash);
       this.discard ();
    }
 }
