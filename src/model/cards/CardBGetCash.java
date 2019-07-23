@@ -20,6 +20,7 @@ public class CardBGetCash extends Card implements CardMoneyOnly
       this.cash = cash;
    }
 
+   @Override
    public void doCardEffect (Player player, Bank bank)
    {
       Transactions.cashToBank (player, bank, cash);

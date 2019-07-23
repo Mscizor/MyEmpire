@@ -19,11 +19,12 @@ public class CardANearestNonProperty extends Card implements CardMovePlayer
       this.isRailroad = isRailroad;
    }
 
+   @Override
    public void doCardEffect (Player player, ArrayList<Space> spaces, Bank bank)
    {
       int playerPos = player.getPosition ();
       int highestDistance = 0;
-      int currentDistance = 0;
+      int currentDistance;
       int destinationLoc;
       Space search;
       for (int i = 0; i < spaces.size (); i++)

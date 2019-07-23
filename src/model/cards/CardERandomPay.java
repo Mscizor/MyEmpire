@@ -19,7 +19,8 @@ public class CardERandomPay extends Card implements CardMoneyOnly
       super (name, text);
       this.randomPayment = randomPayment;
    }
-
+   
+   @Override
    public void doCardEffect (Player player, Bank bank)
    {
       Transactions.cashToBank (player, bank, randomPayment);

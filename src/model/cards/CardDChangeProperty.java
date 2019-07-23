@@ -20,6 +20,7 @@ public class CardDChangeProperty extends Card implements CardApplyOwnableSpace
       this.changeToRent = changeToRent;
    }
 
+   @Override
    public void doCardEffect (Player player, ArrayList<Space> spaces,
            OwnableSpace owned, Bank bank)
    {
@@ -30,11 +31,13 @@ public class CardDChangeProperty extends Card implements CardApplyOwnableSpace
       }
    }
 
+   @Override
    public boolean isApplied ()
    {
       return this.applied;
    }
 
+   @Override
    public double getChangeToRent ()
    {
       return this.changeToRent;

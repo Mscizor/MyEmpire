@@ -20,6 +20,7 @@ public class CardCRandomProperty extends Card implements CardMovePlayer
       this.random = random;
    }
 
+   @Override
    public void doCardEffect (Player player, ArrayList<Space> spaces, Bank bank)
    {
       if (spaces.get (random.getLocation ()) == random)

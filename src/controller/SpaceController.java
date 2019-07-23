@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Random;
 import model.Bank;
 import model.Player;
 import model.spaces.*;
@@ -73,5 +74,22 @@ public class SpaceController
          }
       }
    }
-
+   
+   public static Property randomProperty (ArrayList <Space> spaces)
+   {
+      Random rand = new Random ();
+      int loc = rand.nextInt (32);
+      Property random = null;
+      boolean found = false;
+      for (int j = 0; j < 31 && !found; j++)
+      {
+         if (spaces.get ((loc + j) % 32) instanceof Property)
+         {
+            random = (Property) spaces.get ((loc + j) % 32);
+         }
+         found = true;
+      }
+      
+      return random;
+   }
 }
