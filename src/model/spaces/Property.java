@@ -1,10 +1,8 @@
 package model.spaces;
 
-import model.CardApplyOwnableSpace;
-import model.Ownable;
-import model.Player;
-
 import java.util.ArrayList;
+import model.*;
+import controller.Transactions;
 
 /**
  * This class represents the available properties on the board rand
@@ -56,9 +54,14 @@ public class Property extends OwnableSpace
     * Takes into account the base rent, the number of properties the owner has
     * of the same color, and the cards applied to it.
     *
+    * @param players
+    * @param spaces
+    * @param player
     * @return The total rent value.
     */
-   public double getRent (ArrayList<Player> players, ArrayList<Space> spaces, Player player)
+   @Override
+   public double getRent (ArrayList <Player> players, 
+           ArrayList <Space> spaces, Player player)
    {
       int i;
       int baseRent;
@@ -176,6 +179,7 @@ public class Property extends OwnableSpace
    /**
     * Adds a building and takes money from the owner according to the price.
     * Only adds if able to develop and there is still room to develop.
+    * @param players
     */
    public void addBuilding (ArrayList<Player> players)
    {
@@ -204,9 +208,10 @@ public class Property extends OwnableSpace
     * Checks if the owner is able to develop the property. Takes into
     * consideration if the owner meets the requirements for development.
     *
+    * @param players
     * @return Truth value if the owner is able to develop.
     */
-   public boolean isAbleToDevelop (ArrayList<Player> players)
+   public boolean isAbleToDevelop (ArrayList <Player> players)
    {
       return this.getOwner (players).getCash () >= this.pricePerBuilding
               && (this.footTraffic >= players.size () * multiplier
@@ -217,15 +222,16 @@ public class Property extends OwnableSpace
     * Checks if the owner's other properties of the same color are all fully
     * developed (aside from hotels).
     *
+    * @param players
     * @return Truth value if the owner's other properties of the same color have
     * 4 houses or a hotel.
     */
-   public boolean isOwnedFullyDeveloped (ArrayList<Player> players)
+   public boolean isOwnedFullyDeveloped (ArrayList <Player> players)
    {
       int i;
       boolean ownedFullyDeveloped;
       Property hold;
-      ArrayList<Ownable> owned = this.getOwner (players).getOwned ();
+      ArrayList <Ownable> owned = this.getOwner (players).getOwned ();
 
       ownedFullyDeveloped = true;
       i = 0;
@@ -238,7 +244,8 @@ public class Property extends OwnableSpace
                hold = (Property) owned.get (i);
                if (hold.getOwner (players) != null)
                {
-                  if (hold.getOwner (players) == this.getOwner (players) && hold.numHouses < 4)
+                  if (hold.getOwner (players) == this.getOwner (players) && 
+                          hold.numHouses < 4)
                   {
                      ownedFullyDeveloped = false;
                   }
@@ -249,5 +256,29 @@ public class Property extends OwnableSpace
          i++;
       }
       return ownedFullyDeveloped;
+   }
+   
+   @Override
+   public void buySpace (ArrayList <Player> players, 
+           ArrayList <Space> spaces, Player player, Bank bank)
+   {
+      Player owner = this.getOwner (players);
+      if (owner == null && player.getCash () >= this.getPrice ())
+      {
+         Transactions.cashToBank (player, bank, this.getPrice ());
+         player.addOwnable (this);
+      }
+   }
+   
+   @Override
+   public void payRent (ArrayList <Player> players,
+           ArrayList <Space> spaces, Player player)
+   {
+      Player owner = this.getOwner (players);
+      if (owner != player)
+      {
+         Transactions.cashToOtherPlayer (player, owner, 
+                 this.getRent (players, spaces, player));
+      }
    }
 }

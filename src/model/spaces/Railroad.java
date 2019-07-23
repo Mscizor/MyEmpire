@@ -1,8 +1,8 @@
 package model.spaces;
 
-import java.util.ArrayList;
-
 import model.*;
+import controller.Transactions;
+import java.util.ArrayList;
 
 /**
  * This class inherits the attributes of the OwnableSpace class.
@@ -32,10 +32,16 @@ public class Railroad extends OwnableSpace
    /**
     * Gets the railroad's rent value
     *
+    * @param players
+    * @param spaces
+    * @param player
     * @return a <code> int </code>
     * specifying the railroad's current rent
     */
-   public double getRent (ArrayList<Player> players, ArrayList<Space> spaces, Player player)
+   
+   @Override
+   public double getRent (ArrayList <Player> players, 
+           ArrayList <Space> spaces, Player player)
    {
       int i;
       int baseRent = 0;
@@ -81,5 +87,29 @@ public class Railroad extends OwnableSpace
       }
 
       return finalRent;
+   }
+   
+   @Override
+   public void buySpace (ArrayList <Player> players, 
+           ArrayList <Space> spaces, Player player, Bank bank)
+   {
+      Player owner = this.getOwner (players);
+      if (owner == null && player.getCash () >= this.getPrice ())
+      {
+         Transactions.cashToBank (player, bank, this.getPrice ());
+         player.addOwnable (this);
+      }
+   }
+   
+   @Override
+   public void payRent (ArrayList <Player> players,
+           ArrayList <Space> spaces, Player player)
+   {
+      Player owner = this.getOwner (players);
+      if (owner != player)
+      {
+         Transactions.cashToOtherPlayer (player, owner, 
+                 this.getRent (players, spaces, player));
+      }
    }
 }

@@ -57,7 +57,7 @@ public class CardSet
                cards.add (new CardANearestNonProperty (name, text, isRailroad));
                break;
             case 2:
-               Property randProperty = SpaceController.randomProperty (spaces);
+               Property randProperty = SpaceController.getRandomProperty (spaces);
                if (randProperty != null)
                {
                   name = "Proceed to " + randProperty.getName ();
@@ -133,7 +133,7 @@ public class CardSet
                cards.add (new CardCJail (name, text));
                break;
             case 1:
-               Property randProperty = SpaceController.randomProperty (spaces);
+               Property randProperty = SpaceController.getRandomProperty (spaces);
                if (randProperty != null)
                {
                   name = "Go to " + randProperty.getName ();
@@ -265,6 +265,9 @@ public class CardSet
          }
 
       }
+      
+      this.cards.remove (randomCard);
+      
       return randomCard;
    }
 }

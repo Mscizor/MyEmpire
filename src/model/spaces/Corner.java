@@ -19,7 +19,7 @@ public class Corner extends Space
     * This constructor accepts the type of Corner (as an integer)
     * and the location and initializes the Corner.
     *
-    * @param type The type of corner to be generated.
+    * @param name
     * @param location The location of the space on the array list of spaces.
     */
    public Corner (String name, int location)

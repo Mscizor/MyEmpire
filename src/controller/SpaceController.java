@@ -2,8 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Random;
-import model.Bank;
-import model.Player;
+import model.*;
 import model.spaces.*;
 
 /**
@@ -13,16 +12,42 @@ import model.spaces.*;
  */
 public class SpaceController
 {
-   public static void doLandEffect (ArrayList<Space> spaces, Space space,
-           Player player, Bank bank)
+   public static void doLandEffect (ArrayList <Player> players,
+           ArrayList <Space> spaces, Space space, Player player, Bank bank)
    {
       if (space instanceof Property)
       {
-
+         Property property = (Property) space;
+         Player owner = property.getOwner (players);
+         if (owner == null && player.getCash () >= property.getPrice ())
+         {
+            property.buySpace (players, spaces, player, bank);
+         }
+         else if (owner == player && property.isAbleToDevelop (players))
+         {
+            property.addBuilding (players);
+         }
+         else
+         {
+            property.payRent (players, spaces, player);
+         }
       }
       else if (space instanceof Utility || space instanceof Railroad)
       {
-
+         OwnableSpace oSpace = (OwnableSpace) space;
+         Player owner = oSpace.getOwner (players);
+         if (owner == null)
+         {
+            oSpace.buySpace (players, spaces, player, bank);
+         }
+         else if (owner == player)
+         {
+            System.out.println ("Owner landed.\n");
+         }
+         else
+         {
+            oSpace.payRent (players, spaces, player);
+         }
       }
       else if (space instanceof Corner)
       {
@@ -30,26 +55,22 @@ public class SpaceController
          switch (name)
          {
             case "START":
-               player.changeCash (200);
-               bank.changeCash (-200);
+               Transactions.cashToBank (player, bank, -200);
                break;
             case "Community Service":
-               player.changeCash (-50);
-               bank.changeCash (200);
+               Transactions.cashToBank (player, bank, 50);
                break;
             case "Free Parking":
-               ;
+//               
                break;
             case "JAIL":
                player.arrest ();
-               break;
-            default:
                break;
          }
       }
       else if (space instanceof Chance)
       {
-//         player.changeCash ()
+         
       }
       else if (space instanceof Tax)
       {
@@ -75,7 +96,7 @@ public class SpaceController
       }
    }
    
-   public static Property randomProperty (ArrayList <Space> spaces)
+   public static Property getRandomProperty (ArrayList <Space> spaces)
    {
       Random rand = new Random ();
       int loc = rand.nextInt (32);

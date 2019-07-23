@@ -1,5 +1,11 @@
 package model.spaces;
 
+import controller.CardController;
+import java.util.ArrayList;
+import model.*;
+import model.cards.Card;
+import model.cards.CardSet;
+
 /**
  * This class inherits the attributes of the Space class.
  * It is a special type of space that allows a player to draw from the deck of
@@ -14,8 +20,6 @@ package model.spaces;
 public class Chance extends Space
 {
    /**
-    * This constructor accepts a string and an int datatype as parameter
-    * for name and location and initializes values of the object.
     *
     * @param name the name of the space
     * @param location the location of the space on the array list of spaces
@@ -24,10 +28,11 @@ public class Chance extends Space
    {
       super (name, location);
    }
-   /**
-    * This method accepts a Player object as parameter
-    * and applies the effect of the landed-on corner on the player.
-    *
-    * @param player the player with the current turn
-    */
+   
+   public void doLandEffect (ArrayList <Player> players, 
+           ArrayList <Space> spaces, Player player, Bank bank, CardSet cardSet)
+   {
+      Card card = cardSet.pickRandom ();
+      CardController.doCardEffect (card, player, spaces, bank);
+   }
 }

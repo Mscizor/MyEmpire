@@ -1,10 +1,8 @@
 package model.spaces;
 
+import controller.Transactions;
 import java.util.ArrayList;
-
-import model.spaces.Space;
-import model.CardApplyOwnableSpace;
-import model.Player;
+import model.*;
 
 /**
  * It is a special type of ownable space that increases its value
@@ -35,12 +33,17 @@ public class Utility extends OwnableSpace
    /**
     * Gets the utility's rent value
     *
+    * @param players
+    * @param spaces
+    * @param player
     * @return a <code> int </code> specifying the utility's current rent
     */
-   public double getRent (ArrayList<Player> players, ArrayList<Space> spaces, Player player)
+   @Override
+   public double getRent (ArrayList <Player> players, 
+           ArrayList<Space> spaces, Player player)
    {
       int diceRoll;
-      double baseRent = 0;
+      double baseRent;
       double finalRent;
       boolean bothOwned = true;
       Utility uHold;
@@ -84,5 +87,29 @@ public class Utility extends OwnableSpace
       }
 
       return finalRent;
+   }
+   
+   @Override
+   public void buySpace (ArrayList <Player> players, 
+           ArrayList <Space> spaces, Player player, Bank bank)
+   {
+      Player owner = this.getOwner (players);
+      if (owner == null && player.getCash () >= this.getPrice ())
+      {
+         Transactions.cashToBank (player, bank, this.getPrice ());
+         player.addOwnable (this);
+      }
+   }
+   
+   @Override
+   public void payRent (ArrayList <Player> players,
+           ArrayList <Space> spaces, Player player)
+   {
+      Player owner = this.getOwner (players);
+      if (owner != player)
+      {
+         Transactions.cashToOtherPlayer (player, owner, 
+                 this.getRent (players, spaces, player));
+      }
    }
 }
