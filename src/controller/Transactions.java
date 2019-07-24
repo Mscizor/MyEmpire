@@ -25,7 +25,7 @@ public class Transactions
    }
 
    public static void tradeWithOtherPlayer (Player player, Player other,
-           ArrayList<Ownable> give, ArrayList<Ownable> take)
+           ArrayList <Ownable> give, ArrayList <Ownable> take)
    {
       for (int i = 0; i < give.size (); i++)
       {

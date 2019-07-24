@@ -15,14 +15,6 @@ public class CardController
 
    /**
     *
-    */
-   public CardController ()
-   {
-
-   }
-
-   /**
-    *
     * @param card The card to perform the effect with
     * @param player The player that drew the card
     * @param spaces The spaces of the game

@@ -31,7 +31,7 @@ public class Player
     */
    public Player (String name)
    {
-      this.owned = new ArrayList<> ();
+      this.owned = new ArrayList <> ();
       this.name = new String ();
       this.name = name;
       this.cash = 1500;

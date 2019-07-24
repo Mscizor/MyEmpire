@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public interface Ownable
 {
-   default Player getOwner (ArrayList<Player> players)
+   default Player getOwner (ArrayList <Player> players)
    {
       for (int i = 0; i < players.size (); i++)
       {
