@@ -39,8 +39,7 @@ public class Utility extends OwnableSpace
     * @return a <code> int </code> specifying the utility's current rent
     */
    @Override
-   public double getRent (ArrayList <Player> players, 
-           ArrayList<Space> spaces, Player player)
+   public double getRent (ArrayList <Player> players, ArrayList<Space> spaces, Player player)
    {
       int diceRoll;
       double baseRent;
@@ -53,11 +52,11 @@ public class Utility extends OwnableSpace
          return 0;
       }
 
-      for (int i = 0; i < spaces.size (); i++)
+      for (Space space : spaces)
       {
-         if (spaces.get (i) instanceof Utility)
+         if (space instanceof Utility)
          {
-            uHold = (Utility) spaces.get (i);
+            uHold = (Utility) space;
             if (uHold.getOwner (players) == null)
             {
                bothOwned = false;
@@ -90,8 +89,7 @@ public class Utility extends OwnableSpace
    }
    
    @Override
-   public void buySpace (ArrayList <Player> players, 
-           ArrayList <Space> spaces, Player player, Bank bank)
+   public void buySpace (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank)
    {
       Player owner = this.getOwner (players);
       if (owner == null && player.getCash () >= this.getPrice ())
@@ -102,8 +100,7 @@ public class Utility extends OwnableSpace
    }
    
    @Override
-   public void payRent (ArrayList <Player> players,
-           ArrayList <Space> spaces, Player player)
+   public void payRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player)
    {
       Player owner = this.getOwner (players);
       if (owner != player)

@@ -16,8 +16,8 @@ import model.spaces.Space;
  */
 public class PlayerController
 {
-   public static void moveAndLand (ArrayList <Player> players,
-           ArrayList <Space> spaces, Player player, Bank bank, boolean direct)
+   public static void moveAndLand (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank,
+                                   boolean direct)
    {
       int playerPos = player.getPosition ();
       int diceRoll = player.getDiceRoll ();
@@ -35,9 +35,8 @@ public class PlayerController
               player, bank);
    }
    
-   public static void moveToAndLand (ArrayList <Player> players,
-           ArrayList <Space> spaces, Player player, Bank bank, Space space,
-           boolean direct)
+   public static void moveToAndLand (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank,
+                                     Space space, boolean direct)
    {
       int playerPos = player.getPosition ();
       int destinationLoc = space.getLocation ();

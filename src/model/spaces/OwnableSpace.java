@@ -78,11 +78,8 @@ public abstract class OwnableSpace extends Space implements Ownable
       this.cards.remove (card);
    }
 
-   public abstract double getRent (ArrayList <Player> players, 
-           ArrayList <Space> spaces, Player player);
+   public abstract double getRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player);
    
-   public abstract void buySpace (ArrayList <Player> players,
-           ArrayList <Space> spaces, Player player, Bank bank);
-   public abstract void payRent (ArrayList <Player> players,
-           ArrayList <Space> spaces, Player player);
+   public abstract void buySpace (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank);
+   public abstract void payRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player);
 }

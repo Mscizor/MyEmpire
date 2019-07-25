@@ -90,8 +90,7 @@ public class Railroad extends OwnableSpace
    }
    
    @Override
-   public void buySpace (ArrayList <Player> players, 
-           ArrayList <Space> spaces, Player player, Bank bank)
+   public void buySpace (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank)
    {
       Player owner = this.getOwner (players);
       if (owner == null && player.getCash () >= this.getPrice ())
@@ -102,8 +101,7 @@ public class Railroad extends OwnableSpace
    }
    
    @Override
-   public void payRent (ArrayList <Player> players,
-           ArrayList <Space> spaces, Player player)
+   public void payRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player)
    {
       Player owner = this.getOwner (players);
       if (owner != player)

@@ -1,14 +1,15 @@
 package model;
 
+import model.spaces.OwnableSpace;
+import model.spaces.Space;
+
 import java.util.ArrayList;
-import model.spaces.*;
 
 public interface CardApplyOwnableSpace
 {
-   public boolean isApplied ();
-
-   public void doCardEffect (Player player, ArrayList<Space> spaces,
-           OwnableSpace owned, Bank bank);
-
-   public double getChangeToRent ();
+	boolean isApplied ();
+	
+	void doCardEffect (Player player, ArrayList <Space> spaces, OwnableSpace owned, Bank bank);
+	
+	double getChangeToRent ();
 }

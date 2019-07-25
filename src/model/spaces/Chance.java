@@ -29,8 +29,8 @@ public class Chance extends Space
       super (name, location);
    }
    
-   public void doLandEffect (ArrayList <Player> players, 
-           ArrayList <Space> spaces, Player player, Bank bank, CardSet cardSet)
+   public void doLandEffect (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank,
+                             CardSet cardSet)
    {
       Card card = cardSet.pickRandom ();
       CardController.doCardEffect (card, player, spaces, bank);
