@@ -4,7 +4,6 @@ import model.spaces.Space;
 
 import java.util.ArrayList;
 
-public interface CardMovePlayer
-{
-	void doCardEffect (Player player, ArrayList <Space> spaces, Bank bank);
+public interface CardMovePlayer {
+    void doCardEffect(Player player, ArrayList<Space> spaces, Bank bank);
 }

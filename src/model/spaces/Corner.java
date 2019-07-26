@@ -12,19 +12,17 @@ package model.spaces;
  * @version 1.0
  * @since 1.0
  */
-public class Corner extends Space
-{
+public class Corner extends Space {
 
-   /**
-    * This constructor accepts the type of Corner (as an integer)
-    * and the location and initializes the Corner.
-    *
-    * @param name
-    * @param location The location of the space on the array list of spaces.
-    */
-   public Corner (String name, int location)
-   {
-      super (name, location);
-   }
+    /**
+     * This constructor accepts the type of Corner (as an integer)
+     * and the location and initializes the Corner.
+     *
+     * @param name
+     * @param location The location of the space on the array list of spaces.
+     */
+    public Corner(String name, int location) {
+        super(name, location);
+    }
 
 }

@@ -11,46 +11,40 @@ package model.spaces;
  * @version 1.0
  * @since 1.0
  */
-public abstract class Space
-{
-   private String name;
-   private int location;
+public abstract class Space {
+    private String name;
+    private int location;
 
-   public Space (String name, int location)
-   {
-      this.name = name;
-      this.location = location;
-   }
+    public Space(String name, int location) {
+        this.name = name;
+        this.location = location;
+    }
 
-   /**
-    * Gets the name of the space
-    *
-    * @return a <code> String </code>
-    * specifying the name of the space.
-    */
-   public String getName ()
-   {
-      return this.name;
-   }
+    /**
+     * Gets the name of the space
+     *
+     * @return a <code> String </code>
+     * specifying the name of the space.
+     */
+    public String getName() {
+        return this.name;
+    }
 
-   /**
-    * Gets the location of the space
-    *
-    * @return a <code> int </code>
-    * specifying the position of the space in the array list of spaces.
-    */
-   public int getLocation ()
-   {
-      return this.location;
-   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   public void setName (String name)
-   {
-      this.name = name;
-   }
+    /**
+     * Gets the location of the space
+     *
+     * @return a <code> int </code>
+     * specifying the position of the space in the array list of spaces.
+     */
+    public int getLocation() {
+        return this.location;
+    }
 
-   public void setLocation (int location)
-   {
-      this.location = location;
-   }
+    public void setLocation(int location) {
+        this.location = location;
+    }
 }

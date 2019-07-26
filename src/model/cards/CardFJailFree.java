@@ -8,10 +8,8 @@ import model.Ownable;
  * @author Jan Uriel Marcelo
  * @author Thea Ellen Go
  */
-public class CardFJailFree extends Card implements Ownable
-{
-	public CardFJailFree (String name, String text)
-	{
-		super (name, text);
-	}
+public class CardFJailFree extends Card implements Ownable {
+    public CardFJailFree(String name, String text) {
+        super(name, text);
+    }
 }

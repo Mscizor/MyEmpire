@@ -1,8 +1,11 @@
 package model.spaces;
 
-import java.util.ArrayList;
-import model.*;
+import model.Bank;
+import model.Ownable;
+import model.Player;
 import model.cards.Card;
+
+import java.util.ArrayList;
 
 /**
  * This class inherits the attributes of the Space class.
@@ -13,73 +16,66 @@ import model.cards.Card;
  * @version 1.0
  * @since 1.0
  */
-public abstract class OwnableSpace extends Space implements Ownable
-{
-   private double price;
-   private ArrayList<Card> cards;
+public abstract class OwnableSpace extends Space implements Ownable {
+    private double price;
+    private ArrayList<Card> cards;
 
-   
-   public OwnableSpace (String name, int location, double price)
-   {
-      super (name, location);
-      this.cards = new ArrayList<> ();
-      this.price = price;
-   }
 
-   /**
-    * Gets the price of the space
-    *
-    * @return a <code> int </code>
-    * specifying the price of the specific space
-    */
-   public double getPrice ()
-   {
-      return this.price;
-   }
+    public OwnableSpace(String name, int location, double price) {
+        super(name, location);
+        this.cards = new ArrayList<>();
+        this.price = price;
+    }
 
-   /**
-    * Gets the array list of cards
-    *
-    * @return a <code> ArrayList </code> of @see Card
-    * specifying the array list of cards
-    */
-   public ArrayList<Card> getCards ()
-   {
-      return this.cards;
-   }
+    /**
+     * Gets the price of the space
+     *
+     * @return a <code> int </code>
+     * specifying the price of the specific space
+     */
+    public double getPrice() {
+        return this.price;
+    }
 
-   public void setPrice (int price)
-   {
-      this.price = price;
-   }
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
-   public void setCards (ArrayList<Card> cards)
-   {
-      this.cards = cards;
-   }
+    /**
+     * Gets the array list of cards
+     *
+     * @return a <code> ArrayList </code> of @see Card
+     * specifying the array list of cards
+     */
+    public ArrayList<Card> getCards() {
+        return this.cards;
+    }
 
-   /**
-    * method that adds a card to the space
-    *
-    * @param card is the card added to the space
-    */
-   public void addCard (Card card)
-   {
-      this.cards.add (card);
-   }
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
 
-   /**
-    * method that removes a card from the space
-    *
-    * @param card is the card added to the space
-    */
-   public void removeCard (Card card)
-   {
-      this.cards.remove (card);
-   }
+    /**
+     * method that adds a card to the space
+     *
+     * @param card is the card added to the space
+     */
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
 
-   public abstract double getRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player);
-   
-   public abstract void buySpace (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank);
-   public abstract void payRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player);
+    /**
+     * method that removes a card from the space
+     *
+     * @param card is the card added to the space
+     */
+    public void removeCard(Card card) {
+        this.cards.remove(card);
+    }
+
+    public abstract double getRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player);
+
+    public abstract void buySpace(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank);
+
+    public abstract void payRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player);
 }

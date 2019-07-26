@@ -1,7 +1,10 @@
 package model.spaces;
 
-import model.*;
 import controller.Transactions;
+import model.Bank;
+import model.CardApplyOwnableSpace;
+import model.Player;
+
 import java.util.ArrayList;
 
 /**
@@ -14,100 +17,87 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 1.0
  */
-public class Railroad extends OwnableSpace
-{
-   /**
-    * Railroad constructor that initializes railroad name, location, and cash
-    * value.
-    *
-    * @param name the name of specified railroad
-    * @param location the location of the railroad in the array list of spaces
-    * @param price the price of the railroad
-    */
-   public Railroad (String name, int location, int price)
-   {
-      super (name, location, price);
-   }
+public class Railroad extends OwnableSpace {
+    /**
+     * Railroad constructor that initializes railroad name, location, and cash
+     * value.
+     *
+     * @param name     the name of specified railroad
+     * @param location the location of the railroad in the array list of spaces
+     * @param price    the price of the railroad
+     */
+    public Railroad(String name, int location, int price) {
+        super(name, location, price);
+    }
 
-   /**
-    * Gets the railroad's rent value
-    *
-    * @param players
-    * @param spaces
-    * @param player
-    * @return a <code> int </code>
-    * specifying the railroad's current rent
-    */
-   
-   @Override
-   public double getRent (ArrayList <Player> players, 
-           ArrayList <Space> spaces, Player player)
-   {
-      int i;
-      int baseRent = 0;
-      int finalRent;
-      int countRailroads = 0;
-      Player owner = this.getOwner (players);
+    /**
+     * Gets the railroad's rent value
+     *
+     * @param players
+     * @param spaces
+     * @param player
+     * @return a <code> int </code>
+     * specifying the railroad's current rent
+     */
 
-      if (player == owner)
-      {
-         return 0;
-      }
+    @Override
+    public double getRent(ArrayList<Player> players,
+                          ArrayList<Space> spaces, Player player) {
+        int i;
+        int baseRent = 0;
+        int finalRent;
+        int countRailroads = 0;
+        Player owner = this.getOwner(players);
 
-      // checks the number of railroads owned by the player
-      for (i = 0; i < owner.getOwned ().size (); i++)
-      {
-         if (owner.getOwned ().get (i) instanceof Railroad)
-         {
-            countRailroads++;
-         }
-      }
+        if (player == owner) {
+            return 0;
+        }
 
-      //decides value based on railroads owned
-      switch (countRailroads)
-      {
-         case 1:
-            baseRent = 25;
-            break;
-         case 2:
-            baseRent = 50;
-            break;
-         case 3:
-            baseRent = 150;
-      }
+        // checks the number of railroads owned by the player
+        for (i = 0; i < owner.getOwned().size(); i++) {
+            if (owner.getOwned().get(i) instanceof Railroad) {
+                countRailroads++;
+            }
+        }
 
-      //applies card effects to the base rent value of the railroad
-      finalRent = baseRent;
-      for (i = 0; i < this.getCards ().size (); i++)
-      {
-         if (this.getCards ().get (i) instanceof CardApplyOwnableSpace)
-         {
-            finalRent *= ((CardApplyOwnableSpace) this.getCards ().get (i)).getChangeToRent ();
-         }
-      }
+        //decides value based on railroads owned
+        switch (countRailroads) {
+            case 1:
+                baseRent = 25;
+                break;
+            case 2:
+                baseRent = 50;
+                break;
+            case 3:
+                baseRent = 150;
+        }
 
-      return finalRent;
-   }
-   
-   @Override
-   public void buySpace (ArrayList <Player> players, ArrayList <Space> spaces, Player player, Bank bank)
-   {
-      Player owner = this.getOwner (players);
-      if (owner == null && player.getCash () >= this.getPrice ())
-      {
-         Transactions.cashToBank (player, bank, this.getPrice ());
-         player.addOwnable (this);
-      }
-   }
-   
-   @Override
-   public void payRent (ArrayList <Player> players, ArrayList <Space> spaces, Player player)
-   {
-      Player owner = this.getOwner (players);
-      if (owner != player)
-      {
-         Transactions.cashToOtherPlayer (player, owner, 
-                 this.getRent (players, spaces, player));
-      }
-   }
+        //applies card effects to the base rent value of the railroad
+        finalRent = baseRent;
+        for (i = 0; i < this.getCards().size(); i++) {
+            if (this.getCards().get(i) instanceof CardApplyOwnableSpace) {
+                finalRent *= ((CardApplyOwnableSpace) this.getCards().get(i)).getChangeToRent();
+            }
+        }
+
+        return finalRent;
+    }
+
+    @Override
+    public void buySpace(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank) {
+        Player owner = this.getOwner(players);
+        if (owner == null && player.getCash() >= this.getPrice()) {
+            Transactions.cashToBank(player, bank, this.getPrice());
+            player.addOwnable(this);
+        }
+    }
+
+    @Override
+    public void payRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player) {
+        Player owner = this.getOwner(players);
+        if (owner != player) {
+            Transactions.cashToOtherPlayer(player, owner,
+                    this.getRent(players, spaces, player));
+        }
+    }
 }
