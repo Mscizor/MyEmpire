@@ -51,7 +51,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         if (clicked == this.start) {
             new PlayerMenuController();
             this.dispose ();
-            System.out.println ("Start clicked.");
+            System.out.println ("Start was clicked.");
         }
 
         else if (clicked == this.exit) {
