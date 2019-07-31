@@ -12,6 +12,18 @@ public class PlayerMenuFrame extends JFrame implements ActionListener {
     private JButton removePlayer;
     private JButton finished;
 
+    private int numVisible;
+
+    private JLabel player1;
+    private JLabel player2;
+    private JLabel player3;
+    private JLabel player4;
+
+    private JTextField player1Name;
+    private JTextField player2Name;
+    private JTextField player3Name;
+    private JTextField player4Name;
+
     private PlayerListener playerListener;
 
     public PlayerMenuFrame (PlayerListener playerListener) {
@@ -38,19 +50,40 @@ public class PlayerMenuFrame extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed (ActionEvent e) {
         JButton clicked = (JButton) e.getSource ();
         if (clicked == this.addPlayer) {
-            System.out.println ("Added player.");
+            switch (this.numVisible) {
+                case 2:
+                    // add player 3
+                    break;
+                case 3:
+                    // add player 4
+                    break;
+                case 4:
+                    // warn (dialog)
+                    break;
+            }
         }
         else if (clicked == this.removePlayer) {
-            System.out.println ("Removed player.");
+            switch (this.numVisible) {
+                case 2:
+                    // warn (dialog)
+                    break;
+                case 3:
+                    // remove player 3
+                    break;
+                case 4:
+                    // remove player 4
+                    break;
+            }
         }
         else if (clicked == this.finished) {
             if (this.playerListener != null) {
                 ArrayList <String> names = new ArrayList <> ();
                 // get names and add them here
                 this.playerListener.playerNamesAdded (names);
+                this.dispose ();
             }
         }
 
