@@ -56,7 +56,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
         else if (clicked == this.exit) {
             this.dispose();
-            System.out.println ("Exit clicked.");
+            System.out.println ("Exit was clicked.");
             System.exit(0);
         }
     }
