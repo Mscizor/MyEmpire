@@ -5,6 +5,7 @@ import model.Ownable;
 import model.Player;
 import model.cards.Card;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -21,8 +22,8 @@ public abstract class OwnableSpace extends Space implements Ownable {
     private ArrayList<Card> cards;
 
 
-    public OwnableSpace(String name, int location, double price) {
-        super(name, location);
+    public OwnableSpace(String name, int location, double price, ImageIcon icon) {
+        super(name, location, icon);
         this.cards = new ArrayList<>();
         this.price = price;
     }

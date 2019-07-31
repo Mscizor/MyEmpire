@@ -1,6 +1,6 @@
 package model.cards;
 
-import controller.Transactions;
+import controller.staticcontroller.Transactions;
 import model.Bank;
 import model.CardMoneyOnly;
 import model.Player;

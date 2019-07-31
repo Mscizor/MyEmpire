@@ -1,4 +1,4 @@
-package controller;
+package controller.staticcontroller;
 
 import model.*;
 import model.cards.Card;

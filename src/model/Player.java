@@ -28,8 +28,7 @@ public class Player {
      * @param name the name of the current player
      */
     public Player(String name) {
-        this.owned = new ArrayList<>();
-        this.name = "";
+        this.owned = new ArrayList <> ();
         this.name = name;
         this.cash = 1500;
     }

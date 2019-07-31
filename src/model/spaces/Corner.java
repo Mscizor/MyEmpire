@@ -1,5 +1,7 @@
 package model.spaces;
 
+import javax.swing.*;
+
 /**
  * It is a special type of space that has different types of effects
  * if the Player if the player lands on it.
@@ -21,8 +23,8 @@ public class Corner extends Space {
      * @param name
      * @param location The location of the space on the array list of spaces.
      */
-    public Corner(String name, int location) {
-        super(name, location);
+    public Corner(String name, int location, ImageIcon icon) {
+        super(name, location, icon);
     }
 
 }

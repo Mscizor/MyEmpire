@@ -1,11 +1,12 @@
 package model.spaces;
 
-import controller.Transactions;
+import controller.staticcontroller.Transactions;
 import model.Bank;
 import model.CardApplyOwnableSpace;
 import model.Ownable;
 import model.Player;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -20,15 +21,15 @@ import java.util.ArrayList;
  */
 public class Property extends OwnableSpace {
     private final String color;
-    private final int pricePerBuilding;
+    private final double pricePerBuilding;
     /**
      * The base rent of the property as the number of buildings go up.
      */
-    private final int[] baseRents;
+    private final double[] baseRents;
     private final double multiplier;
     private int numHouses;
     private int numHotels;
-    private int totalCollected;
+    private double totalCollected;
     private int footTraffic;
 
     /**
@@ -43,9 +44,9 @@ public class Property extends OwnableSpace {
      * @param multiplier       Multiplier that determines how much foot traffic is
      *                         needed for development
      */
-    public Property(String name, String color, int location, int price, int pricePerBuilding, int[] baseRents,
-                    double multiplier) {
-        super(name, location, price);
+    public Property(String name, String color, int location, double price, double pricePerBuilding, double[] baseRents,
+                    double multiplier, ImageIcon icon) {
+        super(name, location, price, icon);
         this.baseRents = baseRents;
         this.color = color;
         this.pricePerBuilding = pricePerBuilding;
@@ -63,10 +64,10 @@ public class Property extends OwnableSpace {
      * @return The total rent value.
      */
     @Override
-    public double getRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player) {
+    public double getRent(ArrayList <Player> players, ArrayList <Space> spaces, Player player) {
         int i;
-        int baseRent;
-        int finalRent;
+        double baseRent;
+        double finalRent;
         int count = 1;
         Property pHold;
 
@@ -116,7 +117,7 @@ public class Property extends OwnableSpace {
      *
      * @return Integer representing the price of each building.
      */
-    public int getPricePerBuilding() {
+    public double getPricePerBuilding() {
         return this.pricePerBuilding;
     }
 
@@ -138,7 +139,7 @@ public class Property extends OwnableSpace {
      *
      * @return Integer array representing the base rents of the property.
      */
-    public int[] getBaseRents() {
+    public double[] getBaseRents() {
         return this.baseRents;
     }
 

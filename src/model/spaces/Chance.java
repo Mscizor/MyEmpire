@@ -1,11 +1,12 @@
 package model.spaces;
 
-import controller.CardController;
+import controller.staticcontroller.CardController;
 import model.Bank;
 import model.Player;
 import model.cards.Card;
 import model.cards.CardSet;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +25,8 @@ public class Chance extends Space {
      * @param name     the name of the space
      * @param location the location of the space on the array list of spaces
      */
-    public Chance(String name, int location) {
-        super(name, location);
+    public Chance (String name, int location, ImageIcon icon) {
+        super (name, location, icon);
     }
 
     public void doLandEffect(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank,

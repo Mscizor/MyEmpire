@@ -3,7 +3,7 @@ package model;
 public class Bank {
     private double cash;
 
-    public Bank(int num) {
+    public Bank (int num) {
         this.cash = num * 1500;
     }
 

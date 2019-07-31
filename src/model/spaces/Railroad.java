@@ -1,10 +1,11 @@
 package model.spaces;
 
-import controller.Transactions;
+import controller.staticcontroller.Transactions;
 import model.Bank;
 import model.CardApplyOwnableSpace;
 import model.Player;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -26,8 +27,8 @@ public class Railroad extends OwnableSpace {
      * @param location the location of the railroad in the array list of spaces
      * @param price    the price of the railroad
      */
-    public Railroad(String name, int location, int price) {
-        super(name, location, price);
+    public Railroad(String name, int location, double price, ImageIcon icon) {
+        super(name, location, price, icon);
     }
 
     /**

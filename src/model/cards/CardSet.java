@@ -1,6 +1,6 @@
 package model.cards;
 
-import controller.SpaceController;
+import controller.staticcontroller.SpaceController;
 import model.CardApplyOwnableSpace;
 import model.spaces.Property;
 import model.spaces.Space;

@@ -1,8 +1,10 @@
 package model.spaces;
 
-import controller.Transactions;
+import controller.staticcontroller.Transactions;
 import model.Bank;
 import model.Player;
+
+import javax.swing.*;
 
 /**
  * This class inherits the attributes of the Space class
@@ -27,8 +29,8 @@ public class Tax extends Space {
      * @param tax
      * @param isIncome
      */
-    public Tax(String name, int location, double tax, boolean isIncome) {
-        super(name, location);
+    public Tax(String name, int location, double tax, boolean isIncome, ImageIcon icon) {
+        super(name, location, icon);
         this.tax = tax;
         this.isIncome = isIncome;
     }
