@@ -25,18 +25,21 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     }
 
     private void initComponents () {
-        this.start = new JButton ("Start");
+        ImageIcon icon;
 
-        this.start.setPreferredSize (new Dimension (300, 300));
-        this.start.setBounds (200, 200, 100, 100);
-//        start.setBorderPainted (false);
+        icon = new ImageIcon ("./src/resources/squares/Chance.png");
+        this.start = new JButton (icon);
+
+        this.start.setPreferredSize (new Dimension (80, 80));
+        this.start.setBounds (0, 0, 80, 80);
         this.start.addActionListener (this);
         this.add (start);
 
-        this.exit = new JButton ("Exit");
+        icon = new ImageIcon ("./src/resources/squares/SqStart.png");
+        this.exit = new JButton (icon);
 
-        this.exit.setPreferredSize (new Dimension (100, 100));
-        this.exit.setBounds (200, 600, 100, 100);
+        this.exit.setPreferredSize (new Dimension (80, 80));
+        this.exit.setBounds (80, 0, 80, 80);
 //        exit.setBorderPainted (false);
         this.exit.addActionListener (this);
 
