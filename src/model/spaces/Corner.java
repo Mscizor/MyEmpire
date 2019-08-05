@@ -23,8 +23,8 @@ public class Corner extends Space {
      * @param name
      * @param location The location of the space on the array list of spaces.
      */
-    public Corner(String name, int location, ImageIcon icon) {
-        super(name, location, icon);
+    public Corner(String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
+        super(name, location, spaceIcon, displayIcon);
     }
 
 }

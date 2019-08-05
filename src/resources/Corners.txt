@@ -1,0 +1,15 @@
+START
+SqStart
+Start
+
+Community Service
+SqCommunityService
+CommunityService
+
+Free Parking
+SqFreeParking
+FreeParking
+
+JAIL
+SqJail
+Jail

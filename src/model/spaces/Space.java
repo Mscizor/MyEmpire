@@ -16,12 +16,14 @@ import javax.swing.*;
 public abstract class Space {
     private String name;
     private int location;
-    private ImageIcon icon;
+    private ImageIcon spaceIcon;
+    private ImageIcon displayIcon;
 
-    public Space(String name, int location, ImageIcon icon) {
+    public Space(String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
         this.name = name;
         this.location = location;
-        this.icon = icon;
+        this.spaceIcon = spaceIcon;
+        this.displayIcon = displayIcon;
     }
 
     /**
@@ -52,7 +54,11 @@ public abstract class Space {
         this.location = location;
     }
 
-    public ImageIcon getIcon () {
-        return this.icon;
+    public ImageIcon getSpaceIcon () {
+        return this.spaceIcon;
+    }
+
+    public ImageIcon getDisplayIcon () {
+        return this.displayIcon;
     }
 }

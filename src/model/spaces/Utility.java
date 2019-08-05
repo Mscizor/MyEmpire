@@ -28,8 +28,8 @@ public class Utility extends OwnableSpace {
      * @param location the location of the utility in the array list of spaces
      * @param price    the price of the utility
      */
-    public Utility(String name, int location, double price, ImageIcon icon) {
-        super(name, location, price, icon);
+    public Utility(String name, int location, double price, ImageIcon spaceIcon, ImageIcon displayIcon) {
+        super(name, location, price, spaceIcon, displayIcon);
     }
 
     /**

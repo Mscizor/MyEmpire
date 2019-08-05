@@ -47,6 +47,8 @@ public class PlayerMenuFrame extends JFrame implements ActionListener {
 
         this.finished = new JButton ();
         this.finished.addActionListener (this);
+        this.finished.setBounds (50, 50, 100, 100);
+        this.add (finished);
     }
 
     @Override
@@ -82,6 +84,8 @@ public class PlayerMenuFrame extends JFrame implements ActionListener {
             if (this.playerListener != null) {
                 ArrayList <String> names = new ArrayList <> ();
                 // get names and add them here
+                names.add ("A");
+                names.add ("B");
                 this.playerListener.playerNamesAdded (names);
                 this.dispose ();
             }

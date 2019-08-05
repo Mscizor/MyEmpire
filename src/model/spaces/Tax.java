@@ -29,8 +29,8 @@ public class Tax extends Space {
      * @param tax
      * @param isIncome
      */
-    public Tax(String name, int location, double tax, boolean isIncome, ImageIcon icon) {
-        super(name, location, icon);
+    public Tax(String name, int location, double tax, boolean isIncome, ImageIcon spaceIcon, ImageIcon displayIcon) {
+        super(name, location, spaceIcon, displayIcon);
         this.tax = tax;
         this.isIncome = isIncome;
     }

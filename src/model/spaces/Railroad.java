@@ -27,8 +27,8 @@ public class Railroad extends OwnableSpace {
      * @param location the location of the railroad in the array list of spaces
      * @param price    the price of the railroad
      */
-    public Railroad(String name, int location, double price, ImageIcon icon) {
-        super(name, location, price, icon);
+    public Railroad(String name, int location, double price, ImageIcon spaceIcon, ImageIcon displayIcon) {
+        super(name, location, price, spaceIcon, displayIcon);
     }
 
     /**

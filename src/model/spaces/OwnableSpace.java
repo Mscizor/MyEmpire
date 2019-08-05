@@ -22,8 +22,8 @@ public abstract class OwnableSpace extends Space implements Ownable {
     private ArrayList<Card> cards;
 
 
-    public OwnableSpace(String name, int location, double price, ImageIcon icon) {
-        super(name, location, icon);
+    public OwnableSpace(String name, int location, double price, ImageIcon spaceIcon, ImageIcon displayIcon) {
+        super(name, location, spaceIcon, displayIcon);
         this.cards = new ArrayList<>();
         this.price = price;
     }

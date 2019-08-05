@@ -25,8 +25,8 @@ public class Chance extends Space {
      * @param name     the name of the space
      * @param location the location of the space on the array list of spaces
      */
-    public Chance (String name, int location, ImageIcon icon) {
-        super (name, location, icon);
+    public Chance (String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
+        super (name, location, spaceIcon, displayIcon);
     }
 
     public void doLandEffect(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank,

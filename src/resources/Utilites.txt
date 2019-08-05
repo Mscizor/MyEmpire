@@ -1,5 +1,0 @@
-Electric Utility
-SqElectricity
-
-Water Utility
-SqWater

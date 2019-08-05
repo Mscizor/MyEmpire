@@ -27,7 +27,7 @@ public class PlayerMenuController {
 
             bank = new Bank (playerNames.size ());
 
-//            new SpaceSelectController (players, bank);
+            new SpaceSelectController (players, bank);
         }
     }
 }

@@ -19,7 +19,7 @@ public class CardController {
      * @param spaces The spaces of the game
      * @param bank   The bank containing the bank's money
      */
-    public static void doCardEffect(Card card, Player player, ArrayList<Space> spaces, Bank bank) {
+    public static void doCardEffect (Card card, Player player, ArrayList<Space> spaces, Bank bank) {
         if (card instanceof CardMoneyOnly) {
             // TODO: GUI
             ((CardMoneyOnly) card).doCardEffect(player, bank);
