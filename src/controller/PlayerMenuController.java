@@ -23,10 +23,10 @@ public class PlayerMenuController {
         public void playerNamesAdded (ArrayList <String> playerNames) {
             for (String player : playerNames) {
                 players.add (new Player (player));
+                System.out.println (player);
             }
 
             bank = new Bank (playerNames.size ());
-
             new SpaceSelectController (players, bank);
         }
     }

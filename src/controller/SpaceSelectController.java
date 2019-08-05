@@ -163,6 +163,7 @@ public class SpaceSelectController {
                 spaces.get (index).setLocation (i);
             }
             spaceSelectMenu.dispose ();
+            new PlayingController (players, spaces, bank);
         }
     }
 }
