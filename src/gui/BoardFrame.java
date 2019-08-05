@@ -8,6 +8,7 @@ public class BoardFrame extends JFrame {
     JLayeredPane pane;
 
     ArrayList <JButton> spaces;
+    ArrayList <JLabel> playerIcons;
 
     JPanel messagePanel;
     JLabel messageText;
@@ -92,6 +93,28 @@ public class BoardFrame extends JFrame {
             this.pane.add (btn, new Integer (2), 1);
         };
 
+        this.playerIcons = new ArrayList <> ();
+        for (int i = 0; i < playerNames.size (); i++) {
+            icon = new ImageIcon ("src/resources/images/players/Player" + (i + 1) + ".png");
+            JLabel temp = new JLabel (icon);
+            int x = this.xySpaceLocations[0][0];
+            int y = this.xySpaceLocations[0][0];
+            switch (i) {
+                case 1:
+                    x += 40;
+                    break;
+                case 2:
+                    y += 40;
+                    break;
+                case 3:
+                    x += 40;
+                    y += 40;
+            }
+            temp.setBounds (x, y, 40, 40);
+            this.playerIcons.add (temp);
+            this.pane.add (temp, new Integer (3), 1);
+        }
+
         this.info = new JLayeredPane ();
         this.info.setBounds (720, 0, 360, 720);
 
@@ -130,5 +153,7 @@ public class BoardFrame extends JFrame {
 
         this.add (pane);
         this.add (info);
+
+
     }
 }
