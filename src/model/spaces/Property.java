@@ -79,13 +79,21 @@ public class Property extends OwnableSpace {
         }
 
         for (i = 0; i < spaces.size(); i++) {
+            Player owner = this.getOwner (players);
+
             if (spaces.get(i) instanceof Property) {
                 pHold = (Property) spaces.get(i);
                 if (pHold != this && pHold.color.equals(this.color) && pHold.getOwner(players) != null) {
-                    if (pHold.getOwner(players).getName().equals(this.getOwner(players).getName())) {
+                    if (pHold.getOwner(players).getName() == owner.getName()) {
                         count++;
                     }
                 }
+            }
+        }
+
+        for (i = 0; i < this.getCards().size(); i++) {
+            if (this.getCards().get(i) instanceof CardApplyOwnableSpace) {
+                finalRent *= ((CardApplyOwnableSpace) (this.getCards().get(i))).getChangeToRent();
             }
         }
 
@@ -95,11 +103,6 @@ public class Property extends OwnableSpace {
             finalRent += 20;
         }
 
-        for (i = 0; i < this.getCards().size(); i++) {
-            if (this.getCards().get(i) instanceof CardApplyOwnableSpace) {
-                finalRent *= ((CardApplyOwnableSpace) (this.getCards().get(i))).getChangeToRent();
-            }
-        }
         return finalRent;
     }
 
@@ -169,9 +172,10 @@ public class Property extends OwnableSpace {
      */
     public void addBuilding(ArrayList<Player> players) {
         if (this.isAbleToDevelop(players)) {
-            if (this.numHouses < 4 && this.getOwner(players).getCash() >= this.pricePerBuilding) {
+            if (this.numHouses < 4 && this.numHouses >= 0) {
                 this.numHouses++;
-            } else if (this.numHouses == 4 && this.isAbleToDevelop(players)) {
+            }
+            else if (this.numHouses >= 4 && this.isOwnedFullyDeveloped (players)) {
                 this.numHotels++;
             }
         }
@@ -205,23 +209,19 @@ public class Property extends OwnableSpace {
      * @return Truth value if the owner's other properties of the same color have
      * 4 houses or a hotel.
      */
-    public boolean isOwnedFullyDeveloped(ArrayList<Player> players) {
+    public boolean isOwnedFullyDeveloped (ArrayList<Player> players) {
         int i;
-        boolean ownedFullyDeveloped;
+        boolean ownedFullyDeveloped = true;
         Property hold;
         ArrayList<Ownable> owned = this.getOwner(players).getOwned();
 
-        ownedFullyDeveloped = true;
         i = 0;
         while (i < owned.size() && ownedFullyDeveloped) {
             if (owned.get(i) instanceof Property) {
-                if (((Property) owned.get(i)).getColor().equals(this.getColor())) {
-                    hold = (Property) owned.get(i);
-                    if (hold.getOwner(players) != null) {
-                        if (hold.getOwner(players) == this.getOwner(players) &&
-                                hold.numHouses < 4) {
-                            ownedFullyDeveloped = false;
-                        }
+                hold = (Property) owned.get(i);
+                if (hold.getColor().equals(this.getColor())) {
+                    if (hold.numHouses < 4) {
+                        ownedFullyDeveloped = false;
                     }
                 }
             }

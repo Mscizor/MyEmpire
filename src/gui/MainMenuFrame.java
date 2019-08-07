@@ -14,7 +14,10 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private JButton start;
     private JButton exit;
 
-    public MainMenuFrame() {
+    private ActionListener pressedStart;
+
+    public MainMenuFrame(ActionListener pressedStart) {
+        this.pressedStart = pressedStart;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -22,6 +25,8 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
         this.initComponents();
 
+        this.repaint ();
+        this.revalidate ();
         this.setVisible(true);
     }
         private void initComponents () {
@@ -30,12 +35,12 @@ public class MainMenuFrame extends JFrame implements ActionListener {
             this.pane = new JLayeredPane ();
             this.pane.setBounds (0, 0, 1080, 720);
 
-            icon = new ImageIcon("src/resources/images/StartScreen.png");
+            icon = new ImageIcon("src/resources/images/mainMenu/StartScreen.png");
             JLabel bg = new JLabel (icon);
             bg.setBounds (0, 0, 1080, 720);
             this.pane.add (bg, new Integer (1), 0);
 
-            icon = new ImageIcon("src/resources/images/squares/SqStart.png");
+            icon = new ImageIcon("src/resources/images/mainMenu/Start.png");
             this.start = new JButton(icon);
 
             this.start.setPreferredSize(new Dimension(120, 30));
@@ -43,12 +48,11 @@ public class MainMenuFrame extends JFrame implements ActionListener {
             this.start.addActionListener(this);
             this.pane.add (start, new Integer (2), 0);
 
-            icon = new ImageIcon("src/resources/images/squares/Chance.png");
+            icon = new ImageIcon("src/resources/images/mainMenu/Exit.png");
             this.exit = new JButton(icon);
 
             this.exit.setPreferredSize(new Dimension(120, 30));
             this.exit.setBounds(480, 570, 120, 30);
-//        exit.setBorderPainted (false);
             this.exit.addActionListener(this);
             this.pane.add (exit, new Integer (2), 0);
 
@@ -61,12 +65,9 @@ public class MainMenuFrame extends JFrame implements ActionListener {
             JButton clicked = (JButton) e.getSource();
 
             if (clicked == this.start) {
-                new PlayerMenuController();
-                this.dispose();
-                System.out.println("Start was clicked.");
+                pressedStart.actionPerformed (e);
             } else if (clicked == this.exit) {
                 this.dispose();
-                System.out.println("Exit was clicked.");
                 System.exit(0);
             }
         }

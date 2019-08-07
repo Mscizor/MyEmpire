@@ -21,6 +21,7 @@ public class PlayerMenuController {
 
     private class PressedFinish implements PlayerListener {
         public void playerNamesAdded (ArrayList <String> playerNames) {
+            playerMenu.dispose ();
             for (String player : playerNames) {
                 players.add (new Player (player));
                 System.out.println (player);

@@ -4,14 +4,15 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
 
-    int[][] xySpaceLocations;
-    int currentImageIndex;
-    int[] finalLocations;
+    private JLayeredPane pane;
+
+    private int[][] xySpaceLocations;
+    private int currentImageIndex;
+    private int[] finalLocations;
 
     private JLabel displayedImage;
 
@@ -68,20 +69,27 @@ public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
     }
 
     public void initComponents () {
-        this.displayedImage = new JLabel ();
+        ImageIcon icon;
 
+        this.pane = new JLayeredPane ();
+        this.pane.setBounds (0, 0, 720, 720);
+
+        icon = new ImageIcon ("src/resources/images/EmptyBoard.png");
+        JLabel bg = new JLabel (icon);
+        bg.setBounds (80, 80, 560, 560);
+        this.pane.add (bg, new Integer (1), 1);
+
+        this.displayedImage = new JLabel ();
         this.displayedImage.setBounds (240,180, 240, 360);
         this.displayedImage.setIcon (this.displayImages.get (0));
-        this.add (displayedImage);
+        this.pane.add (displayedImage, new Integer (2), 1);
 
         this.spaces = new ArrayList <> ();
 
         for (int i = 0; i < 32; i++) {
             JButton temp;
-            ImageIcon icon;
             if (i % 8 != 0) {
                 icon = new ImageIcon ("src/resources/images/squares/numbers/" + i + ".png");
-                File file = new File ("src/resources/images/squares/numbers/" + i + ".png");
             }
             else {
                 switch (i) {
@@ -112,12 +120,17 @@ public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
             this.spaces.add (temp);
         }
         for (int i = 0; i < spaces.size (); i++) {
-            this.add (spaces.get (i));
+            this.pane.add (spaces.get (i), new Integer (2), 1);
         }
 
-        this.finished = new JButton ("eh");
-        this.finished.setBounds (500, 500, 200, 200);
+        icon = new ImageIcon ("src/resources/images/spaceMenu/Finished.png");
+        this.finished = new JButton (icon);
+        this.finished.setBounds (345, 110, 30, 30);
         this.finished.addActionListener (this);
+        this.finished.setEnabled (false);
+        this.pane.add (finished, new Integer (2), 1);
+
+        this.add (pane);
     }
 
     @Override
@@ -158,8 +171,8 @@ public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
                 this.displayedImage.setIcon(displayImages.get (this.currentImageIndex));
             }
             else {
-                this.remove (this.displayedImage);
-                this.add (this.finished);
+                this.displayedImage.setVisible (false);
+                this.finished.setEnabled (true);
             }
             this.update ();
         }

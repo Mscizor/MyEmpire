@@ -131,7 +131,7 @@ public class SpaceSelectController {
         }
     }
 
-    private ImageIcon[] getImageIcons (Scanner sc) throws Exception {
+    private ImageIcon[] getImageIcons (Scanner sc) {
         ImageIcon[] returning = new ImageIcon[2];
         try {
             String spaceIconName = sc.nextLine();
@@ -149,10 +149,10 @@ public class SpaceSelectController {
         }
         catch (Exception e) {
             System.out.println (e);
-            throw new Exception ();
         }
         return returning;
     }
+
     private class PressedFinish implements SpaceListener {
         @Override
         public void spacesAdded (int[] finalLocations) {
@@ -163,7 +163,7 @@ public class SpaceSelectController {
                 spaces.get (index).setLocation (i);
             }
             spaceSelectMenu.dispose ();
-            new PlayingController (players, spaces, bank);
+            new PlayingController (players, orderedSpaces, bank);
         }
     }
 }
