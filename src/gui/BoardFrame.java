@@ -14,6 +14,7 @@ public class BoardFrame extends JFrame implements ActionListener {
 
     ArrayList <JButton> spaces;
     ArrayList <JLabel> playerIcons;
+    ArrayList <JTextArea> playerOwned;
 
     JPanel messagePanel;
     JLabel messageText;
@@ -70,6 +71,7 @@ public class BoardFrame extends JFrame implements ActionListener {
 
         this.playerIndices = new int[4];
 
+        this.playerOwned = new ArrayList <> ();
         this.initComponents (playerNames, bankAmount, spaces);
 
         this.setVisible (true);
@@ -77,7 +79,10 @@ public class BoardFrame extends JFrame implements ActionListener {
         timer = new Timer (100, this);
 
         this.moveCurrentPlayer (10);
-
+        ArrayList <String> test = new ArrayList <> ();
+        test.add ("YE");
+        test.add ("ET");
+        this.updateOwnable (test);
     }
 
     public void initComponents (ArrayList <String> playerNames, double bankAmount, ArrayList <ImageIcon> spaces) {
@@ -120,7 +125,7 @@ public class BoardFrame extends JFrame implements ActionListener {
             y += this.getXYMod ()[1];
             temp.setBounds (x, y, 40, 40);
             this.playerIcons.add (temp);
-            this.pane.add (temp, new Integer (3), 1);
+            this.pane.add (temp, 3, 1);
         }
         this.currentPlayer = 0;
 
@@ -130,23 +135,36 @@ public class BoardFrame extends JFrame implements ActionListener {
         icon = new ImageIcon("src/resources/images/playingMenu/InfoBoard.png");
         bg = new JLabel (icon);
         bg.setBounds (0, 0, 360, 720);
-        this.info.add (bg, new Integer (1), 1);
+        this.info.add (bg, 1, 1);
 
-        JLabel bankLabel = new JLabel (/*Icon*/"Bank");
-        bankLabel.setBounds (10, 50, 90, 30);
-        this.bankAmount = new JLabel ();
-        this.bankAmount.setBounds (110, 50, 90, 30);
+        icon = new ImageIcon("src/resources/images/playingMenu/Bank.png");
+        JLabel bankLabel = new JLabel (icon);
+        bankLabel.setBounds (20, 65, 90, 30);
+        this.info.add (bankLabel, 2, 1);
+
+        this.bankAmount = new JLabel (String.valueOf(bankAmount));
+        this.bankAmount.setBounds (120, 55, 90, 30);
+        this.bankAmount.setForeground (Color.WHITE);
+        this.bankAmount.setFont (new Font ("Consolas", Font.PLAIN, 16));
+        this.info.add (this.bankAmount, 2, 1);
 
         for (int i = 0; i < playerNames.size (); i++) {
             String name = playerNames.get (i);
             icon = new ImageIcon("src/resources/images/playingMenu/Player" + (i + 1) + ".png");
             JLabel playerLabel = new JLabel (icon);
             JLabel nameLabel = new JLabel (name);
-            playerLabel.setBounds (20, 120 * i + 160, 80, 20);
-            nameLabel.setBounds (120, 120 * i + 160, 80, 30);
+            playerLabel.setBounds (20, 120 * i + 130, 80, 20);
+            nameLabel.setBounds (120, 120 * i + 125, 80, 30);
             nameLabel.setForeground (Color.WHITE);
-            this.info.add (playerLabel, new Integer (2), 1);
-            this.info.add (nameLabel, new Integer (2), 1);
+            nameLabel.setFont (new Font ("Consolas", Font.PLAIN, 12));
+            this.info.add (playerLabel, 2, 1);
+            this.info.add (nameLabel, 2, 1);
+
+            JTextArea playerOwned = new JTextArea ();
+            playerOwned.setBounds (20, 120 * i + 155, 320, 80);
+            playerOwned.setEditable (false);
+            this.playerOwned.add (playerOwned);
+            this.info.add (playerOwned, 2, 1);
         }
 
         icon = new ImageIcon("src/resources/images/playingMenu/RollDice.png");
@@ -187,10 +205,7 @@ public class BoardFrame extends JFrame implements ActionListener {
 
         this.add (pane);
         this.add (info);
-
-
     }
-
 
     private int[] getXYMod () {
         int[] xyMod = new int[2];
@@ -207,6 +222,15 @@ public class BoardFrame extends JFrame implements ActionListener {
         }
         return xyMod;
     }
+
+    public void updateOwnable (ArrayList <String> playerOwned) {
+        for (int i = 0; i < playerOwned.size (); i++) {
+            JTextArea ownedText = this.playerOwned.get (i);
+
+            ownedText.setText (playerOwned.get (i));
+        }
+    }
+
     public void moveCurrentPlayer (int movement) {
         this.movement = movement;
         this.timer.start ();
@@ -223,7 +247,6 @@ public class BoardFrame extends JFrame implements ActionListener {
                 x += getXYMod ()[0];
                 y += getXYMod ()[1];
                 this.playerIcons.get (currentPlayer).setBounds (x, y, 40, 40);
-
                 this.movement--;
                 System.out.println ("yeet " + movement);
                 this.repaint ();
