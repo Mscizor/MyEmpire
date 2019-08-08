@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface CardApplyOwnableSpace {
     boolean isApplied();
 
-    void doCardEffect(Player player, ArrayList<Space> spaces, OwnableSpace owned, Bank bank);
+    boolean doCardEffect(Player player, ArrayList<Space> spaces, OwnableSpace owned, Bank bank);
 
     double getChangeToRent();
 }

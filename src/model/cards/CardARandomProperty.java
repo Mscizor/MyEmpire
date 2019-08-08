@@ -20,7 +20,8 @@ public class CardARandomProperty extends Card implements CardMovePlayer {
     }
 
     @Override
-    public void doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
+    public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
+        boolean playerBankrupt = false;
         if (random == null) {
             player.changePosition(0);
         } else {
@@ -28,5 +29,7 @@ public class CardARandomProperty extends Card implements CardMovePlayer {
             // TODO: do land thing and start thing
         }
         this.discard();
+
+        return playerBankrupt;
     }
 }

@@ -20,18 +20,19 @@ public class CardController {
      * @param bank   The bank containing the bank's money
      */
     public static void doCardEffect (Card card, Player player, ArrayList<Space> spaces, Bank bank) {
+        boolean playerBankrupt = false;
         if (card instanceof CardMoneyOnly) {
             // TODO: GUI
-            ((CardMoneyOnly) card).doCardEffect(player, bank);
+            playerBankrupt = ((CardMoneyOnly) card).doCardEffect(player, bank);
             // TODO: GUI
         } else if (card instanceof CardMovePlayer) {
             // TODO: GUI
-            ((CardMovePlayer) card).doCardEffect(player, spaces, bank);
+            playerBankrupt = ((CardMovePlayer) card).doCardEffect(player, spaces, bank);
             // TODO: GUI
         } else if (card instanceof CardApplyOwnableSpace) {
             OwnableSpace owned = null;
             // TODO: GUI
-            ((CardApplyOwnableSpace) card).doCardEffect(player, spaces, owned, bank);
+            playerBankrupt = ((CardApplyOwnableSpace) card).doCardEffect(player, spaces, owned, bank);
             // TODO: GUI
         }
     }

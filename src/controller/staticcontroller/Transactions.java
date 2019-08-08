@@ -11,9 +11,13 @@ import java.util.ArrayList;
  * @author Jan Uriel Marcelo
  */
 public class Transactions {
-    public static void cashToBank(Player player, Bank bank, double cash) {
-        player.changeCash(-cash);
-        bank.changeCash(cash);
+    public static boolean cashToBank(Player player, Bank bank, double cash) {
+        if (player.getCash () >= cash) {
+            player.changeCash(-cash);
+            bank.changeCash(cash);
+            return false;
+        }
+        return true;
     }
 
     public static void cashToOtherPlayer(Player player, Player other, double cash) {

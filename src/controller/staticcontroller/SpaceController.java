@@ -12,8 +12,9 @@ import java.util.Random;
  * @author Jan Uriel Marcelo
  */
 public class SpaceController {
-    public static void doLandEffect(ArrayList<Player> players, ArrayList<Space> spaces, Space space, Player player,
+    public static boolean doLandEffect(ArrayList<Player> players, ArrayList<Space> spaces, Space space, Player player,
                                     Bank bank) {
+        boolean playerBankrupt = false;
         if (space instanceof Property) {
             Property property = (Property) space;
             Player owner = property.getOwner(players);
@@ -23,8 +24,8 @@ public class SpaceController {
             else if (owner == player && property.isAbleToDevelop(players)) {
                 property.addBuilding(players);
             }
-            else {
-                property.payRent(players, spaces, player);
+            else if (player.getCash() > property.getRent (players, spaces, player)){
+               playerBankrupt = property.payRent (players, spaces, player);
             }
         }
         else if (space instanceof Utility || space instanceof Railroad) {
@@ -35,18 +36,24 @@ public class SpaceController {
             }
             else if (owner == player) {
             }
-            else {
-                oSpace.payRent(players, spaces, player);
+            else if (player.getCash() > oSpace.getRent (players, spaces, player)){
+                playerBankrupt = oSpace.payRent(players, spaces, player);
             }
         }
         else if (space instanceof Corner) {
             String name = space.getName();
             switch (name) {
                 case "START":
-                    Transactions.cashToBank(player, bank, 200);
+                    if (player.getCash () > 200)
+                        Transactions.cashToBank(player, bank, 200);
+                    else
+                        playerBankrupt = false;
                     break;
                 case "Community Service":
-                    Transactions.cashToBank(player, bank, 50);
+                    if (player.getCash () > 50)
+                        Transactions.cashToBank(player, bank, 50);
+                    else
+                        playerBankrupt = false;
                     break;
                 case "Free Parking":
                     break;
@@ -65,17 +72,24 @@ public class SpaceController {
                     player.changeCash(-75);
                     break;
                 case "Income Tax":
-                    double cash;
+                    double cash = 0;
                     if (player.getCash() * 0.10 > 200) {
                         cash = player.getCash() * 0.10;
                     }
-                    else {
+                    else if (player.getCash () >= 200){
                         cash = 200;
                     }
-                    player.changeCash(-cash);
+                    else {
+                        playerBankrupt = true;
+                    }
+
+                    if (!playerBankrupt)
+                        player.changeCash(-cash);
                     break;
             }
         }
+
+        return playerBankrupt;
     }
 
     public static Property getRandomProperty(ArrayList<Space> spaces) {

@@ -18,9 +18,10 @@ public class CardERandomPay extends Card implements CardMoneyOnly {
     }
 
     @Override
-    public void doCardEffect(Player player, Bank bank) {
-        Transactions.cashToBank(player, bank, randomPayment);
-
+    public boolean doCardEffect(Player player, Bank bank) {
+        boolean playerBankrupt;
+        playerBankrupt = Transactions.cashToBank(player, bank, randomPayment);
         this.discard();
+        return playerBankrupt;
     }
 }

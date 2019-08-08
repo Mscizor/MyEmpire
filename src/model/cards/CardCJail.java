@@ -17,11 +17,12 @@ public class CardCJail extends Card implements CardMovePlayer {
     }
 
     @Override
-    public void doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
+    public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
         if (spaces.get(16).getName().equals("JAIL")) {
             player.changePosition(16);
             player.arrest();
         }
         this.discard();
+        return false;
     }
 }

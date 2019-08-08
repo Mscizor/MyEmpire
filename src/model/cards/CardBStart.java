@@ -17,13 +17,13 @@ public class CardBStart extends Card implements CardMovePlayer {
     }
 
     @Override
-    public void doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
+    public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
         if (spaces.get(0).getName().equals("START")) {
             player.changePosition(0);
             // TODO: do land thing
 
         }
-
         this.discard();
+        return false;
     }
 }

@@ -23,10 +23,11 @@ public class CardDDoubleRent extends Card implements CardApplyOwnableSpace {
     }
 
     @Override
-    public void doCardEffect(Player player, ArrayList<Space> spaces, OwnableSpace owned, Bank bank) {
+    public boolean doCardEffect(Player player, ArrayList<Space> spaces, OwnableSpace owned, Bank bank) {
         if (owned instanceof Property) {
             owned.addCard(this);
         }
+        return false;
     }
 
     @Override

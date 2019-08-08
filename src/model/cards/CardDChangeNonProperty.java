@@ -24,12 +24,13 @@ public class CardDChangeNonProperty extends Card implements CardApplyOwnableSpac
     }
 
     @Override
-    public void doCardEffect(Player player, ArrayList<Space> spaces,
+    public boolean doCardEffect(Player player, ArrayList<Space> spaces,
                              OwnableSpace owned, Bank bank) {
         if (owned instanceof Railroad || owned instanceof Utility) {
             owned.addCard(this);
             this.applied = true;
         }
+        return false;
     }
 
     @Override

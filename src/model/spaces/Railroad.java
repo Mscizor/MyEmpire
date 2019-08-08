@@ -92,13 +92,4 @@ public class Railroad extends OwnableSpace {
             player.addOwnable(this);
         }
     }
-
-    @Override
-    public void payRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player) {
-        Player owner = this.getOwner(players);
-        if (owner != player) {
-            Transactions.cashToOtherPlayer(player, owner,
-                    this.getRent(players, spaces, player));
-        }
-    }
 }

@@ -11,12 +11,13 @@ import java.util.ArrayList;
 
 public class PlayingController {
 
-    ArrayList <Player> players;
-    ArrayList <Space> spaces;
-    CardSet cards;
-    Bank bank;
+    private ArrayList <Player> players;
+    private ArrayList <Space> spaces;
+    private CardSet cards;
+    private Bank bank;
+    private boolean gameOver = false;
 
-    PlayingFrame board;
+    private PlayingFrame playing;
 
     public PlayingController (ArrayList <Player> players, ArrayList <Space> spaces, Bank bank) {
         this.players = players;
@@ -34,15 +35,22 @@ public class PlayingController {
             names.add (player.getName ());
         }
 
-        this.board = new PlayingFrame("My Empire", names, bank.getCash(),
+        this.playing = new PlayingFrame("My Empire", names, bank.getCash(),
                 players.get (0).getCash (), spaceImages, new ButtonPressed ());
+    }
+
+    public void gameStart () {
+        while (!gameOver) {
+
+        }
+
     }
 
     private class ButtonPressed implements ButtonListener {
         @Override
         public void buttonPressed (int index) {
             switch (index) {
-                case 0: // Rolled Dice
+                case 0:
                     break;
                 case 1: // Purchased
                     break;

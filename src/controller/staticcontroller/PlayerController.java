@@ -32,7 +32,7 @@ public class PlayerController {
                 player, bank);
     }
 
-    public static void moveToAndLand(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank,
+    public static void moveToAndLand (ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank,
                                      Space space, boolean direct) {
         int playerPos = player.getPosition();
         int destinationLoc = space.getLocation();

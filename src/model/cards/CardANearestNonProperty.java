@@ -22,7 +22,8 @@ public class CardANearestNonProperty extends Card implements CardMovePlayer {
     }
 
     @Override
-    public void doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
+    public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
+        boolean playerBankrupt = false;
         int playerPos = player.getPosition();
         int highestDistance = 0;
         int currentDistance;
@@ -43,8 +44,9 @@ public class CardANearestNonProperty extends Card implements CardMovePlayer {
                 }
             }
         }
-//    TODO: do the landing thing and start thing
-
+        // TODO: move and land
         this.discard();
+
+        return playerBankrupt;
     }
 }

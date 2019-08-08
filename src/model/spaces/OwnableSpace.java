@@ -1,5 +1,6 @@
 package model.spaces;
 
+import controller.staticcontroller.Transactions;
 import model.Bank;
 import model.Ownable;
 import model.Player;
@@ -78,5 +79,16 @@ public abstract class OwnableSpace extends Space implements Ownable {
 
     public abstract void buySpace(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank);
 
-    public abstract void payRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player);
+    public boolean payRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player) {
+        boolean playerBankrupt = false;
+        Player owner = this.getOwner(players);
+        if (owner != player && player.getCash () > this.getRent (players, spaces, player)) {
+            Transactions.cashToOtherPlayer(player, owner,
+                    this.getRent(players, spaces, player));
+        }
+        else if (owner != player && player.getCash () > this.getRent (players, spaces, player)) {
+            playerBankrupt = true;
+        }
+        return playerBankrupt;
+    }
 }

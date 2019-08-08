@@ -25,7 +25,8 @@ public class CardDRenovateProperty extends Card implements CardApplyOwnableSpace
     }
 
     @Override
-    public void doCardEffect(Player player, ArrayList<Space> spaces, OwnableSpace owned, Bank bank) {
+    public boolean doCardEffect(Player player, ArrayList<Space> spaces, OwnableSpace owned, Bank bank) {
+        boolean playerBankrupt = false;
         if (owned instanceof Property) {
             int ownedHouses = 0, ownedHotels = 0;
             for (int i = 0; i < player.getOwned().size(); i++) {
@@ -35,12 +36,13 @@ public class CardDRenovateProperty extends Card implements CardApplyOwnableSpace
                     ownedHotels += pHold.getNumHotels();
                 }
             }
-            Transactions.cashToBank(player, bank, ownedHouses * 25 + ownedHotels * 50);
+            playerBankrupt = Transactions.cashToBank(player, bank, ownedHouses * 25 + ownedHotels * 50);
             owned.addCard(this);
             this.applied = true;
         } else {
             this.discard();
         }
+        return playerBankrupt;
     }
 
     @Override
