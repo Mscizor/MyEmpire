@@ -295,6 +295,11 @@ public class PlayingFrame extends JFrame implements ActionListener {
         this.buttons.get (button).setEnabled (true);
     }
 
+    public void setButtonsEnabled (boolean[] buttonsEnabled) {
+        for (int i = 0; i < 6; i++) {
+            this.buttons.get (i).setEnabled (buttonsEnabled[i]);
+        }
+    }
     public void setCurrentPlayer (int currentPlayer) {
         this.currentPlayer = currentPlayer;
     }

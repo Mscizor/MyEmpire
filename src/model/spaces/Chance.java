@@ -1,13 +1,6 @@
 package model.spaces;
 
-import controller.staticcontroller.CardController;
-import model.Bank;
-import model.Player;
-import model.cards.Card;
-import model.cards.CardSet;
-
 import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * This class inherits the attributes of the Space class.
@@ -27,11 +20,5 @@ public class Chance extends Space {
      */
     public Chance (String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
         super (name, location, spaceIcon, displayIcon);
-    }
-
-    public void doLandEffect(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank,
-                             CardSet cardSet) {
-        Card card = cardSet.pickRandom();
-        CardController.doCardEffect(card, player, spaces, bank);
     }
 }

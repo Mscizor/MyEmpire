@@ -1,6 +1,5 @@
 package model.cards;
 
-import controller.staticcontroller.SpaceController;
 import model.CardApplyOwnableSpace;
 import model.spaces.Property;
 import model.spaces.Space;
@@ -49,7 +48,7 @@ public class CardSet {
                     cards.add(new CardANearestNonProperty(name, text, true));
                     break;
                 case 2:
-                    Property randProperty = SpaceController.getRandomProperty(spaces);
+                    Property randProperty = this.getRandomProperty(spaces);
                     if (randProperty != null) {
                         name = "Proceed to " + randProperty.getName();
                         text = "Go directly to " + randProperty.getName() +
@@ -119,7 +118,7 @@ public class CardSet {
                     cards.add(new CardCJail(name, text));
                     break;
                 case 1:
-                    Property randProperty = SpaceController.getRandomProperty(spaces);
+                    Property randProperty = this.getRandomProperty(spaces);
                     if (randProperty != null) {
                         name = "Go to " + randProperty.getName();
                         text = "Go to " + randProperty.getName() +
@@ -202,7 +201,7 @@ public class CardSet {
      * This method accepts a null parameter and puts discarded cards back into the set of usable cards if certain
      * conditions are met
      */
-    public void shuffleSet() {
+    private void shuffleSet() {
         int i;
 
         for (i = 0; i < cards.size(); i++) {
@@ -229,7 +228,7 @@ public class CardSet {
 
         int i = 0;
         Card randomCard = null;
-        while (i < cards.size() && !found && !cards.isEmpty()) {
+        while (i < cards.size() && !found) {
             randomCard = cards.get((randomPick + i) % cards.size());
             if (!randomCard.isDiscarded()
                     && !(randomCard instanceof CardApplyOwnableSpace)
@@ -241,5 +240,20 @@ public class CardSet {
         this.cards.remove(randomCard);
 
         return randomCard;
+    }
+
+    private Property getRandomProperty (ArrayList<Space> spaces) {
+        Random rand = new Random();
+        int loc = rand.nextInt(32);
+        Property random = null;
+        boolean found = false;
+        for (int j = 0; j < 31 && !found; j++) {
+            if (spaces.get((loc + j) % 32) instanceof Property) {
+                random = (Property) spaces.get((loc + j) % 32);
+            }
+            found = true;
+        }
+
+        return random;
     }
 }
