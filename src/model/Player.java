@@ -64,6 +64,9 @@ public class Player {
         return this.diceRoll;
     }
 
+    public void setDiceRoll (int diceRoll) {
+        this.diceRoll = diceRoll;
+    }
     /**
      * Gets and returns true if the player is in jail
      *
@@ -109,17 +112,8 @@ public class Player {
      *
      * @param position the position of the current player in the array list of spaces
      */
-    public void changePosition(int position) {
+    public void changePosition (int position) {
         this.position = position;
-    }
-
-    /**
-     * updates the player's position depending on the value of the dice rolled
-     *
-     * @param numForward the number of spaces a player's position is moved
-     */
-    public void moveForward(int numForward) {
-        this.position = (this.position + numForward) % 32;
     }
 
     public double getTotalValue() {

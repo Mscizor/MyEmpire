@@ -92,4 +92,13 @@ public class Railroad extends OwnableSpace {
             player.addOwnable(this);
         }
     }
+
+    @Override
+    public String toString () {
+        String string = "";
+
+        string += this.getName () + "at Space " + this.getLocation();
+
+        return string;
+    }
 }

@@ -239,4 +239,13 @@ public class Property extends OwnableSpace {
             player.addOwnable(this);
         }
     }
+
+    @Override
+    public String toString () {
+        String string = "";
+
+        string += this.getName () + " - " + this.getColor () + " at Space " + this.getLocation ();
+
+        return string;
+    }
 }

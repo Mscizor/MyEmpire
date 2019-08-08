@@ -8,6 +8,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
+
 public class PlayingFrame extends JFrame implements ActionListener {
 
     /* Timers */
@@ -193,10 +196,12 @@ public class PlayingFrame extends JFrame implements ActionListener {
             this.playerAmounts.add (playerAmount);
             info.add (playerAmount, 2, 1);
 
-            JTextArea playerOwned = new JTextArea ();
+            JTextArea playerText = new JTextArea ();
+            playerText.setEditable (false);
+            this.playerOwned.add (playerText);
+            JScrollPane playerOwned = new JScrollPane (playerText, VERTICAL_SCROLLBAR_AS_NEEDED,
+                    HORIZONTAL_SCROLLBAR_AS_NEEDED);
             playerOwned.setBounds (20, 120 * i + 155, 320, 80);
-            playerOwned.setEditable (false);
-            this.playerOwned.add (playerOwned);
             info.add (playerOwned, 2, 1);
         }
 
@@ -307,6 +312,32 @@ public class PlayingFrame extends JFrame implements ActionListener {
     public void moveCurrentPlayer (int movement) {
         this.movement = movement;
         this.moveTimer.start ();
+    }
+
+    public int getPlayerLocation (int player) {
+        int x, y;
+        x = playerIcons.get (player).getX();
+        y = playerIcons.get (player).getY();
+
+        switch (player) {
+            case 1:
+                x -= 40;
+                break;
+            case 2:
+                y -= 40;
+                break;
+            case 3:
+                x -= 40;
+                y -= 40;
+                break;
+        }
+
+        for (int i = 0; i < this.xySpaceLocations.length; i++) {
+            if (x == this.xySpaceLocations[i][0] && y == this.xySpaceLocations[i][1])
+                return i;
+        }
+
+        return -1;
     }
 
     @Override

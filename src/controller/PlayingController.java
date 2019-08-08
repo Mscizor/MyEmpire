@@ -18,7 +18,6 @@ public class PlayingController {
     private CardSet cards;
     private Bank bank;
 
-
     public static final boolean[] JUST_ROLL_DICE = new boolean[] {true, false, false, false, false, false};
     public static final boolean[] JUST_PURCHASE = new boolean[] {false, true, false, false, false, false};
     public static final boolean[] JUST_DEVELOP = new boolean[] {false, false, true, false, false, false};
@@ -70,16 +69,19 @@ public class PlayingController {
     public void doCardEffect (Card card, Player player, ArrayList<Space> spaces, Bank bank) {
         boolean playerBankrupt = false;
         String text = card.getText ();
-        // TODO: emit text
         if (card instanceof CardMoneyOnly) {
             playerBankrupt = ((CardMoneyOnly) card).doCardEffect(player, bank);
+            this.updateGUI ();
         }
         else if (card instanceof CardMovePlayer) {
             playerBankrupt = ((CardMovePlayer) card).doCardEffect(player, spaces, bank);
+            this.updateGUI ();
         }
         else if (card instanceof CardApplyOwnableSpace) {
             OwnableSpace owned = null;
+            // TODO: get player input
             playerBankrupt = ((CardApplyOwnableSpace) card).doCardEffect(player, spaces, owned, bank);
+            this.updateGUI ();
         }
     }
 
@@ -135,7 +137,8 @@ public class PlayingController {
                     if (player.getCash () > 200)
                         Transactions.cashToBank(player, bank, 200);
                     else
-                        playerBankrupt = false;
+                        playerBankrupt = true;
+                    this.updateGUI ();
                     break;
                 case "Community Service":
                     // TODO: text
@@ -143,15 +146,18 @@ public class PlayingController {
                     if (player.getCash () > 50)
                         Transactions.cashToBank(player, bank, 50);
                     else
-                        playerBankrupt = false;
+                        playerBankrupt = true;
+                    this.updateGUI ();
                     break;
                 case "Free Parking":
                     // TODO: text
                     this.playing.setButtonsEnabled (JUST_FINISHED);
+                    this.updateGUI ();
                     break;
                 case "JAIL":
                     // TODO: text
                     this.playing.setButtonsEnabled (JUST_FINISHED);
+                    this.updateGUI ();
                     player.arrest();
                     break;
             }
@@ -160,6 +166,7 @@ public class PlayingController {
             // TODO: text
             // TODO: draw card
             // TODO: do card effect
+            this.updateGUI ();
         }
         else if (space instanceof Tax) {
             String name = space.getName();
@@ -173,6 +180,7 @@ public class PlayingController {
                     else {
                         player.changeCash(-75);
                     }
+                    this.updateGUI ();
                     break;
                 case "Income Tax":
                     // TODO: text
@@ -190,6 +198,7 @@ public class PlayingController {
 
                     if (!playerBankrupt)
                         player.changeCash(-cash);
+                    this.updateGUI ();
                     break;
             }
         }
@@ -204,11 +213,14 @@ public class PlayingController {
         int diceRoll = player.getDiceRoll();
 
         if (playerPos + diceRoll < playerPos && !direct) {
+            // TODO: emit text
             Transactions.cashToBank(player, bank, -200);
+            this.updateGUI ();
         }
 
         playerPos = playerPos + diceRoll;
         player.changePosition(playerPos);
+        this.updateGUI ();
 
         playerBankrupt = this.doLandEffect(players, spaces, spaces.get(playerPos), player, bank);
 
@@ -222,10 +234,13 @@ public class PlayingController {
         int destinationLoc = space.getLocation();
 
         if (destinationLoc < playerPos && !direct) {
+            // TODO: emit text
             Transactions.cashToBank(player, bank, -200);
+            this.updateGUI ();
         }
 
         player.changePosition(destinationLoc);
+        this.updateGUI ();
 
         playerBankrupt = this.doLandEffect(players, spaces, space, player, bank);
         return playerBankrupt;
@@ -235,11 +250,35 @@ public class PlayingController {
         return false;
     }
 
+    public void updateGUI () {
+        for (int i = 0; i < players.size (); i++) {
+            Player player = players.get (i);
+            ArrayList <Ownable> owned = player.getOwned ();
+            StringBuilder ownedText = new StringBuilder ();
+            for (Ownable ownable : owned) {
+                ownedText.append ("\n" + ownable);
+            }
+            playing.setPlayerCash (i, player.getCash ());
+            playing.setPlayerText (i, ownedText.toString ());
+            playing.refresh ();
+
+            int movement = playing.getPlayerLocation (i) - player.getPosition ();
+            if (movement < 0)
+                movement += 32;
+            playing.moveCurrentPlayer (movement);
+        }
+
+        playing.setBankCash (bank.getCash ());
+    }
+
     private class ButtonPressed implements ButtonListener {
         @Override
         public void buttonPressed (int index) {
             switch (index) {
-                case 0:
+                case 0: // Roll Dice
+                    for (Player player : players) {
+                        player.setDiceRoll (0);
+                    }
                     break;
                 case 1: // Purchased
                     break;
