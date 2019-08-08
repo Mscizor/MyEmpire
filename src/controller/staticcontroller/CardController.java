@@ -22,18 +22,18 @@ public class CardController {
     public static void doCardEffect (Card card, Player player, ArrayList<Space> spaces, Bank bank) {
         boolean playerBankrupt = false;
         if (card instanceof CardMoneyOnly) {
-            // TODO: GUI
+            // TODO: Card message
             playerBankrupt = ((CardMoneyOnly) card).doCardEffect(player, bank);
-            // TODO: GUI
+            // TODO: change in GUI
         } else if (card instanceof CardMovePlayer) {
-            // TODO: GUI
+            // TODO: Card message
             playerBankrupt = ((CardMovePlayer) card).doCardEffect(player, spaces, bank);
-            // TODO: GUI
+            // TODO: change in GUI
         } else if (card instanceof CardApplyOwnableSpace) {
             OwnableSpace owned = null;
-            // TODO: GUI
+            // TODO: Card message
             playerBankrupt = ((CardApplyOwnableSpace) card).doCardEffect(player, spaces, owned, bank);
-            // TODO: GUI
+            // TODO: change in GUI
         }
     }
 }

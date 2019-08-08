@@ -12,9 +12,10 @@ import java.util.Random;
  * @author Jan Uriel Marcelo
  */
 public class SpaceController {
-    public static boolean doLandEffect(ArrayList<Player> players, ArrayList<Space> spaces, Space space, Player player,
+    public static boolean doLandEffect (ArrayList<Player> players, ArrayList<Space> spaces, Space space, Player player,
                                     Bank bank) {
         boolean playerBankrupt = false;
+        // TODO: gui message
         if (space instanceof Property) {
             Property property = (Property) space;
             Player owner = property.getOwner(players);
