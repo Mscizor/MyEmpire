@@ -1,7 +1,7 @@
 package controller;
 
-import gui.BoardFrame;
-import gui.InfoFrame;
+import gui.PlayingFrame;
+import gui.ButtonListener;
 import model.*;
 import model.cards.*;
 import model.spaces.*;
@@ -16,8 +16,7 @@ public class PlayingController {
     CardSet cards;
     Bank bank;
 
-    BoardFrame board;
-    InfoFrame info;
+    PlayingFrame board;
 
     public PlayingController (ArrayList <Player> players, ArrayList <Space> spaces, Bank bank) {
         this.players = players;
@@ -35,7 +34,27 @@ public class PlayingController {
             names.add (player.getName ());
         }
 
-        this.board = new BoardFrame (names, bank.getCash(), spaceImages);
-//        this.info = new InfoFrame (names, bank.getCash ());
+        this.board = new PlayingFrame("My Empire", names, bank.getCash(),
+                players.get (0).getCash (), spaceImages, new ButtonPressed ());
+    }
+
+    private class ButtonPressed implements ButtonListener {
+        @Override
+        public void buttonPressed (int index) {
+            switch (index) {
+                case 0: // Rolled Dice
+                    break;
+                case 1: // Purchased
+                    break;
+                case 2: // Develop
+                    break;
+                case 3: // Pay Rent
+                    break;
+                case 4: // Trade
+                    break;
+                case 5: // Finished
+                    break;
+            }
+        }
     }
 }

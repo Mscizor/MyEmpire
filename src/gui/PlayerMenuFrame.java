@@ -21,7 +21,9 @@ public class PlayerMenuFrame extends JFrame implements ActionListener {
 
     private PlayerListener playerListener;
 
-    public PlayerMenuFrame (PlayerListener playerListener) {
+    public PlayerMenuFrame (String title, PlayerListener playerListener) {
+        super (title);
+
         this.setDefaultCloseOperation (EXIT_ON_CLOSE);
         this.setLayout (null);
         this.setResizable (false);

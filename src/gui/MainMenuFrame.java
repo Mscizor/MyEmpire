@@ -16,7 +16,9 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
     private ActionListener pressedStart;
 
-    public MainMenuFrame(ActionListener pressedStart) {
+    public MainMenuFrame(String title, ActionListener pressedStart) {
+        super (title);
+
         this.pressedStart = pressedStart;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);

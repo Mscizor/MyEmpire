@@ -31,7 +31,8 @@ public class SpaceSelectController {
 
         this.initSpaces ();
 
-        this.spaceSelectMenu = new SpaceSelectMenuFrame (new PressedFinish (), spaceImages, displayImages);
+        this.spaceSelectMenu = new SpaceSelectMenuFrame ("Choose where to put the spaces!",
+                new PressedFinish (), spaceImages, displayImages);
     }
 
     public void initSpaces () {

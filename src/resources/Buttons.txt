@@ -1,0 +1,6 @@
+RollDice
+Purchase
+Develop
+PayRent
+Trade
+Finished

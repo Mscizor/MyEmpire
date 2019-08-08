@@ -16,7 +16,7 @@ public class PlayerMenuController {
 
     public PlayerMenuController () {
         this.players = new ArrayList <> ();
-        this.playerMenu = new PlayerMenuFrame (new PressedFinish ());
+        this.playerMenu = new PlayerMenuFrame ("Choose your players!", new PressedFinish ());
     }
 
     private class PressedFinish implements PlayerListener {

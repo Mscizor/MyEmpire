@@ -12,28 +12,34 @@ import java.util.Random;
  * @author Jan Uriel Marcelo
  */
 public class SpaceController {
-    public static void doLandEffect(ArrayList<Player> players,
-                                    ArrayList<Space> spaces, Space space, Player player, Bank bank) {
+    public static void doLandEffect(ArrayList<Player> players, ArrayList<Space> spaces, Space space, Player player,
+                                    Bank bank) {
         if (space instanceof Property) {
             Property property = (Property) space;
             Player owner = property.getOwner(players);
             if (owner == null && player.getCash() >= property.getPrice()) {
                 property.buySpace(players, spaces, player, bank);
-            } else if (owner == player && property.isAbleToDevelop(players)) {
+            }
+            else if (owner == player && property.isAbleToDevelop(players)) {
                 property.addBuilding(players);
-            } else {
+            }
+            else {
                 property.payRent(players, spaces, player);
             }
-        } else if (space instanceof Utility || space instanceof Railroad) {
+        }
+        else if (space instanceof Utility || space instanceof Railroad) {
             OwnableSpace oSpace = (OwnableSpace) space;
             Player owner = oSpace.getOwner(players);
             if (owner == null) {
                 oSpace.buySpace(players, spaces, player, bank);
-            } else if (owner == player) {
-            } else {
+            }
+            else if (owner == player) {
+            }
+            else {
                 oSpace.payRent(players, spaces, player);
             }
-        } else if (space instanceof Corner) {
+        }
+        else if (space instanceof Corner) {
             String name = space.getName();
             switch (name) {
                 case "START":
@@ -48,9 +54,11 @@ public class SpaceController {
                     player.arrest();
                     break;
             }
-        } else if (space instanceof Chance) {
+        }
+        else if (space instanceof Chance) {
 
-        } else if (space instanceof Tax) {
+        }
+        else if (space instanceof Tax) {
             String name = space.getName();
             switch (name) {
                 case "Luxury Tax":
@@ -60,7 +68,8 @@ public class SpaceController {
                     double cash;
                     if (player.getCash() * 0.10 > 200) {
                         cash = player.getCash() * 0.10;
-                    } else {
+                    }
+                    else {
                         cash = 200;
                     }
                     player.changeCash(-cash);

@@ -24,8 +24,10 @@ public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
 
     private SpaceListener spaceListener;
 
-    public SpaceSelectMenuFrame (SpaceListener spaceListener, ArrayList <ImageIcon> spaceImages,
+    public SpaceSelectMenuFrame (String title, SpaceListener spaceListener, ArrayList <ImageIcon> spaceImages,
                                  ArrayList <ImageIcon> displayImages) {
+        super (title);
+
         this.spaceListener = spaceListener;
         this.spaceImages = spaceImages;
         this.displayImages = displayImages;
