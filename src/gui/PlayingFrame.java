@@ -88,8 +88,6 @@ public class PlayingFrame extends JFrame implements ActionListener {
         moveTimer = new Timer (100, this);
         messageTimer = new Timer (1000, this);
         iconTimer = new Timer (1000, this);
-
-        this.moveCurrentPlayer (10);
     }
 
     private void initComponents (ArrayList <String> playerNames, double startingCash,
@@ -221,6 +219,7 @@ public class PlayingFrame extends JFrame implements ActionListener {
                 temp = new JButton (icon);
                 temp.setBounds (x, y, 165, 30);
                 temp.addActionListener (this);
+                if (i != 0) {temp.setEnabled (false);}
                 this.buttons.add (temp);
                 info.add (temp, 2, 1);
             }
@@ -264,6 +263,23 @@ public class PlayingFrame extends JFrame implements ActionListener {
         this.iconTimer.start ();
     }
 
+    public Timer getMoveTimer () {
+        return this.moveTimer;
+    }
+
+    public Timer getMessageTimer () {
+        return this.messageTimer;
+    }
+
+    public Timer getIconTimer () {
+        return this.iconTimer;
+    }
+
+    public void stopShowingTimers () {
+        this.iconTimer.stop ();
+        this.messageTimer.stop ();
+    }
+
     public void setMessage (String message) {
         this.messageText.setText (message);
     }
@@ -292,19 +308,12 @@ public class PlayingFrame extends JFrame implements ActionListener {
         this.bankAmount.setText (String.valueOf (newCash));
     }
 
-    public void disableButton (int button) {
-        this.buttons.get (button).setEnabled (false);
-    }
-
-    public void enableButton (int button) {
-        this.buttons.get (button).setEnabled (true);
-    }
-
     public void setButtonsEnabled (boolean[] buttonsEnabled) {
         for (int i = 0; i < 6; i++) {
             this.buttons.get (i).setEnabled (buttonsEnabled[i]);
         }
     }
+
     public void setCurrentPlayer (int currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
@@ -340,6 +349,16 @@ public class PlayingFrame extends JFrame implements ActionListener {
         return -1;
     }
 
+    public void testPause (int seconds) {
+        for (int i = 0; i < seconds; i++) {
+            try {
+                Thread.sleep (1000);
+                System.out.println (i);
+            } catch (InterruptedException e) {
+
+            }
+        }
+    }
     @Override
     public void actionPerformed (ActionEvent e) {
         if (e.getSource () instanceof Timer)
