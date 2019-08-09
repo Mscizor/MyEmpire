@@ -14,10 +14,10 @@ public class CardFJailFree extends Card implements Ownable {
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         String string = "";
 
-        string += "Card -- " + this.getName ();
+        string += "Card -- " + this.getName();
 
         return string;
     }

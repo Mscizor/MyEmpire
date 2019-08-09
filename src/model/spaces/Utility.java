@@ -91,10 +91,10 @@ public class Utility extends OwnableSpace {
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         String string = "";
 
-        string += this.getName () + "at Space " + this.getLocation();
+        string += this.getName() + " at Space " + this.getLocation();
 
         return string;
     }

@@ -9,26 +9,26 @@ import model.Player;
 
 public class PlayerMenuController {
 
-    private ArrayList <Player> players;
+    private ArrayList<Player> players;
     private Bank bank;
 
     private PlayerMenuFrame playerMenu;
 
-    public PlayerMenuController () {
-        this.players = new ArrayList <> ();
-        this.playerMenu = new PlayerMenuFrame ("Choose your players!", new PressedFinish ());
+    public PlayerMenuController() {
+        this.players = new ArrayList<>();
+        this.playerMenu = new PlayerMenuFrame("Choose your players!", new PressedFinish());
     }
 
     private class PressedFinish implements PlayerListener {
-        public void playerNamesAdded (ArrayList <String> playerNames) {
-            playerMenu.dispose ();
+        public void playerNamesAdded(ArrayList<String> playerNames) {
+            playerMenu.dispose();
             for (String player : playerNames) {
-                players.add (new Player (player));
-                System.out.println (player);
+                players.add(new Player(player));
+                System.out.println(player);
             }
 
-            bank = new Bank (playerNames.size ());
-            new SpaceSelectController (players, bank);
+            bank = new Bank(playerNames.size());
+            new SpaceSelectController(players, bank);
         }
     }
 }

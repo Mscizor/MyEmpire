@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Transactions {
     public static boolean cashToBank(Player player, Bank bank, double cash) {
-        if (player.getCash () >= cash) {
+        if (player.getCash() >= cash) {
             player.changeCash(-cash);
             bank.changeCash(cash);
             return false;

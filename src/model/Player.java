@@ -28,7 +28,7 @@ public class Player {
      * @param name the name of the current player
      */
     public Player(String name) {
-        this.owned = new ArrayList <> ();
+        this.owned = new ArrayList<>();
         this.name = name;
         this.cash = 1500;
     }
@@ -64,9 +64,10 @@ public class Player {
         return this.diceRoll;
     }
 
-    public void setDiceRoll (int diceRoll) {
+    public void setDiceRoll(int diceRoll) {
         this.diceRoll = diceRoll;
     }
+
     /**
      * Gets and returns true if the player is in jail
      *
@@ -112,7 +113,7 @@ public class Player {
      *
      * @param position the position of the current player in the array list of spaces
      */
-    public void changePosition (int position) {
+    public void changePosition(int position) {
         this.position = position;
     }
 

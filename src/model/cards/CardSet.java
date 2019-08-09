@@ -242,7 +242,7 @@ public class CardSet {
         return randomCard;
     }
 
-    private Property getRandomProperty (ArrayList<Space> spaces) {
+    private Property getRandomProperty(ArrayList<Space> spaces) {
         Random rand = new Random();
         int loc = rand.nextInt(32);
         Property random = null;

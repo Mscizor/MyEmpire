@@ -46,19 +46,19 @@ public abstract class Space {
      * @return a <code> int </code>
      * specifying the position of the space in the array list of spaces.
      */
-    public int getLocation () {
+    public int getLocation() {
         return this.location;
     }
 
-    public void setLocation (int location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 
-    public ImageIcon getSpaceIcon () {
+    public ImageIcon getSpaceIcon() {
         return this.spaceIcon;
     }
 
-    public ImageIcon getDisplayIcon () {
+    public ImageIcon getDisplayIcon() {
         return this.displayIcon;
     }
 }

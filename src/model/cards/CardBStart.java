@@ -19,9 +19,15 @@ public class CardBStart extends Card implements CardMovePlayer {
     @Override
     public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
         if (spaces.get(0).getName().equals("START")) {
-            player.changePosition(0);
-            // TODO: do land thing
-
+            int playerPos = player.getPosition();
+            int destinationLoc = 0;
+            int distance;
+            if (destinationLoc - playerPos >= 0) {
+                distance = destinationLoc - playerPos;
+            } else {
+                distance = destinationLoc - playerPos + 32;
+            }
+            player.setDiceRoll (distance);
         }
         this.discard();
         return false;

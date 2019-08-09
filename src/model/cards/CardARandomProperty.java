@@ -21,15 +21,22 @@ public class CardARandomProperty extends Card implements CardMovePlayer {
 
     @Override
     public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
-        boolean playerBankrupt = false;
         if (random == null) {
             player.changePosition(0);
         } else {
-            player.changePosition(random.getLocation());
-            // TODO: do land thing and start thing
+            int playerPos = player.getPosition();
+            int destinationLoc = random.getLocation();
+            int distance;
+
+            if (destinationLoc - playerPos >= 0) {
+                distance = destinationLoc - playerPos;
+            } else {
+                distance = destinationLoc - playerPos + 32;
+            }
+
+            player.setDiceRoll (distance);
         }
         this.discard();
-
-        return playerBankrupt;
+        return false;
     }
 }

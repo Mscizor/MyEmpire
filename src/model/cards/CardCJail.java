@@ -19,7 +19,17 @@ public class CardCJail extends Card implements CardMovePlayer {
     @Override
     public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
         if (spaces.get(16).getName().equals("JAIL")) {
-            player.changePosition(16);
+            int playerPos = player.getPosition();
+            int destinationLoc = 16;
+            int distance;
+
+            if (destinationLoc - playerPos >= 0) {
+                distance = destinationLoc - playerPos;
+            } else {
+                distance = destinationLoc - playerPos + 32;
+            }
+
+            player.setDiceRoll (distance);
             player.arrest();
         }
         this.discard();

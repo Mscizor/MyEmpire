@@ -18,7 +18,7 @@ public class Chance extends Space {
      * @param name     the name of the space
      * @param location the location of the space on the array list of spaces
      */
-    public Chance (String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
-        super (name, location, spaceIcon, displayIcon);
+    public Chance(String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
+        super(name, location, spaceIcon, displayIcon);
     }
 }

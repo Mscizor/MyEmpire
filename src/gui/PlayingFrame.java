@@ -12,13 +12,6 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
 public class PlayingFrame extends JFrame implements ActionListener {
-
-    /* Timers */
-    private Timer moveTimer;
-    private Timer messageTimer;
-    private Timer iconTimer;
-    private int seconds;
-
     /* Board GUI */
     private ArrayList <JButton> spaces;
     private ArrayList <JLabel> playerIcons;
@@ -44,7 +37,7 @@ public class PlayingFrame extends JFrame implements ActionListener {
     private int[][] xySpaceLocations;
     /* Location variables and movement */
 
-    public PlayingFrame(String title, ArrayList <String> playerNames, double startingCash, double bankAmount,
+    public PlayingFrame (String title, ArrayList <String> playerNames, double startingCash, double bankAmount,
                         ArrayList <ImageIcon> spaces, ButtonListener btnListener) {
         super (title);
 
@@ -84,10 +77,6 @@ public class PlayingFrame extends JFrame implements ActionListener {
         this.initComponents (playerNames, startingCash, bankAmount, spaces);
 
         this.setVisible (true);
-
-        moveTimer = new Timer (100, this);
-        messageTimer = new Timer (1000, this);
-        iconTimer = new Timer (1000, this);
     }
 
     private void initComponents (ArrayList <String> playerNames, double startingCash,
@@ -128,8 +117,8 @@ public class PlayingFrame extends JFrame implements ActionListener {
             int x = this.xySpaceLocations[0][0];
             int y = this.xySpaceLocations[0][0];
             this.currentPlayer = i;
-            x += this.getXYMod ()[0];
-            y += this.getXYMod ()[1];
+            x += this.getXYMod (i)[0];
+            y += this.getXYMod (i)[1];
             temp.setBounds (x, y, 40, 40);
             this.playerIcons.add (temp);
             pane.add (temp, 3, 1);
@@ -137,12 +126,12 @@ public class PlayingFrame extends JFrame implements ActionListener {
         this.currentPlayer = 0;
 
         this.messagePanel = new JPanel ();
-        this.messagePanel.setBounds (120, 260, 480, 200);
+        this.messagePanel.setBounds (120, 440, 480, 130);
         this.messagePanel.setBorder (BorderFactory.createRaisedBevelBorder());
         pane.add (messagePanel, 6, 1);
 
         this.messageText = new JTextArea ();
-        this.messageText.setBounds (125, 255, 470, 190);
+        this.messageText.setBounds (125, 255, 470, 120);
         this.messageText.setOpaque (false);
         this.messageText.setEditable (false);
         this.messageText.setLineWrap (true);
@@ -150,7 +139,7 @@ public class PlayingFrame extends JFrame implements ActionListener {
         this.messagePanel.add (this.messageText);
 
         this.centerImage = new JLabel ();
-        this.centerImage.setBounds (240, 140,240, 360);
+        this.centerImage.setBounds (240, 85,240, 360);
         this.setVisible (false);
         pane.add (centerImage, 5, 1);
 
@@ -233,9 +222,9 @@ public class PlayingFrame extends JFrame implements ActionListener {
         this.add (info);
     }
 
-    private int[] getXYMod () {
+    private int[] getXYMod (int player) {
         int[] xyMod = new int[2];
-        switch (currentPlayer) {
+        switch (player) {
             case 1:
                 xyMod[0] += 40;
                 break;
@@ -249,80 +238,131 @@ public class PlayingFrame extends JFrame implements ActionListener {
         return xyMod;
     }
 
-    public void emitMessage (int seconds, String message) {
-        this.seconds = seconds;
-        this.messageText.setText (message);
-        this.refresh ();
-        this.messageTimer.start ();
-    }
-
-    public void emitImage (int seconds, ImageIcon icon) {
-        this.seconds = seconds;
-        this.centerImage.setIcon (icon);
-        this.refresh ();
-        this.iconTimer.start ();
-    }
-
-    public Timer getMoveTimer () {
-        return this.moveTimer;
-    }
-
-    public Timer getMessageTimer () {
-        return this.messageTimer;
-    }
-
-    public Timer getIconTimer () {
-        return this.iconTimer;
-    }
-
-    public void stopShowingTimers () {
-        this.iconTimer.stop ();
-        this.messageTimer.stop ();
-    }
-
-    public void setMessage (String message) {
-        this.messageText.setText (message);
-    }
-
     public void setIcon (ImageIcon icon) {
-        this.centerImage.setIcon (icon);
-    }
-
-    public void setMessageVisible (boolean visible) {
-        this.messagePanel.setVisible (visible);
+        SwingUtilities.invokeLater (() -> {
+            this.centerImage.setIcon (icon);
+        });
     }
 
     public void setIconVisible (boolean visible) {
-        this.centerImage.setVisible (visible);
+        SwingUtilities.invokeLater (() -> {
+            this.centerImage.setVisible (visible);
+        });
+    }
+
+    public void setMessage (String text) {
+        SwingUtilities.invokeLater (() -> {
+            this.messageText.setText (text);
+        });
+    }
+
+    public void appendMessage (String text) {
+        SwingUtilities.invokeLater (() -> {
+            this.messageText.append (text);
+        });
+    }
+    public void setMessageVisible (boolean visible) {
+        SwingUtilities.invokeLater (() -> {
+            this.messagePanel.setVisible (visible);
+        });
+    }
+
+    public void emitMessage (int seconds, String message) {
+        try {
+            SwingUtilities.invokeLater(() -> {
+                this.messageText.setText (message);
+                this.messagePanel.setVisible(true);
+            });
+            Thread.sleep(1000 * seconds);
+            SwingUtilities.invokeLater(() -> {
+                this.messagePanel.setVisible(false);
+            });
+        }
+        catch (InterruptedException e) {}
+    }
+
+    public void emitImage (int seconds, ImageIcon icon) {
+        try {
+            SwingUtilities.invokeLater(() -> {
+                this.centerImage.setIcon(icon);
+                this.centerImage.setVisible(true);
+            });
+            Thread.sleep(1000 * seconds);
+            SwingUtilities.invokeLater(() -> {
+                this.centerImage.setVisible(false);
+            });
+        }
+        catch (InterruptedException e) {}
     }
 
     public void setPlayerText (int player, String newText) {
-        this.playerOwned.get (player).setText (newText);
+        SwingUtilities.invokeLater (() -> {
+            this.playerOwned.get (player).setText (newText);
+        });
     }
 
     public void setPlayerCash (int player, double newCash) {
-        this.playerAmounts.get (player).setText (String.valueOf (newCash));
+        SwingUtilities.invokeLater (() -> {
+            this.playerAmounts.get (player).setText (String.valueOf (newCash));
+        });
     }
 
     public void setBankCash (double newCash) {
-        this.bankAmount.setText (String.valueOf (newCash));
+        SwingUtilities.invokeLater (() -> {
+            this.bankAmount.setText (String.valueOf (newCash));
+        });
     }
 
     public void setButtonsEnabled (boolean[] buttonsEnabled) {
-        for (int i = 0; i < 6; i++) {
-            this.buttons.get (i).setEnabled (buttonsEnabled[i]);
-        }
+        SwingUtilities.invokeLater (() -> {
+            for (int i = 0; i < 6; i++) {
+                this.buttons.get (i).setEnabled (buttonsEnabled[i]);
+            }
+        });
+    }
+
+    public void setBtnSpaceEnabled (int pos) {
+        this.spaces.get (pos).setEnabled (true);
     }
 
     public void setCurrentPlayer (int currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
-    public void moveCurrentPlayer (int movement) {
-        this.movement = movement;
-        this.moveTimer.start ();
+    public void movePlayer (int player, int movement) {
+        Runnable x = new PlayerMove (this, player, movement);
+        Thread y = new Thread (x);
+        y.start ();
     }
 
+    private class PlayerMove implements Runnable {
+        private PlayingFrame board;
+        int player;
+        int timesMove;
+        public PlayerMove (PlayingFrame board, int player, int timesMove) {
+            this.board = board;
+            this.player = player;
+            this.timesMove = timesMove;
+        }
+        @Override
+        public void run() {
+            try {
+                while (this.timesMove > 0) {
+                    int index = (++board.playerIndices[player]) % 32;
+                    int x = board.xySpaceLocations[index][0];
+                    int y = board.xySpaceLocations[index][1];
+                    x += board.getXYMod(player)[0];
+                    y += board.getXYMod(player)[1];
+                    board.playerIcons.get(player).setBounds(x, y, 40, 40);
+                    Thread.sleep (200);
+                    board.refresh();
+                    this.timesMove--;
+                }
+            }
+            catch (InterruptedException e) {}
+        }
+
+    }
     public int getPlayerLocation (int player) {
         int x, y;
         x = playerIcons.get (player).getX();
@@ -359,57 +399,20 @@ public class PlayingFrame extends JFrame implements ActionListener {
             }
         }
     }
+
     @Override
     public void actionPerformed (ActionEvent e) {
-        if (e.getSource () instanceof Timer)
-        {
-            Timer timer = (Timer) e.getSource ();
-            if (timer == this.moveTimer) {
-                if (this.movement > 0) {
-                    this.messageText.setText ("Moving...");
-                    this.messagePanel.setVisible(true);
-                    int index = (++this.playerIndices[currentPlayer]) % 32;
-                    int x = this.xySpaceLocations[index][0];
-                    int y = this.xySpaceLocations[index][1];
-                    x += getXYMod()[0];
-                    y += getXYMod()[1];
-                    this.playerIcons.get(currentPlayer).setBounds(x, y, 40, 40);
-                    this.movement--;
-                    System.out.println("yeet " + movement);
-                    this.refresh ();
-                } else {
-                    timer.stop();
-                    this.messagePanel.setVisible (false);
-                }
-            }
-            else if (timer == this.messageTimer || timer == this.iconTimer) {
-                if (timer == this.messageTimer) {
-                    this.messagePanel.setVisible (true);
-                }
-                else {
-                    this.centerImage.setVisible (true);
-                }
-                this.refresh ();
-
-                if (this.seconds > 0) {
-                    this.seconds--;
-                }
-                else {
-                    timer.stop ();
-                    if (timer == this.messageTimer) {
-                        this.messagePanel.setVisible (false);
-                    }
-                    else {
-                        this.centerImage.setVisible (false);
-                    }
-                }
-            }
-        }
-        else if (e.getSource () instanceof JButton && !this.messageTimer.isRunning() && !this.iconTimer.isRunning ()
-                && !this.moveTimer.isRunning ()) {
+        if (e.getSource () instanceof JButton) {
             JButton pressed = (JButton) e.getSource ();
             if (this.buttons.contains (pressed)) {
                 this.btnListener.buttonPressed (this.buttons.indexOf (pressed));
+            }
+            else if (this.spaces.contains (pressed)) {
+                for (JButton btn : this.spaces) {
+                    btn.setEnabled (false);
+                    // buttons of spaces begin from 100
+                    this.btnListener.buttonPressed (100 + this.spaces.indexOf ( pressed));
+                }
             }
         }
     }

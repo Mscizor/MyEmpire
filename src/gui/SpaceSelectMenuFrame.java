@@ -16,17 +16,17 @@ public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
 
     private JLabel displayedImage;
 
-    private ArrayList <JButton> spaces;
+    private ArrayList<JButton> spaces;
     private JButton finished;
 
-    private ArrayList <ImageIcon> spaceImages;
-    private ArrayList <ImageIcon> displayImages;
+    private ArrayList<ImageIcon> spaceImages;
+    private ArrayList<ImageIcon> displayImages;
 
     private SpaceListener spaceListener;
 
-    public SpaceSelectMenuFrame (String title, SpaceListener spaceListener, ArrayList <ImageIcon> spaceImages,
-                                 ArrayList <ImageIcon> displayImages) {
-        super (title);
+    public SpaceSelectMenuFrame(String title, SpaceListener spaceListener, ArrayList<ImageIcon> spaceImages,
+                                ArrayList<ImageIcon> displayImages) {
+        super(title);
 
         this.spaceListener = spaceListener;
         this.spaceImages = spaceImages;
@@ -38,16 +38,13 @@ public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
             if (i < 9) {
                 x = 80 * i;
                 y = 0;
-            }
-            else if (9 <= i && i < 17) {
+            } else if (9 <= i && i < 17) {
                 x = 640;
                 y = 80 * (i - 8);
-            }
-            else if (17 <= i && i < 25) {
+            } else if (17 <= i && i < 25) {
                 x = 80 * (24 - i);
                 y = 640;
-            }
-            else if (25 <= i && i < 32) {
+            } else if (25 <= i && i < 32) {
                 x = 0;
                 y = 80 * (32 - i);
             }
@@ -60,128 +57,125 @@ public class SpaceSelectMenuFrame extends JFrame implements ActionListener {
         this.finalLocations[16] = 30;
         this.finalLocations[24] = 31;
 
-        this.setDefaultCloseOperation (EXIT_ON_CLOSE);
-        this.setLayout (null);
-        this.setResizable (false);
-        this.setSize (/* Size */725, 750);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setResizable(false);
+        this.setSize(/* Size */725, 750);
 
-        this.initComponents ();
+        this.initComponents();
 
-        this.setVisible (true);
+        this.setVisible(true);
     }
 
-    public void initComponents () {
+    public void initComponents() {
         ImageIcon icon;
 
-        this.pane = new JLayeredPane ();
-        this.pane.setBounds (0, 0, 720, 720);
+        this.pane = new JLayeredPane();
+        this.pane.setBounds(0, 0, 720, 720);
 
-        icon = new ImageIcon ("src/resources/images/EmptyBoard.png");
-        JLabel bg = new JLabel (icon);
-        bg.setBounds (80, 80, 560, 560);
-        this.pane.add (bg, new Integer (1), 1);
+        icon = new ImageIcon("src/resources/images/EmptyBoard.png");
+        JLabel bg = new JLabel(icon);
+        bg.setBounds(80, 80, 560, 560);
+        this.pane.add(bg, new Integer(1), 1);
 
-        this.displayedImage = new JLabel ();
-        this.displayedImage.setBounds (240,180, 240, 360);
-        this.displayedImage.setIcon (this.displayImages.get (0));
-        this.pane.add (displayedImage, new Integer (2), 1);
+        this.displayedImage = new JLabel();
+        this.displayedImage.setBounds(240, 180, 240, 360);
+        this.displayedImage.setIcon(this.displayImages.get(0));
+        this.pane.add(displayedImage, new Integer(2), 1);
 
-        this.spaces = new ArrayList <> ();
+        this.spaces = new ArrayList<>();
 
         for (int i = 0; i < 32; i++) {
             JButton temp;
             if (i % 8 != 0) {
-                icon = new ImageIcon ("src/resources/images/squares/numbers/" + i + ".png");
-            }
-            else {
+                icon = new ImageIcon("src/resources/images/squares/numbers/" + i + ".png");
+            } else {
                 switch (i) {
                     case 0:
-                        icon = new ImageIcon ("src/resources/images/squares/SqStart.png");
+                        icon = new ImageIcon("src/resources/images/squares/SqStart.png");
                         break;
                     case 8:
-                        icon = new ImageIcon ("src/resources/images/squares/SqCommunityService.png");
+                        icon = new ImageIcon("src/resources/images/squares/SqCommunityService.png");
                         break;
                     case 16:
-                        icon = new ImageIcon ("src/resources/images/squares/SqJail.png");
+                        icon = new ImageIcon("src/resources/images/squares/SqJail.png");
                         break;
                     default:
-                        icon = new ImageIcon ("src/resources/images/squares/SqFreeParking.png");
+                        icon = new ImageIcon("src/resources/images/squares/SqFreeParking.png");
                 }
             }
-            temp = new JButton (icon);
+            temp = new JButton(icon);
 
             if (i % 8 == 0) {
-                temp.setDisabledIcon (icon);
-                temp.setEnabled (false);
+                temp.setDisabledIcon(icon);
+                temp.setEnabled(false);
             }
 
             int x = this.xySpaceLocations[i][0];
             int y = this.xySpaceLocations[i][1];
-            temp.setBounds (x, y, 80, 80);
-            temp.addActionListener (this);
-            this.spaces.add (temp);
+            temp.setBounds(x, y, 80, 80);
+            temp.addActionListener(this);
+            this.spaces.add(temp);
         }
-        for (int i = 0; i < spaces.size (); i++) {
-            this.pane.add (spaces.get (i), new Integer (2), 1);
+        for (int i = 0; i < spaces.size(); i++) {
+            this.pane.add(spaces.get(i), new Integer(2), 1);
         }
 
-        icon = new ImageIcon ("src/resources/images/spaceMenu/Finished.png");
-        this.finished = new JButton (icon);
-        this.finished.setBounds (345, 110, 30, 30);
-        this.finished.addActionListener (this);
-        this.finished.setEnabled (false);
-        this.pane.add (finished, new Integer (2), 1);
+        icon = new ImageIcon("src/resources/images/spaceMenu/Finished.png");
+        this.finished = new JButton(icon);
+        this.finished.setBounds(345, 110, 30, 30);
+        this.finished.addActionListener(this);
+        this.finished.setEnabled(false);
+        this.pane.add(finished, new Integer(2), 1);
 
-        this.add (pane);
+        this.add(pane);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton pressed = (JButton) e.getSource ();
+        JButton pressed = (JButton) e.getSource();
         if (pressed == this.finished) {
             boolean finishedPlacing = true;
             for (JButton btn : spaces) {
-                if (btn.isEnabled ()) {
+                if (btn.isEnabled()) {
                     finishedPlacing = false;
                 }
             }
 
             if (this.spaceListener != null && finishedPlacing) {
-                ArrayList <ImageIcon> imagesAdded = new ArrayList <> ();
+                ArrayList<ImageIcon> imagesAdded = new ArrayList<>();
                 int i = 0;
                 for (JButton space : spaces) {
-                    imagesAdded.add ((ImageIcon) space.getDisabledIcon());
+                    imagesAdded.add((ImageIcon) space.getDisabledIcon());
                 }
-                this.spaceListener.spacesAdded (this.finalLocations);
+                this.spaceListener.spacesAdded(this.finalLocations);
             }
-        }
-        else if (this.spaces.contains (pressed)) {
-            int index = this.spaces.indexOf (pressed);
-            JButton spacePressed = this.spaces.get (index);
+        } else if (this.spaces.contains(pressed)) {
+            int index = this.spaces.indexOf(pressed);
+            JButton spacePressed = this.spaces.get(index);
             this.finalLocations[index] = currentImageIndex;
-            spacePressed.setDisabledIcon (spaceImages.get (this.currentImageIndex));
-            spacePressed.setEnabled (false);
+            spacePressed.setDisabledIcon(spaceImages.get(this.currentImageIndex));
+            spacePressed.setEnabled(false);
             this.currentImageIndex++;
 
             boolean finished = true;
             for (JButton btn : this.spaces) {
-                if (btn.isEnabled ())
+                if (btn.isEnabled())
                     finished = false;
             }
 
             if (!finished) {
-                this.displayedImage.setIcon(displayImages.get (this.currentImageIndex));
+                this.displayedImage.setIcon(displayImages.get(this.currentImageIndex));
+            } else {
+                this.displayedImage.setVisible(false);
+                this.finished.setEnabled(true);
             }
-            else {
-                this.displayedImage.setVisible (false);
-                this.finished.setEnabled (true);
-            }
-            this.update ();
+            this.update();
         }
     }
 
-    public void update () {
-        this.revalidate ();
-        this.repaint ();
+    public void update() {
+        this.revalidate();
+        this.repaint();
     }
 }
