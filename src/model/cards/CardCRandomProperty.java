@@ -28,6 +28,7 @@ public class CardCRandomProperty extends Card implements CardMovePlayer {
         } else {
             int playerPos = player.getPosition();
             int destinationLoc = random.getLocation();
+            System.out.println ("CHANCE TESTING: " + random);
             int distance;
 
             if (destinationLoc - playerPos >= 0) {

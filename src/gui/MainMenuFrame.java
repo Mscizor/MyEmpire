@@ -41,7 +41,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         icon = new ImageIcon("src/resources/images/mainMenu/StartScreen.png");
         JLabel bg = new JLabel(icon);
         bg.setBounds(0, 0, 1080, 720);
-        this.pane.add(bg, new Integer(1), 0);
+        this.pane.add(bg, 1, 0);
 
         icon = new ImageIcon("src/resources/images/mainMenu/Start.png");
         this.start = new JButton(icon);
@@ -49,7 +49,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         this.start.setPreferredSize(new Dimension(120, 30));
         this.start.setBounds(480, 530, 120, 30);
         this.start.addActionListener(this);
-        this.pane.add(start, new Integer(2), 0);
+        this.pane.add(start, 2, 0);
 
         icon = new ImageIcon("src/resources/images/mainMenu/Exit.png");
         this.exit = new JButton(icon);
@@ -57,7 +57,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         this.exit.setPreferredSize(new Dimension(120, 30));
         this.exit.setBounds(480, 570, 120, 30);
         this.exit.addActionListener(this);
-        this.pane.add(exit, new Integer(2), 0);
+        this.pane.add(exit, 2, 0);
 
         this.add(pane);
     }

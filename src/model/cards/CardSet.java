@@ -230,13 +230,17 @@ public class CardSet {
         Card randomCard = null;
         while (i < cards.size() && !found) {
             randomCard = cards.get((randomPick + i) % cards.size());
-            if (!randomCard.isDiscarded()
-                    && !(randomCard instanceof CardApplyOwnableSpace)
-                    || ((CardApplyOwnableSpace) randomCard).isApplied()) {
-                found = true;
+            if (!randomCard.isDiscarded() || randomCard instanceof CardApplyOwnableSpace) {
+                if (randomCard instanceof CardApplyOwnableSpace) {
+                    if (((CardApplyOwnableSpace) randomCard).isApplied()) {
+                        found = true;
+                    }
+                }
+                else {
+                    found = true;
+                }
             }
         }
-
         this.cards.remove(randomCard);
 
         return randomCard;

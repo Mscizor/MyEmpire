@@ -10,6 +10,7 @@ import model.spaces.*;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class PlayingController {
@@ -22,7 +23,9 @@ public class PlayingController {
     private Card drawnCard;
     private Bank bank;
 
+
     boolean playerBankrupt;
+    boolean trading;
 
     private boolean turnOver = false;
     private boolean gameOver = false;
@@ -30,6 +33,7 @@ public class PlayingController {
     public static final boolean[] JUST_ROLL_DICE = new boolean[]{true, false, false, false, false, false};
     public static final boolean[] JUST_PURCHASE = new boolean[]{false, true, false, false, false, false};
     public static final boolean[] JUST_DEVELOP = new boolean[]{false, false, true, false, false, false};
+    public static final boolean[] JUST_PAY = new boolean[]{false, false, false, true, false, false};
     public static final boolean[] JUST_FINISHED = new boolean[]{false, false, false, false, false, true};
     public static final boolean[] PAY_OR_TRADE = new boolean[]{false, false, false, true, true, false};
     public static final boolean[] TRADE_OR_FINISHED = new boolean[]{false, false, false, false, true, true};
@@ -63,7 +67,7 @@ public class PlayingController {
         @Override
         public void run() {
             try {
-                Thread.sleep ((int) (1000 * seconds));
+                Thread.sleep (1000 * seconds);
             }
             catch (InterruptedException e) {}
         }
@@ -73,7 +77,6 @@ public class PlayingController {
         Random rand = new Random();
         Player player = this.players.get(currentPlayer);
         this.turnOver = false;
-        System.out.println("yeet1111");
         playing.setMessage(String.format("It is %s's turn! ", player.getName()));
         if (player.isInJail()) {
             playing.appendMessage(String.format("%s pays 50 to the bank as payment for JAIL. ", player.getName()));
@@ -92,11 +95,28 @@ public class PlayingController {
         Player player = this.players.get(currentPlayer);
         this.gameOver = this.moveAndLand(players, spaces, player, bank, false);
         this.turnOver = true;
-        if (gameOver) {
+        if (!gameOver) {
             return;
         }
-        // TODO: Show winners
-        System.out.println("yeet finished");
+
+        ArrayList <String> colors = new ArrayList <> (Arrays.asList ("Gray", "Purple", "Pink", "Green", "Blue", "Red", "Yellow"));
+        ArrayList <String> two = new ArrayList <> (Arrays.asList ("Gray", "Red", "Yellow"));
+        ArrayList <Property> pList = new ArrayList <>();
+        for (Player p : players) {
+            for (Ownable o : p.getOwned ()) {
+                if (o instanceof Property) {
+                    pList.add((Property) o);
+                }
+            }
+
+            ArrayList <String> colorSets = new ArrayList <> ();
+            for (Property pr : pList) {
+                int count = 3;
+                if (two.contains(pr.getColor())) {
+                    count--;
+                }
+            }
+        }
     }
 
     public boolean doCardEffect(Card card, Player player, ArrayList<Space> spaces, Bank bank) {
@@ -105,7 +125,7 @@ public class PlayingController {
         if (card instanceof CardMoneyOnly) {
             System.out.println ("cmo");
             playerBankrupt = ((CardMoneyOnly) card).doCardEffect(player, bank);
-            this.updateGUI();
+            this.playing.setButtonsEnabled(JUST_FINISHED);
         } else if (card instanceof CardMovePlayer) {
             System.out.println ("cmp");
             boolean direct;
@@ -115,15 +135,13 @@ public class PlayingController {
             else
                 direct = false;
             this.moveAndLand (players, spaces, player, bank, direct);
-            this.updateGUI();
         } else if (card instanceof CardApplyOwnableSpace) {
             OwnableSpace owned = null;
             boolean noButtons[] = new boolean[]{false, false, false, false, false, false};
             System.out.println ("aos");
             ArrayList <Ownable> ownedList = player.getOwned ();
             int numOwned = 0;
-            for (int i = 0; i < ownedList.size (); i++) {
-                Ownable ownable = ownedList.get (i);
+            for (Ownable ownable : ownedList) {
                 if (card instanceof CardDChangeNonProperty) {
                     if (ownable instanceof OwnableSpace && !(ownable instanceof Property)) {
                         playing.setBtnSpaceEnabled (((OwnableSpace) ownable).getLocation());
@@ -135,9 +153,13 @@ public class PlayingController {
                     numOwned++;
                 }
             }
-            if (numOwned == 0)
-                card.discard ();
-            playing.setButtonsEnabled (noButtons);
+            if (numOwned == 0) {
+                card.discard();
+                playing.setButtonsEnabled(JUST_FINISHED);
+            }
+            else {
+                playing.setButtonsEnabled(noButtons);
+            }
         }
         this.drawnCard = card;
         return playerBankrupt;
@@ -151,18 +173,13 @@ public class PlayingController {
         String sName = space.getName();
         this.playing.setIcon(space.getDisplayIcon());
         this.playing.setIconVisible(true);
+        System.out.println ("Player landed on:" + space);
         Runnable x = new SafePause (5);
         Thread stop = new Thread (x);
         stop.start ();
         if (space instanceof Property) {
             Property property = (Property) space;
             Player owner = property.getOwner(players);
-            System.out.print ("Owner: ");
-            if (owner == null)
-                System.out.println ("null");
-            else
-                System.out.println (owner.getName ());
-
             if (owner == null && player.getCash() >= property.getPrice()) {
                 text = String.format("No one owns %s. %s buys the property for %.1f", sName, pName, property.getPrice());
                 this.playing.setButtonsEnabled(JUST_PURCHASE);
@@ -173,13 +190,27 @@ public class PlayingController {
                 text = String.format("%s lands on their own property (%s), but is not able to develop their property.", pName, property.getName());
                 this.playing.setButtonsEnabled(JUST_FINISHED);
             } else if (owner != null) {
+                int numOwned = 0;
+                ArrayList <Ownable> ownedList = player.getOwned ();
+                for (Ownable ownable : ownedList) {
+                    if (ownable instanceof OwnableSpace) {
+                        playing.setBtnSpaceEnabled(((OwnableSpace) ownable).getLocation());
+                        numOwned++;
+                    }
+                }
                 if (player.getCash() >= property.getRent(players, spaces, player)) {
-                    text = String.format("%s lands on %s's property (%s) and can either trade or pay them %.1f as rent.", pName, owner.getName(), pName,
+                    text = String.format("%s lands on %s's property (%s) and can either trade if they own anything or pay them %.1f as rent.", pName, owner.getName(), pName,
                             property.getRent(players, spaces, player));
-                    this.playing.setButtonsEnabled(PAY_OR_TRADE);
+                    if (numOwned > 0)
+                        this.playing.setButtonsEnabled(PAY_OR_TRADE);
+                    else
+                        this.playing.setButtonsEnabled(JUST_PAY);
                 } else {
-                    text = String.format("%s lands on %s's property (%s) and can either trade or declare bankruptcy.", pName, owner.getName(), pName);
-                    this.playing.setButtonsEnabled(TRADE_OR_FINISHED);
+                    text = String.format("%s lands on %s's property (%s) and can either trade if they own anything or declare bankruptcy.", pName, owner.getName(), pName);
+                    if (numOwned > 0)
+                        this.playing.setButtonsEnabled(TRADE_OR_FINISHED);
+                    else
+                        this.playing.setButtonsEnabled(JUST_FINISHED);
                 }
             } else {
                 text = String.format("No one owns %s. %s does not have enough money to buy it.", sName, pName);
@@ -187,11 +218,6 @@ public class PlayingController {
             }
             this.playing.appendMessage(text + " ");
             this.playing.setMessageVisible(true);
-            System.out.print ("Owner: ");
-            if (owner == null)
-                System.out.println ("null");
-            else
-                System.out.println (owner.getName ());
 
         } else if (space instanceof Utility || space instanceof Railroad) {
             OwnableSpace oSpace = (OwnableSpace) space;
@@ -225,7 +251,6 @@ public class PlayingController {
                     text = String.format("%s lands on %s and gains %.1f.", pName, sName, (double) 200);
                     this.playing.setButtonsEnabled(JUST_FINISHED);
                     Transactions.cashToBank(player, bank, -200);
-                    this.updateGUI();
                     break;
                 case "Community Service":
                     this.playing.setButtonsEnabled(JUST_FINISHED);
@@ -236,18 +261,15 @@ public class PlayingController {
                         text += String.format("%s does not have enough money to pay the community service. Bankrupt!", pName);
                         playerBankrupt = true;
                     }
-                    this.updateGUI();
                     break;
                 case "Free Parking":
                     text = String.format("%s lands on %s and has free parking for a turn.", pName, sName);
                     this.playing.setButtonsEnabled(JUST_FINISHED);
-                    this.updateGUI();
                     break;
                 case "JAIL":
                     text = String.format("%s lands on %s and is arrested.", pName, sName);
                     this.playing.setButtonsEnabled(JUST_FINISHED);
                     player.arrest();
-                    this.updateGUI();
                     break;
                 default:
                     text = "Error";
@@ -257,7 +279,9 @@ public class PlayingController {
         } else if (space instanceof Chance) {
             text = String.format ("%s landed on Chance! ", pName);
             Card drawn = cards.pickRandom ();
-            text += String.format ("%s drew %s!", pName, drawn.getName ());
+            text += String.format ("%s drew %s! - \"%s\" ", pName, drawn.getName (), drawn.getText());
+            this.playing.appendMessage(text);
+            this.playing.setMessageVisible (true);
             this.doCardEffect (drawn, player, spaces, bank);
         } else if (space instanceof Tax) {
             switch (sName) {
@@ -270,7 +294,6 @@ public class PlayingController {
                         Transactions.cashToBank(player, bank, 75);
                     }
                     this.playing.setButtonsEnabled(JUST_FINISHED);
-                    this.updateGUI();
                     break;
                 case "Income Tax":
                     double cash;
@@ -284,7 +307,6 @@ public class PlayingController {
                         playerBankrupt = true;
                     }
                     this.playing.setButtonsEnabled(JUST_FINISHED);
-                    this.updateGUI();
                     break;
                 default:
                     text = "Error";
@@ -329,14 +351,6 @@ public class PlayingController {
             playing.setPlayerCash(i, player.getCash());
             playing.setPlayerText(i, ownedText);
             playing.refresh();
-
-            System.out.println ("Player " + (i + 1));
-            for (Ownable ownable : owned) {
-                System.out.println (ownable);
-            }
-            System.out.println ("--- = ---");
-
-            System.out.println ("Player " + (i + 1) + " GUI vs Model: " + playing.getPlayerLocation(i) + " " + player.getPosition());
             int movement =  player.getPosition() - playing.getPlayerLocation(i);
             if (movement < 0)
                 movement += 32;
@@ -364,6 +378,7 @@ public class PlayingController {
                             p.setDiceRoll(0);
                         }
                         player.setDiceRoll(rand.nextInt(6) + 1);
+                        System.out.println (player.getName () + " rolled a " + player.getDiceRoll());
                         playing.appendMessage(String.format("%s rolled a %d. ", player.getName(), player.getDiceRoll()));
                         doNextPartTurn();
                         break;
@@ -375,19 +390,32 @@ public class PlayingController {
                         break;
                     case 2: // Develop
                         Property property = (Property) landedSpace;
-                        Transactions.cashToBank(player, bank, property.getPrice());
+                        gameOver = Transactions.cashToBank(player, bank, property.getPrice());
                         updateGUI();
                         playing.setButtonsEnabled(JUST_FINISHED);
                         break;
                     case 3: // Pay Rent
                         oSpace = (OwnableSpace) landedSpace;
                         Player other = oSpace.getOwner(players);
-                        Transactions.cashToOtherPlayer(player, other, oSpace.getRent(players, spaces, player));
+                        gameOver = Transactions.cashToOtherPlayer(player, other, oSpace.getRent(players, spaces, player));
                         updateGUI();
                         playing.setButtonsEnabled(JUST_FINISHED);
                         break;
                     case 4: // Trade
-                        // TODO: DO THE FUCKING TRADE
+                        trading = true;
+                        int numOwned = 0;
+                        ArrayList <Ownable> ownedList = player.getOwned ();
+                        for (Ownable ownable : ownedList) {
+                            if (ownable instanceof OwnableSpace) {
+                                playing.setBtnSpaceEnabled(((OwnableSpace) ownable).getLocation());
+                                numOwned++;
+                                }
+                        }
+                        boolean[] nothing = new boolean[]{false, false, false, false, false, false};
+                        playing.setButtonsEnabled (nothing);
+                        playing.setMessage("Click one of your owned spaces to select it to trade");
+                        playing.setMessageVisible(true);
+                        updateGUI ();
                         break;
                     case 5: // Finished
                         currentPlayer = (++currentPlayer % players.size());
@@ -398,7 +426,19 @@ public class PlayingController {
             }
             else {
                 OwnableSpace owned = (OwnableSpace) spaces.get (index - 100);
-                playerBankrupt = ((CardApplyOwnableSpace) drawnCard).doCardEffect(player, spaces, owned, bank);
+                if (!trading) {
+                    playerBankrupt = ((CardApplyOwnableSpace) drawnCard).doCardEffect(player, spaces, owned, bank);
+                }
+                else {
+                    OwnableSpace spaceTraded = (OwnableSpace) spaces.get(index);
+                    OwnableSpace spaceLanded = (OwnableSpace) spaces.get(player.getPosition());
+                    Player owner = spaceLanded.getOwner (players);
+                    owner.getOwned().remove(spaceLanded);
+                    player.getOwned().remove(spaceTraded);
+                    owner.getOwned().add(spaceTraded);
+                    owner.getOwned().add(spaceLanded);
+                    trading = false;
+                }
                 updateGUI();
             }
         }

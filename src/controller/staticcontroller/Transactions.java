@@ -20,9 +20,13 @@ public class Transactions {
         return true;
     }
 
-    public static void cashToOtherPlayer(Player player, Player other, double cash) {
-        player.changeCash(-cash);
-        other.changeCash(cash);
+    public static boolean cashToOtherPlayer(Player player, Player other, double cash) {
+        if (player.getCash () >= cash) {
+            player.changeCash(-cash);
+            other.changeCash(cash);
+            return false;
+        }
+        return true;
     }
 
     public static void tradeWithOtherPlayer(Player player, Player other,

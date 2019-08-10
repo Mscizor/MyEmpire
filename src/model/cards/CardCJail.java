@@ -20,6 +20,7 @@ public class CardCJail extends Card implements CardMovePlayer {
     public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
         if (spaces.get(16).getName().equals("JAIL")) {
             int playerPos = player.getPosition();
+            System.out.println (spaces.get(16));
             int destinationLoc = 16;
             int distance;
 

@@ -20,6 +20,7 @@ public class CardBStart extends Card implements CardMovePlayer {
     public boolean doCardEffect(Player player, ArrayList<Space> spaces, Bank bank) {
         if (spaces.get(0).getName().equals("START")) {
             int playerPos = player.getPosition();
+            System.out.println ("CHANCE TESTING: " + spaces.get (0));
             int destinationLoc = 0;
             int distance;
             if (destinationLoc - playerPos >= 0) {

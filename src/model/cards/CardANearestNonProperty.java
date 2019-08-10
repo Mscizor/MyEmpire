@@ -29,10 +29,9 @@ public class CardANearestNonProperty extends Card implements CardMovePlayer {
         int currentDistance;
         int destinationLoc;
         for (Space search : spaces) {
-            if ((search instanceof Railroad && this.isRailroad)
-                    || (search instanceof Utility && !this.isRailroad)) {
+            if ((search instanceof Railroad && this.isRailroad) || (search instanceof Utility && !this.isRailroad)) {
                 destinationLoc = search.getLocation();
-
+                System.out.println ("CHANCE TESTING: " + search);
                 if (destinationLoc - playerPos >= 0) {
                     currentDistance = destinationLoc - playerPos;
                 } else {
@@ -44,6 +43,8 @@ public class CardANearestNonProperty extends Card implements CardMovePlayer {
                 }
             }
         }
+
+        System.out.println ("Lowest distance: " + lowestDistance + "from " + player.getName ());
 
         player.setDiceRoll (lowestDistance);
         this.discard();

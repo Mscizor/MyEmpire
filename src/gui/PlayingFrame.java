@@ -203,7 +203,6 @@ public class PlayingFrame extends JFrame implements ActionListener {
 
                 JButton temp;
                 String name = sc.nextLine ();
-                System.out.println (name);
                 icon = new ImageIcon ("src/resources/images/playingMenu/" + name + ".png");
                 temp = new JButton (icon);
                 temp.setBounds (x, y, 165, 30);
@@ -239,32 +238,22 @@ public class PlayingFrame extends JFrame implements ActionListener {
     }
 
     public void setIcon (ImageIcon icon) {
-        SwingUtilities.invokeLater (() -> {
-            this.centerImage.setIcon (icon);
-        });
+        SwingUtilities.invokeLater (() -> this.centerImage.setIcon (icon));
     }
 
     public void setIconVisible (boolean visible) {
-        SwingUtilities.invokeLater (() -> {
-            this.centerImage.setVisible (visible);
-        });
+        SwingUtilities.invokeLater (() -> this.centerImage.setVisible (visible));
     }
 
     public void setMessage (String text) {
-        SwingUtilities.invokeLater (() -> {
-            this.messageText.setText (text);
-        });
+        SwingUtilities.invokeLater (() -> this.messageText.setText (text));
     }
 
     public void appendMessage (String text) {
-        SwingUtilities.invokeLater (() -> {
-            this.messageText.append (text);
-        });
+        SwingUtilities.invokeLater (() -> this.messageText.append (text));
     }
     public void setMessageVisible (boolean visible) {
-        SwingUtilities.invokeLater (() -> {
-            this.messagePanel.setVisible (visible);
-        });
+        SwingUtilities.invokeLater (() -> this.messagePanel.setVisible (visible));
     }
 
     public void emitMessage (int seconds, String message) {
@@ -274,9 +263,7 @@ public class PlayingFrame extends JFrame implements ActionListener {
                 this.messagePanel.setVisible(true);
             });
             Thread.sleep(1000 * seconds);
-            SwingUtilities.invokeLater(() -> {
-                this.messagePanel.setVisible(false);
-            });
+            SwingUtilities.invokeLater(() -> this.messagePanel.setVisible(false));
         }
         catch (InterruptedException e) {}
     }
@@ -288,29 +275,21 @@ public class PlayingFrame extends JFrame implements ActionListener {
                 this.centerImage.setVisible(true);
             });
             Thread.sleep(1000 * seconds);
-            SwingUtilities.invokeLater(() -> {
-                this.centerImage.setVisible(false);
-            });
+            SwingUtilities.invokeLater(() -> this.centerImage.setVisible(false));
         }
         catch (InterruptedException e) {}
     }
 
     public void setPlayerText (int player, String newText) {
-        SwingUtilities.invokeLater (() -> {
-            this.playerOwned.get (player).setText (newText);
-        });
+        SwingUtilities.invokeLater (() -> this.playerOwned.get (player).setText (newText));
     }
 
     public void setPlayerCash (int player, double newCash) {
-        SwingUtilities.invokeLater (() -> {
-            this.playerAmounts.get (player).setText (String.valueOf (newCash));
-        });
+        SwingUtilities.invokeLater (() -> this.playerAmounts.get (player).setText (String.valueOf (newCash)));
     }
 
     public void setBankCash (double newCash) {
-        SwingUtilities.invokeLater (() -> {
-            this.bankAmount.setText (String.valueOf (newCash));
-        });
+        SwingUtilities.invokeLater (() -> this.bankAmount.setText (String.valueOf (newCash)));
     }
 
     public void setButtonsEnabled (boolean[] buttonsEnabled) {
@@ -389,17 +368,6 @@ public class PlayingFrame extends JFrame implements ActionListener {
         return -1;
     }
 
-    public void testPause (int seconds) {
-        for (int i = 0; i < seconds; i++) {
-            try {
-                Thread.sleep (1000);
-                System.out.println (i);
-            } catch (InterruptedException e) {
-
-            }
-        }
-    }
-
     @Override
     public void actionPerformed (ActionEvent e) {
         if (e.getSource () instanceof JButton) {
@@ -407,12 +375,13 @@ public class PlayingFrame extends JFrame implements ActionListener {
             if (this.buttons.contains (pressed)) {
                 this.btnListener.buttonPressed (this.buttons.indexOf (pressed));
             }
-            else if (this.spaces.contains (pressed)) {
+            else {
+                System.out.println ("test");
                 for (JButton btn : this.spaces) {
-                    btn.setEnabled (false);
-                    // buttons of spaces begin from 100
-                    this.btnListener.buttonPressed (100 + this.spaces.indexOf ( pressed));
+                    btn.setEnabled(false);
                 }
+                // buttons of spaces begin from 100
+                this.btnListener.buttonPressed (100 + this.spaces.indexOf ( pressed));
             }
         }
     }

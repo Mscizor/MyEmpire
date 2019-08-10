@@ -24,7 +24,6 @@ public class PlayerMenuController {
             playerMenu.dispose();
             for (String player : playerNames) {
                 players.add(new Player(player));
-                System.out.println(player);
             }
 
             bank = new Bank(playerNames.size());
