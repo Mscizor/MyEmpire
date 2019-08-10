@@ -24,10 +24,10 @@ public class Tax extends Space {
      * This constructor accepts the type of Tax (as an integer)
      * and the location and initializes the Tax.
      *
-     * @param name
-     * @param location The location of the tax space on the list of spaces.
-     * @param tax
-     * @param isIncome
+     * @param name      the name of the tax space
+     * @param location  the location of the tax space on the list of spaces.
+     * @param tax       the amount of tax associated with the tax space
+     * @param isIncome  truth value of whether or not the sapce is an income tax space
      */
     public Tax(String name, int location, double tax, boolean isIncome, ImageIcon spaceIcon, ImageIcon displayIcon) {
         super(name, location, spaceIcon, displayIcon);
@@ -35,6 +35,13 @@ public class Tax extends Space {
         this.isIncome = isIncome;
     }
 
+    /**
+     * Method that fines tax from the current player
+     * and transfers it to the bank if player is able to pay.
+     *
+     * @param player    the current player
+     * @param bank      the bank of the game
+     */
     public void fineTax(Player player, Bank bank) {
         double fine;
         if (this.isIncome && player.getCash() * 0.1 >= tax)
