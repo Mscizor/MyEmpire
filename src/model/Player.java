@@ -23,7 +23,7 @@ public class Player {
     private int diceRoll = 0;
 
     /**
-     * Player constructor that initializes player name and cash value
+     * Constructor that initializes player name and cash value
      *
      * @param name the name of the current player
      */
@@ -34,82 +34,103 @@ public class Player {
     }
 
     /**
-     * Gets the player name
+     * Method that gets the player name
      *
-     * @return a <code> String </code> specifying the name of the current player
+     * @return String specifying the name of the current player
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     * Gets the player's cash value
+     * Method that gets the player's cash value
      *
-     * @return a <code> double </code> specifying the cash value of the current player
+     * @return Double specifying the cash value of the current player
      */
     public double getCash() {
         return this.cash;
     }
 
     /**
-     * Gets the player's current position
+     * Method that gets the player's current position
      *
-     * @return a <code> int </code> specifying the position of the current player in the array list of spaces.
+     * @return Integer specifying the position of the current player in the array list of spaces.
      */
     public int getPosition() {
         return this.position;
     }
 
+    /**
+     * Method that gets the player's rolled dice value
+     *
+     * @return Integer specifying the value of the rolled dice.
+     */
     public int getDiceRoll() {
         return this.diceRoll;
     }
 
+    /**
+     * Method that sets the players rolled dice value
+     * @param diceRoll  the value of the rolled dice
+     */
     public void setDiceRoll(int diceRoll) {
         this.diceRoll = diceRoll;
     }
 
     /**
-     * Gets and returns true if the player is in jail
+     * Method that checks whether or not the current player is in jail
      *
-     * @return a <code> boolean </code> specifying the inJail value of the player
+     * @return Boolean specifying whether or not the player is in jail
      */
     public boolean isInJail() {
         return this.inJail;
     }
 
+    /**
+     * Method that gets the player's list of ownable spaces
+     * @return a <code> ArrayList </code> of @see Ownable
+     * specifying the list of ownable spaces owned by the player
+     */
     public ArrayList<Ownable> getOwned() {
         return this.owned;
     }
 
+    /**
+     * Method that adds an ownable space to the current list of ownable space
+     * owned by the player
+     *
+     * @param own the ownable space to be added to the
+     *            list of ownable spaces owned by the player
+     */
     public void addOwnable(Ownable own) {
         this.owned.add(own);
     }
 
     /**
-     * sets player's inJail value to true
+     * Method that sets player's inJail value to true
      */
     public void arrest() {
         this.inJail = true;
     }
 
     /**
-     * sets player's inJail value to false
+     * Method that sets player's inJail value to false
      */
     public void bail() {
         this.inJail = false;
     }
 
     /**
-     * method that updates the player's cash value by the cashChange value
+     * Method that updates the player's cash value
      *
-     * @param cashChange the amount of change in a player's cash value
+     * @param cashChange the amount of change to a player's current cash value
      */
     public void changeCash(double cashChange) {
         this.cash += cashChange;
     }
 
     /**
-     * updates the player's position into the current one
+     * MEthod that updates the player's position
      *
      * @param position the position of the current player in the array list of spaces
      */
