@@ -37,6 +37,7 @@ public class PlayingController {
     public static final boolean[] JUST_FINISHED = new boolean[]{false, false, false, false, false, true};
     public static final boolean[] PAY_OR_TRADE = new boolean[]{false, false, false, true, true, false};
     public static final boolean[] TRADE_OR_FINISHED = new boolean[]{false, false, false, false, true, true};
+    public static final boolean[] NOTHING = new boolean[]{false, false, false, false, false, false};
 
     private PlayingFrame playing;
 
@@ -95,13 +96,11 @@ public class PlayingController {
         Player player = this.players.get(currentPlayer);
         this.gameOver = this.moveAndLand(players, spaces, player, bank, false);
         this.turnOver = true;
-        if (!gameOver) {
-            return;
-        }
 
         ArrayList <String> colors = new ArrayList <> (Arrays.asList ("Gray", "Purple", "Pink", "Green", "Blue", "Red", "Yellow"));
         ArrayList <String> two = new ArrayList <> (Arrays.asList ("Gray", "Red", "Yellow"));
         ArrayList <Property> pList = new ArrayList <>();
+        ArrayList <String> foundColors = new ArrayList <> ();
         for (Player p : players) {
             for (Ownable o : p.getOwned ()) {
                 if (o instanceof Property) {
@@ -110,12 +109,46 @@ public class PlayingController {
             }
 
             ArrayList <String> colorSets = new ArrayList <> ();
-            for (Property pr : pList) {
+            for (Property pr1 : pList) {
+                Player owner;
                 int count = 3;
-                if (two.contains(pr.getColor())) {
-                    count--;
+                if (pr1.getOwner(players) != null) {
+                    owner = pr1.getOwner(players);
+                    if (two.contains(pr1.getColor())) {
+                        count--;
+                    }
+                    for (Property pr2 : pList) {
+                        if (pr1.getColor().equals(pr2.getColor()) && owner == pr2.getOwner(players))
+                            count--;
+                    }
+                    if (count == 0 && !foundColors.contains(pr1.getColor())) {
+                        foundColors.add(pr1.getColor());
+                    }
                 }
             }
+
+            if (foundColors.size () >= 2) {
+                gameOver = true;
+                player = null;
+            }
+        }
+
+        if (bank.getCash() <= 0) {
+            gameOver = true;
+            player = null;
+        }
+
+        if (!gameOver)
+            return;
+        else {
+            playing.setButtonsEnabled(NOTHING);
+
+            String finalRes = "Yeet";
+//            for (int i = 0; i < players.size (); i++){
+//                finalRes += String.format ("Rank %d - %s\n", i, players.get ((int) worth[i][1]).getName());
+//            }
+            playing.setMessage (finalRes);
+            playing.setMessageVisible(true);
         }
     }
 
@@ -411,8 +444,7 @@ public class PlayingController {
                                 numOwned++;
                                 }
                         }
-                        boolean[] nothing = new boolean[]{false, false, false, false, false, false};
-                        playing.setButtonsEnabled (nothing);
+                        playing.setButtonsEnabled (NOTHING);
                         playing.setMessage("Click one of your owned spaces to select it to trade");
                         playing.setMessageVisible(true);
                         updateGUI ();
@@ -430,16 +462,17 @@ public class PlayingController {
                     playerBankrupt = ((CardApplyOwnableSpace) drawnCard).doCardEffect(player, spaces, owned, bank);
                 }
                 else {
-                    OwnableSpace spaceTraded = (OwnableSpace) spaces.get(index);
+                    OwnableSpace spaceTraded = owned;
                     OwnableSpace spaceLanded = (OwnableSpace) spaces.get(player.getPosition());
                     Player owner = spaceLanded.getOwner (players);
                     owner.getOwned().remove(spaceLanded);
                     player.getOwned().remove(spaceTraded);
                     owner.getOwned().add(spaceTraded);
-                    owner.getOwned().add(spaceLanded);
+                    player.getOwned().add(spaceLanded);
                     trading = false;
                 }
                 updateGUI();
+                playing.setButtonsEnabled(JUST_FINISHED);
             }
         }
     }

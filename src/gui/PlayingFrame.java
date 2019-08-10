@@ -103,6 +103,7 @@ public class PlayingFrame extends JFrame implements ActionListener {
 
             int x = this.xySpaceLocations[i][0];
             int y = this.xySpaceLocations[i][1];
+            temp.addActionListener(this);
             temp.setBounds (x, y, 80, 80);
             this.spaces.add (temp);
         }
