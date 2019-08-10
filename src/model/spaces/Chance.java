@@ -15,9 +15,11 @@ import javax.swing.*;
  */
 public class Chance extends Space {
     /**
-     * @param name     the name of the space
-     * @param location the location of the space on the array list of spaces
-     */
+     * @param name          the name of the chance space
+     * @param location      the location of the chance space on the array list of spaces
+     * @param spaceIcon     the image of the chance space players can land on
+     * @param displayIcon   the image of the chance space that holds its information
+     * */
     public Chance(String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
         super(name, location, spaceIcon, displayIcon);
     }

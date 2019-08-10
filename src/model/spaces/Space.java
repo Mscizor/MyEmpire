@@ -19,6 +19,15 @@ public abstract class Space {
     private ImageIcon spaceIcon;
     private ImageIcon displayIcon;
 
+    /**
+     * Constructor that initializes Space name, location,
+     * and images associated with it.
+     *
+     * @param name          the name of the space
+     * @param location      the location of the space
+     * @param spaceIcon     the image of the space players can land on
+     * @param displayIcon   the image of the space that holds its information
+     */
     public Space(String name, int location, ImageIcon spaceIcon, ImageIcon displayIcon) {
         this.name = name;
         this.location = location;
@@ -27,37 +36,55 @@ public abstract class Space {
     }
 
     /**
-     * Gets the name of the space
+     * Method that gets the name of the space
      *
-     * @return a <code> String </code>
-     * specifying the name of the space.
+     * @return String specifying the name of the space.
      */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Method that sets the name of the space
+     *
+     * @param name  the name of the space
+     */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Gets the location of the space
+     * Method that gets the location of the space
      *
-     * @return a <code> int </code>
-     * specifying the position of the space in the array list of spaces.
+     * @return Integer specifying the position of the space in the array list of spaces.
      */
     public int getLocation() {
         return this.location;
     }
 
+    /**
+     * Method that sets the location of the space
+     *
+     * @param location the integer position of the space in the board
+     */
     public void setLocation(int location) {
         this.location = location;
     }
 
+    /**
+     * Method that gets the image of the space players can land on
+     *
+     * @return ImageIcon specifying the spaceIcon
+     */
     public ImageIcon getSpaceIcon() {
         return this.spaceIcon;
     }
 
+    /**
+     * Method that gets the image of the space that holds its information
+     *
+     * @return ImageIcon specifying the displayIcon
+     */
     public ImageIcon getDisplayIcon() {
         return this.displayIcon;
     }

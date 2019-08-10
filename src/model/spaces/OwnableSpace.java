@@ -22,7 +22,16 @@ public abstract class OwnableSpace extends Space implements Ownable {
     private double price;
     private ArrayList<Card> cards;
 
-
+    /**
+     * Constructor that accepts the type of Qwnable space
+     * the location, and the price then initializes the vales for the Ownable space
+     *
+     * @param name          the name of the corner space
+     * @param location      the location of the corner space on the array list of spaces
+     * @param price         the price of the ownable space
+     * @param spaceIcon     the image of the corner space players can land on
+     * @param displayIcon   the image of the corner space that holds its information
+     */
     public OwnableSpace(String name, int location, double price, ImageIcon spaceIcon, ImageIcon displayIcon) {
         super(name, location, spaceIcon, displayIcon);
         this.cards = new ArrayList<>();
@@ -30,21 +39,24 @@ public abstract class OwnableSpace extends Space implements Ownable {
     }
 
     /**
-     * Gets the price of the space
+     * Method that gets the price of the space
      *
-     * @return a <code> int </code>
-     * specifying the price of the specific space
+     * @return Integer specifying the price of the specific space
      */
     public double getPrice() {
         return this.price;
     }
 
+    /**
+     * Method that sets the price of the Ownable space
+     * @param price the price of the Ownable space
+     */
     public void setPrice(int price) {
         this.price = price;
     }
 
     /**
-     * Gets the array list of cards
+     * Method that gets the array list of cards
      *
      * @return a <code> ArrayList </code> of @see Card
      * specifying the array list of cards
@@ -53,6 +65,11 @@ public abstract class OwnableSpace extends Space implements Ownable {
         return this.cards;
     }
 
+    /**
+     * Method that sets the chance cards associated with the ownable space
+     *
+     * @param cards the list of cards
+     */
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
     }
@@ -67,9 +84,9 @@ public abstract class OwnableSpace extends Space implements Ownable {
     }
 
     /**
-     * method that removes a card from the space
+     * Method that removes a card from the space
      *
-     * @param card is the card added to the space
+     * @param card the card added to the space
      */
     public void removeCard(Card card) {
         this.cards.remove(card);
@@ -79,13 +96,24 @@ public abstract class OwnableSpace extends Space implements Ownable {
 
     public abstract void buySpace(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank);
 
+    /**
+     * Method that checks if a player is able to pay rent.
+     * If player is able to, cash is transferred from the current player
+     * to the owner of the space.
+     *
+     * @param players   the list of players in the game
+     * @param spaces    the list if spaces in the game
+     * @param player    the current player
+     *
+     * @return Boolean that specifies if a player is able to pay rent
+     */
     public boolean payRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player) {
         boolean playerBankrupt = false;
         Player owner = this.getOwner(players);
-        if (owner != player && player.getCash() > this.getRent(players, spaces, player)) {
+        if (owner != player && player.getCash() >= this.getRent(players, spaces, player)) {
             Transactions.cashToOtherPlayer(player, owner,
                     this.getRent(players, spaces, player));
-        } else if (owner != player && player.getCash() > this.getRent(players, spaces, player)) {
+        } else if (owner != player && player.getCash() < this.getRent(players, spaces, player)) {
             playerBankrupt = true;
         }
         return playerBankrupt;

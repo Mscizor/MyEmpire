@@ -33,7 +33,7 @@ public class Property extends OwnableSpace {
     private int footTraffic;
 
     /**
-     * A constructor that constructs a property with the input attributes.
+     * Constructor that constructs a property with the input attributes.
      *
      * @param name             Name of the property
      * @param color            Color value of the property
@@ -43,6 +43,8 @@ public class Property extends OwnableSpace {
      * @param baseRents        Index array of the base rents of the property
      * @param multiplier       Multiplier that determines how much foot traffic is
      *                         needed for development
+     * @param spaceIcon        Image of the property players can land on
+     * @param displayIcon      Image of the property that holds its information
      */
     public Property(String name, String color, int location, double price, double pricePerBuilding, double[] baseRents,
                     double multiplier, ImageIcon spaceIcon, ImageIcon displayIcon) {
@@ -58,10 +60,11 @@ public class Property extends OwnableSpace {
      * Takes into account the base rent, the number of properties the owner has
      * of the same color, and the cards applied to it.
      *
-     * @param players
-     * @param spaces
-     * @param player
-     * @return The total rent value.
+     * @param players   The list of players
+     * @param spaces    The list of spaces
+     * @param player    The current player
+     *
+     * @return Double representing the total rent value.
      */
     @Override
     public double getRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player) {
@@ -84,7 +87,7 @@ public class Property extends OwnableSpace {
             if (spaces.get(i) instanceof Property) {
                 pHold = (Property) spaces.get(i);
                 if (pHold != this && pHold.color.equals(this.color) && pHold.getOwner(players) != null) {
-                    if (pHold.getOwner(players).getName() == owner.getName()) {
+                    if (pHold.getOwner(players).getName().equals(owner.getName())) {
                         count++;
                     }
                 }
@@ -107,7 +110,7 @@ public class Property extends OwnableSpace {
     }
 
     /**
-     * Gets the string representation of the color.
+     * Method that gets the string representation of the color.
      *
      * @return String representing the color of the property.
      */
@@ -116,7 +119,7 @@ public class Property extends OwnableSpace {
     }
 
     /**
-     * Gets the price of each building of the property.
+     * Method that gets the price of each building of the property.
      *
      * @return Integer representing the price of each building.
      */
@@ -125,7 +128,7 @@ public class Property extends OwnableSpace {
     }
 
     /**
-     * Gets the number of buildings.
+     * Method that gets the number of buildings.
      *
      * @return Integer representing the number of buildings.
      */
@@ -133,21 +136,26 @@ public class Property extends OwnableSpace {
         return this.numHouses;
     }
 
+    /**
+     * Method that gets the number of hotels.
+     *
+     * @return Integer representing the number of hotels.
+     */
     public int getNumHotels() {
         return this.numHotels;
     }
 
     /**
-     * Gets the base rents of this property.
+     * Method that gets the base rents of this property.
      *
-     * @return Integer array representing the base rents of the property.
+     * @return Integer Array representing the base rents of the property.
      */
     public double[] getBaseRents() {
         return this.baseRents;
     }
 
     /**
-     * Gets the multiplier used in calculating foot traffic threshold.
+     * Method that gets the multiplier used in calculating foot traffic threshold.
      *
      * @return Double representing the multiplier of the property.
      */
@@ -156,7 +164,7 @@ public class Property extends OwnableSpace {
     }
 
     /**
-     * Gets the current foot traffic of this property.
+     * Method that gets the current foot traffic of this property.
      *
      * @return Integer representing the current foot traffic of the property.
      */
@@ -164,16 +172,25 @@ public class Property extends OwnableSpace {
         return this.footTraffic;
     }
 
+    /**
+     * Method that transfers money from the player to the bank
+     * depending on whether a building was added
+     *
+     * @param players   the list of players
+     * @param bank      the bank of the game
+     */
     public void develop (ArrayList <Player> players, Bank bank) {
         boolean wasAdded = this.addBuilding (players);
         if (wasAdded)
             Transactions.cashToBank (this.getOwner (players), bank, this.getPricePerBuilding());
     }
+
     /**
-     * Adds a building and takes money from the owner according to the price.
-     * Only adds if able to develop and there is still room to develop.
+     * Method that adds a building an if there is still room to develop.
      *
-     * @param players
+     * @param players   The list of players in the game
+     *
+     * @return Boolean specifying if a building can be added
      */
     public boolean addBuilding(ArrayList<Player> players) {
         if (this.isAbleToDevelop(players)) {
@@ -189,18 +206,19 @@ public class Property extends OwnableSpace {
     }
 
     /**
-     * Adds foot traffic to the property.
+     * Method that adds foot traffic to the property.
      */
     public void addFootTraffic() {
         this.footTraffic++;
     }
 
     /**
-     * Checks if the owner is able to develop the property. Takes into
+     * Method that checks if the owner is able to develop the property. Takes into
      * consideration if the owner meets the requirements for development.
      *
-     * @param players
-     * @return Truth value if the owner is able to develop.
+     * @param players   the list of players
+     *
+     * @return Boolean specifying if the owner is able to develop.
      */
     public boolean isAbleToDevelop(ArrayList<Player> players) {
         return this.getOwner(players).getCash() >= this.pricePerBuilding
@@ -209,11 +227,12 @@ public class Property extends OwnableSpace {
     }
 
     /**
-     * Checks if the owner's other properties of the same color are all fully
+     * Method that checks if the owner's other properties of the same color are all fully
      * developed (aside from hotels).
      *
-     * @param players
-     * @return Truth value if the owner's other properties of the same color have
+     * @param players   the list of players
+     *
+     * @return Boolean specifying if the owner's other properties of the same color have
      * 4 houses or a hotel.
      */
     public boolean isOwnedFullyDeveloped(ArrayList<Player> players) {
@@ -238,6 +257,17 @@ public class Property extends OwnableSpace {
         return ownedFullyDeveloped;
     }
 
+    /**
+     *  Method that checks if the property is owned
+     *  and if the player is able to afford it.
+     *  If space has no owner and the player is able to afford it,
+     *  player buys the space.
+     *
+     * @param players   the list of players
+     * @param spaces    the list of spaces
+     * @param player    the current player
+     * @param bank      the bank of the game
+     */
     @Override
     public void buySpace (ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank) {
         Player owner = this.getOwner(players);
@@ -248,6 +278,9 @@ public class Property extends OwnableSpace {
         }
     }
 
+    /**
+     * @return String that contains the name, color, and location of the property.
+     */
     @Override
     public String toString() {
         String string = "";
