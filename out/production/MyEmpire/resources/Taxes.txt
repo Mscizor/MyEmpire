@@ -1,0 +1,11 @@
+Luxury Tax
+75
+false
+SqLuxuryTax
+LuxuryTax
+
+Income Tax
+200
+true
+SqIncomeTax
+IncomeTax
