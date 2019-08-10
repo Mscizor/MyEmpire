@@ -24,21 +24,23 @@ public class Utility extends OwnableSpace {
      * Utility constructor that initializes utility name, location, and cash
      * value.
      *
-     * @param name     the name of specified utility
-     * @param location the location of the utility in the array list of spaces
-     * @param price    the price of the utility
+     * @param name          the name of specified utility
+     * @param location      the location of the utility in the array list of spaces
+     * @param price         the price of the utility
+     * @param spaceIcon     the image of the utility the player will land on
+     * @param displayIcon   the image of the utility that holds its information
      */
     public Utility(String name, int location, double price, ImageIcon spaceIcon, ImageIcon displayIcon) {
         super(name, location, price, spaceIcon, displayIcon);
     }
 
     /**
-     * Gets the utility's rent value
+     * Method that gets the utility's rent value
      *
-     * @param players
-     * @param spaces
-     * @param player
-     * @return a <code> int </code> specifying the utility's current rent
+     * @param players   the list of players
+     * @param spaces    the list of spaces
+     * @param player    the current player
+     * @return Integer specifying the utility's current rent
      */
     @Override
     public double getRent(ArrayList<Player> players, ArrayList<Space> spaces, Player player) {
@@ -81,6 +83,17 @@ public class Utility extends OwnableSpace {
         return finalRent;
     }
 
+    /**
+     *  Method that checks whether or not a utility is owned and if
+     *  the current player is able to afford it or not.
+     *  If the player is able to afford it, and if the utility is not owned,
+     *  cash is transferred to the bank from the player.
+     *
+     * @param players   the list of players
+     * @param spaces    the list of spaces
+     * @param player    the current player
+     * @param bank      the bank of the game
+     */
     @Override
     public void buySpace(ArrayList<Player> players, ArrayList<Space> spaces, Player player, Bank bank) {
         Player owner = this.getOwner(players);
@@ -90,6 +103,9 @@ public class Utility extends OwnableSpace {
         }
     }
 
+    /**
+     * @return String that contains the utility name and its location
+     */
     @Override
     public String toString() {
         String string = "";
