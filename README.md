@@ -7,7 +7,7 @@ A board game based on the game Monopoly. Learned fundamental object-oriented pro
 
 It was pretty tough for this term seeing as it included creating an actual user interface that wasn't the command line.
 Unfortunately, we weren't able to completely finish the project. I'm taking this as an experience to become more
-responsible about the time used and wasted.
+responsible about the time used and wasted. Some of the commmits were in panic and frustration.
 
 # Learnings
 
